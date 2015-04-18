@@ -1,0 +1,19 @@
+<!DOCTYPE diamondcore>
+
+<?xml version="1.0" encoding="UTF-8" plugin="true">
+	<info>
+		<author>Trent Summerlin</author>
+		<version>1.0</version>
+		<description>Used to derp the crap around</description>
+		<name>LOLMan</name>z
+	</info>
+	
+	<onEnable>
+		<logger level="info">Hello there!</info>
+		</registerEvents>
+	</onEnable>
+	
+	<event eventType="PlayerJoinEvent">
+		<sendMessage player=</getPlayer> message=("Hello there" . </getPlayer info="name">)>
+	</event>
+</xml>

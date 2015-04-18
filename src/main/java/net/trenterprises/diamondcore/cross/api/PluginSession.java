@@ -25,6 +25,7 @@ import java.util.Map;
 
 import net.trenterprises.diamondcore.cross.api.event.Event;
 import net.trenterprises.diamondcore.cross.api.exception.InvalidConstructorException;
+import net.trenterprises.diamondcore.cross.api.exception.InvalidPluginDescriptorException;
 import net.trenterprises.diamondcore.cross.api.exception.PluginDuplicateException;
 import net.trenterprises.diamondcore.cross.command.custom.CustomCommand;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
@@ -40,29 +41,29 @@ import org.yaml.snakeyaml.Yaml;
  */
 public class PluginSession {
 	
-	static DiamondLogger logger = new Log4j2Logger("DiamondCore");
+	protected static DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	
 	// Plugin list
 	public static ArrayList<PluginSession> sessionList = new ArrayList<PluginSession>();
-	private static ArrayList<String> mainClassList = new ArrayList<String>();
-	private static ArrayList<String> mainPackageList = new ArrayList<String>();
-	private static ArrayList<String> pluginNames = new ArrayList<String>();
+	protected static ArrayList<String> mainClassList = new ArrayList<String>();
+	protected static ArrayList<String> mainPackageList = new ArrayList<String>();
+	protected static ArrayList<String> pluginNames = new ArrayList<String>();
 	
-	// Advanced Plugin Info
+	// Advanced plugin info
 	protected String mainClass;
 	protected String mainPackage;
 	protected File jarFile;
 	
-	// General Plugin Info
+	// General plugin info
 	protected String pluginName;
 	protected String pluginVersion;
 	protected String pluginAuthor;
 	
 	// Plugin methods
-	private final String enableMethod = "onEnable";
-	private final String disableMethod = "onDisable";
+	protected final String enableMethod = "onEnable";
+	protected final String disableMethod = "onDisable";
 	
-	public PluginSession(File jarFile) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException, ClassNotFoundException, IOException, PluginDuplicateException, InvalidConstructorException {
+	public PluginSession(File jarFile) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException, ClassNotFoundException, IOException, PluginDuplicateException, InvalidConstructorException, InvalidPluginDescriptorException {
 		// Load Plugin Jar and Plugin Properties
 		this.jarFile = jarFile;
 		this.loadPluginYML();
@@ -115,16 +116,20 @@ public class PluginSession {
 	/**
 	 * Used to load the plugin YAML and see if the plugin is valid at all
 	 * 
-	 * @throws IOException
-	 * @throws PluginDuplicateException
 	 * @author Trent Summerlin
 	 * @version 1.0
+	 * @throws IOException
+	 * @throws PluginDuplicateException
+	 * @throws InvalidPluginDescriptorException 
 	 */
-	protected void loadPluginYML() throws IOException, PluginDuplicateException {
+	protected void loadPluginYML() throws IOException, PluginDuplicateException, InvalidPluginDescriptorException {
+		// Load plugin YAML
 		Yaml PluginYML = new Yaml();
 		URL PluginURL = new URL("jar:file:" + this.jarFile.getAbsolutePath() + "!/plugin.yml");
 		InputStream PluginInputStream = PluginURL.openStream();
 		Map<?, ?> PluginMap = (Map<?, ?>) PluginYML.load(PluginInputStream);
+		
+		// Get main package
 		mainClass = PluginMap.get("main").toString();
 		String[] RawMainPackage = mainClass.split("\\.");
 		StringBuilder b = new StringBuilder();
@@ -132,13 +137,15 @@ public class PluginSession {
 			b.append((i == RawMainPackage.length-1 ? (RawMainPackage[i]+ ".") : (RawMainPackage[i])));
 		}
 		mainPackage = b.toString();
+		
+		// Get plugin info, throw exceptions if neccessary
 		pluginName = PluginMap.get("name").toString();
 		pluginVersion = PluginMap.get("version").toString();
 		pluginAuthor = PluginMap.get("author").toString();
-		if(mainClass.equals(null)) throw new NullPointerException();
-		if(pluginName.equals(null)) throw new NullPointerException();
-		if(pluginVersion.equals(null)) throw new NullPointerException();
-		if(pluginAuthor.equals(null)) throw new NullPointerException();
+		if(mainClass.equals(null)) throw new InvalidPluginDescriptorException("main");
+		if(pluginName.equals(null)) throw new InvalidPluginDescriptorException("name");
+		if(pluginVersion.equals(null)) throw new InvalidPluginDescriptorException("version");
+		if(pluginAuthor.equals(null)) throw new InvalidPluginDescriptorException("author");
 		
 		// Register commands
 		try {
@@ -163,9 +170,9 @@ public class PluginSession {
 	/**
 	 * Used to get the main class of the plugin
 	 * 
-	 * @return The main class of the plugin
 	 * @author Trent Summerlin
 	 * @version 1.0
+	 * @return The main class of the plugin
 	 */
 	public String getMainClass() {
 		return mainClass;
@@ -174,9 +181,9 @@ public class PluginSession {
 	/**
 	 * Used to get the main package of the plugin
 	 * 
-	 * @return The main package of the plugin
 	 * @author Trent Summerlin
 	 * @version 1.0
+	 * @return The main package of the plugin
 	 */
 	public String getMainPackage() {
 		return mainPackage;
@@ -185,9 +192,9 @@ public class PluginSession {
 	/**
 	 * Used to get the name of the plugin
 	 * 
-	 * @return The name of the plugin
 	 * @author Trent Summerlin
 	 * @version 1.0
+	 * @return The name of the plugin
 	 */
 	public String getPluginName() {
 		return pluginName;
@@ -196,9 +203,9 @@ public class PluginSession {
 	/**
 	 * Used to get the version of the plugin
 	 * 
-	 * @return The version of the plugin
 	 * @author Trent Summerlin
 	 * @version 1.0
+	 * @return The version of the plugin
 	 */
 	public String getPluginVersion() {
 		return pluginVersion;
@@ -207,9 +214,9 @@ public class PluginSession {
 	/**
 	 * Used to get the author of the plugin
 	 * 
-	 * @return The author of the plugin
 	 * @author Trent Summerlin
 	 * @version 1.0
+	 * @return The author of the plugin
 	 */
 	public String getPluginAuthor() {
 		return pluginAuthor;
@@ -218,9 +225,9 @@ public class PluginSession {
 	/**
 	 * Used to get the main jar file of the plugin
 	 * 
-	 * @return The plugin JAR file
 	 * @author Trent Summerlin
 	 * @version 1.0
+	 * @return The plugin JAR file
 	 */
 	public File getJar() {
 		return this.jarFile;
@@ -229,27 +236,30 @@ public class PluginSession {
 	/**
 	 * Used to get a class from a specific plugin
 	 * 
-	 * @param Class to load
-	 * @return Class object from plugin
 	 * @author Trent Summerlin
 	 * @version 1.0
+	 * @param classDirectory
+	 * 		Class package/directory
+	 * @return Class object from plugin
 	 * @throws ClassNotFoundException
 	 * @throws MalformedURLException
 	 */
-	public Class<?> getClassFromPlugin(String ClassToLoad) throws ClassNotFoundException, MalformedURLException {
+	public Class<?> getClassFromPlugin(String classDirectory) throws ClassNotFoundException, MalformedURLException {
 	    URL[] PluginURLs = { this.jarFile.getAbsoluteFile().toURI().toURL() };
 	   	URLClassLoader classLoader = URLClassLoader.newInstance(PluginURLs);
-	    Class<?> pluginClass = classLoader.loadClass(ClassToLoad);
+	    Class<?> pluginClass = classLoader.loadClass(classDirectory);
 	    return pluginClass;
 	}
 	
 	/**
 	 * Used to execute a method from a class
 	 * 
-	 * @param Class to execute method from
-	 * @param Name of the method
 	 * @author Trent Summerlin
 	 * @version 1.0
+	 * @param classObject
+	 * 		Class to execute method from
+	 * @param methodName
+	 * 		Name of the method
 	 * @throws IllegalAccessException
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
@@ -257,9 +267,9 @@ public class PluginSession {
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 */
-	public void executeClassMethod(Class<?> Class, String MethodName) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
-		 Method Method = Class.getMethod(MethodName);
-		 Method.invoke(Class.newInstance());
+	public void executeClassMethod(Class<?> classObject, String methodName) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
+		 Method Method = classObject.getMethod(methodName);
+		 Method.invoke(classObject.newInstance());
 	}
 	
 	/**
@@ -267,9 +277,12 @@ public class PluginSession {
 	 * 
 	 * @author Trent Summerlin
 	 * @version 1.0
-	 * @param Class to execute event from
-	 * @param Name of the method
-	 * @param Name of the Event
+	 * @param classObject
+	 * 		Class to execute event from
+	 * @param methodName
+	 * 		Name of the method to execute
+	 * @param event
+	 * 		Event object being thrown
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 * @throws IllegalAccessException
@@ -277,9 +290,10 @@ public class PluginSession {
 	 * @throws InvocationTargetException
 	 * @throws InstantiationException
 	 */
-	public void executeEvent(Class<?> Class, String MethodName, Event e) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
-		Method Method = Class.getMethod(MethodName, e.getClass());
-		Method.invoke(Class.newInstance(), e);
+	public void executeEvent(Class<?> classObject, String methodName, Event e) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
+		Method Method = classObject.getMethod(methodName, e.getClass());
+		
+		Method.invoke(classObject.newInstance(), e);
 	}
 	
 	/**

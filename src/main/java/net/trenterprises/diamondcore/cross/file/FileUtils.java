@@ -33,12 +33,13 @@ public class FileUtils {
 	 * 
 	 * @author Trent Summerlin
 	 * @version 1.0
-	 * @param File
+	 * @param file
+	 *  	Text file to read from
 	 * @return Text file string result
 	 * @throws IOException
 	 */
-	public static String readFromFile(File File) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(FileList.bannedPlayerList));
+	public static String readFromFile(File file) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(file));
 		StringBuilder builder = new StringBuilder();
 		String line = null;
 		while((line = reader.readLine()) != null) {

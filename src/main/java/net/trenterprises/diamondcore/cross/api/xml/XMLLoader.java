@@ -9,58 +9,40 @@
  
 */
 
-package net.trenterprises.diamondcore.cross.api;
+package net.trenterprises.diamondcore.cross.api.xml;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import net.trenterprises.diamondcore.run;
-import net.trenterprises.diamondcore.cross.api.exception.PluginDuplicateException;
 import net.trenterprises.diamondcore.cross.file.FileList;
-import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
-import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
+import net.trenterprises.diamondcore.cross.file.FileUtils;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
 
 /**
- * This class is used to load all of the plugins located inside
+ * Used to load get all of the XML plugins
  * <br>
- * of the "plugin" folder
+ * ready for deployment in the server
  * 
  * @author Trent Summerlin
- * @version 1.0
+ * @verson 0.1.0-SNAPSHOT
  */
-public abstract class PluginLoader {
+public abstract class XMLLoader {
 	
-	private static DiamondLogger logger = new Log4j2Logger("DiamondCore");
+	protected final static String DOCTYPE_VERSION = "<!DOCTYPE diamondcore>";
 	
-	public static void loadPlugins() {
-		logger.info("Loading plugins!");
-		ArrayList<File> jarList = listJars();
-		for(int i = 0; i < jarList.size(); i++) {
-			try {
-				new PluginSession(jarList.get(i));
-			}
-			catch(PluginDuplicateException PDE) {
-				logger.err("The plugin " + PDE.getPluginName() + " was not loaded because it conflicts with another!");
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		logger.info("Finished loading plugins!");
-	}
-	
-	public static void unloadPlugins() {
-		ArrayList<PluginSession> sessions = PluginSession.sessionList;
-		for(int i = 0; i < sessions.size(); i++) {
-			try {
-				sessions.get(i).unloadSession();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	public static void loadXMLPlugins() throws IOException {
+		ArrayList<File> xmlPluginFiles = listXMLFiles();
+		for(int i = 0; i < xmlPluginFiles.size(); i++) {
+			//String title = Jsoup.connect("http://jsoup.org/").get().title();
 		}
 	}
 	
-	private static ArrayList<File> listJars() {
+	private static ArrayList<File> listXMLFiles() throws IOException {
 		ArrayList<File> fileListArray = new ArrayList<File>();
 		FileList.setDebug(run.getShouldDebug());
 		String pathToPlugins = FileList.pluginFolder.getAbsolutePath();
@@ -68,9 +50,22 @@ public abstract class PluginLoader {
 		File[] pluginFiles = pluginFolderList.listFiles(); 
 		for (int i = 0; i < pluginFiles.length; i++) {
 			if (pluginFiles[i].isFile()) {
-				if(pluginFiles[i].getName().endsWith(".jar")) fileListArray.add(pluginFiles[i]);
+				if(pluginFiles[i].getName().endsWith(".xml")){
+					Document xml = Jsoup.parse(FileUtils.readFromFile(pluginFiles[i]), "UTF-8", Parser.xmlParser());
+					String doctype = xml.childNodes().toArray()[0].toString();
+					if(doctype.equals(DOCTYPE_VERSION)) fileListArray.add(pluginFiles[i]);
+				}
 			}
 		}
 		return fileListArray;
 	}
+	
+	public static void main(String[] args) throws IOException {
+		FileList.setDebug(true);
+		ArrayList<File> files = listXMLFiles();
+		for(int i = 0; i < files.size(); i++) {
+			System.out.println(files.get(i).getName());
+		}
+	}
+	
 }
