@@ -35,6 +35,13 @@ public final class PocketPlayerLoginEvent extends PocketEvent {
 	}
 	
 	/**
+	 * Used to get the event name
+	 */
+	public String getName() {
+		return "PocketPlayerLoginEvent";
+	}
+	
+	/**
 	 * Used to get the player's InetAddress
 	 * 
 	 * @return Player's InetAddress

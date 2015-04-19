@@ -20,6 +20,7 @@ import net.trenterprises.diamondcore.cross.command.diamond.ReloadCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.BanCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.HelpCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.SayCommand;
+import net.trenterprises.diamondcore.cross.command.vanilla.StopCommand;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
@@ -69,6 +70,8 @@ public abstract class Command {
 				return CommandType.PLUGINS;
 			case "reload":
 				return CommandType.RELOAD;
+			case "stop":
+				return CommandType.STOP;
 			
 			// Opertator
 			case "kick":
@@ -173,7 +176,13 @@ public abstract class Command {
 		}
 		else if(commandType.equals(CommandType.RELOAD)) {
 			ReloadCommand command = new ReloadCommand();
-			command.execute(sender, logger);
+			boolean shouldRun = sender.equals(CommandSender.CONSOLE);
+			if(shouldRun) command.execute(sender, logger);
+		}
+		else if(commandType.equals(CommandType.STOP)) {
+			StopCommand command = new StopCommand();
+			boolean shouldRun = sender.equals(CommandSender.CONSOLE);
+			if(shouldRun) command.execute(sender, logger);
 		}
 		else if(commandType.equals(CommandType.KICK)) {
 			

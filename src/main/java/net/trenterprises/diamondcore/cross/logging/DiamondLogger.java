@@ -24,10 +24,12 @@ public abstract interface DiamondLogger{
 	String InfoTag = "MSG";
 	String WarnTag = "WARN";
 	String ErrorTag = "ERR";
-
-	void debug(String msg);
+	
 	void info(String msg);
 	void warn(String msg);
 	void err(String msg);
+	
+	@Deprecated
+	void debug(String msg);
 }
 

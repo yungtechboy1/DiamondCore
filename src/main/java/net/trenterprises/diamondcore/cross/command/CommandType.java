@@ -374,6 +374,7 @@ public enum CommandType {
 	TOGGLE_DOWNFALL,
 	PLUGINS,
 	RELOAD,
+	STOP,
 	
 	// Operator Related
 	KICK, BAN, BAN_IP, PARDON, PARDON_IP,

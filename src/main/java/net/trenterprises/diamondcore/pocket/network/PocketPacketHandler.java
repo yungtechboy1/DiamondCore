@@ -41,7 +41,6 @@ import org.blockserver.io.BinaryReader;
  */
 public class PocketPacketHandler {
 	
-	private DiamondCoreServer server;
 	private DatagramSocket socket;
 	private long ServerID = new Random().nextLong();
 	private HashMap<String, PocketSession> sessions = new HashMap<String, PocketSession>();
@@ -66,7 +65,7 @@ public class PocketPacketHandler {
 	 * @version 1.1
 	 */
 	public void tick() {
-			try {
+		try {
 			// Get ready to receive message
 			byte[] PocketBuffer = new byte[1535];
 			DatagramPacket pocketPacket = new DatagramPacket(PocketBuffer, PocketBuffer.length);

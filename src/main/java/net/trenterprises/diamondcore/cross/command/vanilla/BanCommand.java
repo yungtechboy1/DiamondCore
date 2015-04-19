@@ -40,7 +40,7 @@ public final class BanCommand extends Command {
 	
 	@Override
 	public String getName() {
-		return "Ban";
+		return "ban";
 	}
 	
 	@Override

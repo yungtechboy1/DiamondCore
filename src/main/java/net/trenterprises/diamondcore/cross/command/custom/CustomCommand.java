@@ -14,6 +14,7 @@ package net.trenterprises.diamondcore.cross.command.custom;
 import java.util.ArrayList;
 
 import net.trenterprises.diamondcore.cross.api.PluginSession;
+import net.trenterprises.diamondcore.cross.api.html.HTMLSession;
 import net.trenterprises.diamondcore.cross.command.custom.exception.ExistentCommandException;
 import net.trenterprises.diamondcore.cross.command.custom.exception.InvalidCommandException;
 
@@ -32,13 +33,30 @@ public final class CustomCommand {
 	private final String commandName;
 	private final String commandDescription;
 	private final String commandUsage;
-	private final PluginSession session;
+	private final PluginSession pluginSession;
+	private final HTMLSession htmlSession;
 	
 	public CustomCommand(String commandName, String commandDescription, String commandUsage, PluginSession session) throws InvalidCommandException {
 		this.commandName = commandName;
 		this.commandDescription = commandDescription;
 		this.commandUsage = commandUsage;
-		this.session = session;
+		this.pluginSession = session;
+		this.htmlSession = null;
+		
+		// Check to make sure the command is valid
+		for(int i = 0; i < commands.size(); i++) {
+			CustomCommand command = commands.get(i);
+			if(command.getName().equalsIgnoreCase(this.getName())) throw new ExistentCommandException(this.getName());
+		}
+		commands.add(this);
+	}
+	
+	public CustomCommand(String commandName, String commandDescription, String commandUsage, HTMLSession session) throws InvalidCommandException {
+		this.commandName = commandName;
+		this.commandDescription = commandDescription;
+		this.commandUsage = commandUsage;
+		this.pluginSession = null;
+		this.htmlSession = session;
 		
 		// Check to make sure the command is valid
 		for(int i = 0; i < commands.size(); i++) {
@@ -94,14 +112,31 @@ public final class CustomCommand {
 	/**
 	 * Used to get the plugin session that the command
 	 * <br>
-	 * is stored in
+	 * is stored in. If null is returned, try using getHTMLSession()
 	 * 
 	 * @author Trent Summerlin
 	 * @version 1.0
 	 * @return Command plugin session
 	 */
-	public PluginSession getCommandSession() {
-		return this.session;
+	public PluginSession getPluginSession() {
+		if(this.htmlSession.equals(null)) return this.pluginSession;
+		else return null;
 	}
+
+	/**
+	 * Used to get the plugin session that the command
+	 * <br>
+	 * is stored in. If null is returned, try using getPluginSession()
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @return Command plugin session
+	 */
+	public HTMLSession getHTMLSession() {
+		if(this.pluginSession.equals(null)) return this.htmlSession;
+		else return null;
+	}
+	
+	
 	
 }

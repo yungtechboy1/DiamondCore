@@ -3,6 +3,7 @@ package net.trenterprises.diamondcore.cross.command.diamond;
 import java.io.IOException;
 
 import net.trenterprises.diamondcore.cross.api.PluginLoader;
+import net.trenterprises.diamondcore.cross.api.html.HTMLLoader;
 import net.trenterprises.diamondcore.cross.command.Command;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 import net.trenterprises.diamondcore.cross.command.custom.CustomCommand;
@@ -14,12 +15,12 @@ public class ReloadCommand extends Command {
 
 	@Override
 	public String getName() {
-		return "Reload";
+		return "reload";
 	}
 
 	@Override
 	public String getDescription() {
-		return "used to reload plugins quickly and easily, use for plugin devs";
+		return "used to reload plugins quickly and easily, useful for plugin devs";
 	}
 
 	@Override
@@ -39,6 +40,7 @@ public class ReloadCommand extends Command {
 		try {
 			// Unload plugins
 			PluginLoader.unloadPlugins();
+			HTMLLoader.unloadPlugins();
 			
 			// Clear custom commands
 			CustomCommand.commands.clear();
@@ -51,6 +53,7 @@ public class ReloadCommand extends Command {
 						
 			// Reload properties
 			PluginLoader.loadPlugins();
+			HTMLLoader.loadPlugins();
 			
 			logger.info("Reload complete!");
 		}

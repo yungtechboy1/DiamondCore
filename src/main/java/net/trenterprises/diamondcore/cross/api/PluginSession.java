@@ -86,7 +86,7 @@ public class PluginSession {
 		}
 		
 		// See if the main class is already in use #2
-		if((mainClassCheck == null || PluginSession.mainClassList.size() == 0)) {
+		if(mainClassCheck == null || PluginSession.mainClassList.size() == 0) {
 			// Issue a warning if the main-class is different (Indicating it's a different plugin) but the name is taken by another plugin.
 			if(pluginNames.contains(this.pluginName)) logger.warn("Warning: A there are multiple plugins with the name \"" + this.pluginName + "\"!");
 			
@@ -175,7 +175,7 @@ public class PluginSession {
 	 * @return The main class of the plugin
 	 */
 	public String getMainClass() {
-		return mainClass;
+		return this.mainClass;
 	}
 	
 	/**
@@ -186,7 +186,7 @@ public class PluginSession {
 	 * @return The main package of the plugin
 	 */
 	public String getMainPackage() {
-		return mainPackage;
+		return this.mainPackage;
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class PluginSession {
 	 * @return The name of the plugin
 	 */
 	public String getPluginName() {
-		return pluginName;
+		return this.pluginName;
 	}
 	
 	/**
@@ -208,7 +208,7 @@ public class PluginSession {
 	 * @return The version of the plugin
 	 */
 	public String getPluginVersion() {
-		return pluginVersion;
+		return this.pluginVersion;
 	}
 	
 	/**
@@ -219,7 +219,7 @@ public class PluginSession {
 	 * @return The author of the plugin
 	 */
 	public String getPluginAuthor() {
-		return pluginAuthor;
+		return this.pluginAuthor;
 	}
 	
 	/**
@@ -292,7 +292,6 @@ public class PluginSession {
 	 */
 	public void executeEvent(Class<?> classObject, String methodName, Event e) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
 		Method Method = classObject.getMethod(methodName, e.getClass());
-		
 		Method.invoke(classObject.newInstance(), e);
 	}
 	
@@ -310,8 +309,12 @@ public class PluginSession {
 	 * @throws MalformedURLException 
 	 */
 	public void unloadSession() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, SecurityException, ClassNotFoundException, MalformedURLException {
-		try {this.executeClassMethod(this.getClassFromPlugin(this.getMainClass()), this.disableMethod);}
-		catch(NoSuchMethodException E) {/* Ignore, some plugins don't use this. */}
+		try {
+			this.executeClassMethod(this.getClassFromPlugin(this.getMainClass()), this.disableMethod);
+		}
+		catch(NoSuchMethodException e) {
+			e.printStackTrace();
+		}
 		int index = sessionList.indexOf(this);
 		sessionList.remove(index);
 		mainClassList.remove(index);

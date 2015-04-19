@@ -36,6 +36,13 @@ public final class PocketServerListPingEvent extends PocketEvent {
 	}
 	
 	/**
+	 * Used to get the event name
+	 */
+	public String getName() {
+		return "PocketServerListPingEvent";
+	}
+	
+	/**
 	 * Used to get the player's InetAddress
 	 * 
 	 * @return Player's InetAddress

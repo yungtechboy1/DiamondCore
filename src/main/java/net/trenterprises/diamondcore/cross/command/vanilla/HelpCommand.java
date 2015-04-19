@@ -23,7 +23,7 @@ public class HelpCommand extends Command {
 	
 	@Override
 	public String getName() {
-		return "Help";
+		return "help";
 	}
 
 	@Override

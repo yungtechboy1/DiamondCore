@@ -24,6 +24,7 @@ import net.trenterprises.diamondcore.cross.api.event.EventHandler;
 import net.trenterprises.diamondcore.cross.api.event.Listener;
 import net.trenterprises.diamondcore.cross.api.event.desktop.DesktopEvent;
 import net.trenterprises.diamondcore.cross.api.event.pocket.PocketEvent;
+import net.trenterprises.diamondcore.cross.api.html.HTMLSession;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
@@ -87,6 +88,8 @@ public final class PluginManager {
 	 * @throws NoSuchMethodException
 	 */
 	public static void throwEvent(Event e) throws InstantiationException, IllegalAccessException, MalformedURLException, SecurityException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException {
+		
+		// Java plugin event
 		for(int i = 0; i < Listeners.size();) {
 			boolean ran = false;
 			int k = 0;
@@ -123,6 +126,13 @@ public final class PluginManager {
 			}
 			i++;
 		}
+		
+		// HTML plugin event
+		ArrayList<HTMLSession> html = HTMLSession.sessionList;
+		for(int k = 0; k < html.size(); k++) {
+			html.get(k).throwEvent(e);
+		}
+		
 	}
 	
 }

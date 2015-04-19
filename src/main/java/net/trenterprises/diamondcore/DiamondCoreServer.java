@@ -16,6 +16,8 @@ import java.net.DatagramSocket;
 
 import net.trenterprises.diamondcore.cross.Ticker;
 import net.trenterprises.diamondcore.cross.api.PluginLoader;
+import net.trenterprises.diamondcore.cross.api.html.HTMLLoader;
+import net.trenterprises.diamondcore.cross.command.custom.exception.InvalidCommandException;
 import net.trenterprises.diamondcore.cross.console.ConsoleInputReader;
 import net.trenterprises.diamondcore.cross.file.FileCheckup;
 import net.trenterprises.diamondcore.cross.file.FileList;
@@ -43,10 +45,10 @@ public class DiamondCoreServer {
 	private static DiamondLogger Logger = new Log4j2Logger("DiamondCore");
 	
 	// Threads
-	static PocketPacketHandler PacketHandler;
-	static DatagramSocket PocketSocket;
+	static PocketPacketHandler packetHandler;
+	static DatagramSocket pocketSocket;
 	
-	public DiamondCoreServer(boolean shouldDebug) throws IOException, InterruptedException {
+	public DiamondCoreServer(boolean shouldDebug) throws IOException, InterruptedException, InvalidCommandException {
 		debug = shouldDebug;
 		Logger.info("Starting Pocket Server!");
 		Logger.info(("Debug: " + (debug == true ? "activated" : "de-activated")));
@@ -60,17 +62,18 @@ public class DiamondCoreServer {
 		ServerSettings.load();
 		
 		// Open Socket
-		PocketSocket = new DatagramSocket(ServerSettings.getPEPort());
+		pocketSocket = new DatagramSocket(ServerSettings.getPEPort());
 		
 		// Load plugins
 		PluginLoader.loadPlugins();
+		HTMLLoader.loadPlugins();
 		
 		running = true;
 		Logger.info("Started Pocket Server!");
 		
 		// Initialize everything
 		ConsoleInputReader consoleInput = new ConsoleInputReader();
-		PocketPacketHandler pocketListener = new PocketPacketHandler(DiamondCoreServer.PocketSocket, this);
+		PocketPacketHandler pocketListener = new PocketPacketHandler(DiamondCoreServer.pocketSocket, this);
 		
 		// Finish startup
 		new MainTicker(consoleInput, pocketListener).start();
@@ -97,6 +100,17 @@ public class DiamondCoreServer {
 	 */
 	public static boolean isDebug() {
 		return debug;
+	}
+	
+	/**
+	 * Used to retrieve the MCPE server socket so it can be maganged
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @return Server MCPE socket
+	 */
+	public static DatagramSocket getPocketSocket() {
+		return pocketSocket;
 	}
 	
 }
@@ -139,9 +153,9 @@ class PocketPacketHandlerThread extends Thread {
 
 	public void run() {
 		try {
-			DiamondCoreServer.PacketHandler = new PocketPacketHandler(DiamondCoreServer.PocketSocket, server);
+			DiamondCoreServer.packetHandler = new PocketPacketHandler(DiamondCoreServer.pocketSocket, server);
 			while(DiamondCoreServer.isRunning()) {
-				DiamondCoreServer.PacketHandler.tick();
+				DiamondCoreServer.packetHandler.tick();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

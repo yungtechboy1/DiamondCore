@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import net.trenterprises.diamondcore.cross.api.PluginSession;
+import net.trenterprises.diamondcore.cross.api.html.HTMLSession;
 import net.trenterprises.diamondcore.cross.api.javaplugin.sub.command.CommandExecutor;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 
@@ -67,6 +68,7 @@ public class CommandManager {
 	 * @throws NoSuchMethodException 
 	 */
 	public static void throwCommand(CommandSender sender, String commandLabel, String[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, MalformedURLException, InstantiationException, ClassNotFoundException, NoSuchMethodException, SecurityException{
+		// Java plugin command
 		for(int i = 0; i < PluginSession.sessionList.size(); i++) {
 			PluginSession session = PluginSession.sessionList.get(i);
 			Class<?> mainClassObject = session.getClassFromPlugin(session.getMainClass());
@@ -85,6 +87,12 @@ public class CommandManager {
 					// Ignore, will happen
 				}
 			}
+		}
+		
+		// HTML plugin command
+		ArrayList<HTMLSession> html = HTMLSession.sessionList;
+		for(int j = 0; j < html.size(); j++) {
+			html.get(j).throwCommand(sender, commandLabel, args);
 		}
 	}
 	
