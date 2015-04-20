@@ -10,6 +10,6 @@
 */
 
 /**
- * This package is the main package for the Minecraft Desktop part of this program
+ * This is the package that contains all the files that will be read/copied
  */
-package net.trenterprises.diamondcore.desktop;
+package net.trenterprises.diamondcore.cross.file.files;

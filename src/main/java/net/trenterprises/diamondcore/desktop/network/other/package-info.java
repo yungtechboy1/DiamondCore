@@ -10,6 +10,8 @@
 */
 
 /**
- * This package is the main package for the Minecraft Desktop part of this program
+ * This package contains code for packets which
+ * are sent to Desktop clients at random times, unlike
+ * other packets
  */
-package net.trenterprises.diamondcore.desktop;
+package net.trenterprises.diamondcore.desktop.network.other;

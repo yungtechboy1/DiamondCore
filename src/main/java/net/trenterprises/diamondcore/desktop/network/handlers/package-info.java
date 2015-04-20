@@ -10,6 +10,7 @@
 */
 
 /**
- * This package is the main package for the Minecraft Desktop part of this program
+ * This package contains all of the code required to respond
+ * to a packet sent by a MC Desktop client
  */
-package net.trenterprises.diamondcore.desktop;
+package net.trenterprises.diamondcore.desktop.network.handlers;
