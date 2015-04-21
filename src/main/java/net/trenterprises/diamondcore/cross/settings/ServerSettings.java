@@ -11,10 +11,14 @@
 
 package net.trenterprises.diamondcore.cross.settings;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+
+import javax.imageio.ImageIO;
 
 import net.trenterprises.diamondcore.cross.file.FileList;
 import net.trenterprises.diamondcore.cross.world.GeneratorType;
@@ -151,6 +155,23 @@ public abstract class ServerSettings {
 	 */
 	public static String getPCMOTD() {
 		return Properties.get("motd-pc").toString();
+	}
+	
+	/**
+	 * Get the MCPC server favicon (Will return null if no the favicon is invalid)
+	 * 
+	 * @return Server MCPC favicon
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @throws IOException 
+	 */
+	public static File getServerFavicon() throws IOException {
+		if(FileList.serverFavicon.exists()) {
+			BufferedImage image = ImageIO.read(FileList.serverFavicon);
+			if(image.getWidth() == 64 && image.getHeight() == 64) return FileList.serverFavicon;
+			else return null;
+		}
+		else return null;
 	}
 	
 	/**

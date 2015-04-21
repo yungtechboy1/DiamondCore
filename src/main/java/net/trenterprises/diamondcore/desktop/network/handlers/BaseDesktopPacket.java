@@ -9,20 +9,28 @@
  
 */
 
-package net.trenterprises.diamondcore.pocket.network.handlers;
+package net.trenterprises.diamondcore.desktop.network.handlers;
 
 import java.io.IOException;
 
 /**
- * This is the base of every MCPE packet hander in DiamondCore
+ * This is the base of every Minecraft desktop packet handler in DiamondCore
  * 
  * @author Trent Summerlin
  * @version 1.0
  */
-public abstract interface BasePocketPacket {
+public interface BaseDesktopPacket {
 	
 	/**
-	 * Used to get the packet ID sent by the MCPE client
+	 * Used to get the packet length sent by the Minecraft desktop client
+	 * 
+	 * @author Trent Summerlin
+	 * @return Packet length sent by client
+	 */
+	public int getReceivedPacketLength();
+	
+	/**
+	 * Used to get the packet ID sent by the Minecraft desktop client
 	 * 
 	 * @author Trent Summerlin
 	 * @return Packet ID sent by client

@@ -44,6 +44,7 @@ public abstract class FileList {
 	
 	// Server Related
 	public static File serverProperties = new File(Base + "server.properties");
+	public static File serverFavicon = new File(Base + "server-icon.png");
 	public static File serverLog = new File(Base + "server.log");
 	public static File worldFolder = new File(Base + "worlds");
 	public static File pluginFolder = new File(Base + "plugins");
@@ -67,6 +68,7 @@ public abstract class FileList {
 		bannedIPList = new File(Base + "banned-ip.json");
 		playerFolder = new File(Base + "players");
 		serverProperties = new File(Base + "server.properties");
+		serverFavicon = new File(Base + "server-icon.png");
 		serverLog = new File(Base + "server.log");
 		worldFolder = new File(Base + "worlds");
 		pluginFolder = new File(Base + "plugins");

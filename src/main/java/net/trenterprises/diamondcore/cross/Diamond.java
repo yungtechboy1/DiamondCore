@@ -9,7 +9,7 @@
 
 */
 
-package net.trenterprises.diamondcore.cross.api;
+package net.trenterprises.diamondcore.cross;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -34,8 +34,13 @@ import org.json.simple.parser.ParseException;
  */
 public abstract class Diamond {
 	
+	// Minecraft Desktop
+	public static final String versionTag = "DiamondCore Unstable 1.8";
+	public static final int DesktopProtocol = 47;
+	
+	// Minecraft: Pocket Edition
 	public static final int PocketProtocol = 5;
-	public static final int DesktopProtocol = -1;
+	
 	
 	/**
 	 * Used to get the online players
@@ -45,7 +50,9 @@ public abstract class Diamond {
 	 * @version 1.0
 	 */
 	public static final ArrayList<String> getOnlinePlayers() {
-		return null;
+		ArrayList<String> players = new ArrayList<String>();
+		players.add("TEST-PLAYER");
+		return players;
 	}
 	
 	/**

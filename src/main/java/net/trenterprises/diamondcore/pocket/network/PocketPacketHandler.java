@@ -5,7 +5,8 @@
 | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
 | |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
 | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|                                                                                                        
+|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\| 
+                                                                                                       
 */
 
 package net.trenterprises.diamondcore.pocket.network;
@@ -33,13 +34,13 @@ import net.trenterprises.diamondcore.pocket.network.utils.PocketPacketUtils;
 import org.blockserver.io.BinaryReader;
 
 /**
- * This is the listener for packets sent by Minecraft: Pocket Edition clients
+ * This is the listener for packets sent by Minecraft Pocket Edition clients
  * 
  * @author Trent Summerlin
  * @author jython234
  * @version 1.1
  */
-public class PocketPacketHandler {
+public class PocketPacketHandler extends Thread implements Runnable {
 	
 	private DatagramSocket socket;
 	private long ServerID = new Random().nextLong();
@@ -52,9 +53,7 @@ public class PocketPacketHandler {
 		socket.setBroadcast(true);
 		socket.setSendBufferSize(65535);
 		socket.setReceiveBufferSize(65535);
-		if(!socket.isBound()) {
-			socket.bind(new InetSocketAddress(ServerSettings.getServerIP(), ServerSettings.getPEPort()));
-		}
+		if(!socket.isBound()) socket.bind(new InetSocketAddress(ServerSettings.getServerIP(), ServerSettings.getPEPort()));
 	}
 	
 	/**
@@ -64,56 +63,57 @@ public class PocketPacketHandler {
 	 * @author jython234
 	 * @version 1.1
 	 */
-	public void tick() {
-		try {
-			// Get ready to receive message
-			byte[] PocketBuffer = new byte[1535];
-			DatagramPacket pocketPacket = new DatagramPacket(PocketBuffer, PocketBuffer.length);
-			//socket.setSoTimeout(1000);
-			socket.receive(pocketPacket);
-			
-			//Strip extra null bytes
-			pocketPacket.setData(Arrays.copyOf(pocketPacket.getData(), pocketPacket.getLength()));
+	public void run() {
+		while(true) {
+			try {
+				// Get ready to receive message
+				byte[] pocketBuffer = new byte[1535];
+				DatagramPacket pocketPacket = new DatagramPacket(pocketBuffer, pocketBuffer.length);
+				socket.receive(pocketPacket);
 				
-			// Now handle it
-			byte PacketID = pocketPacket.getData()[0];
-			BinaryReader in = new BinaryReader(new ByteArrayInputStream(PocketBuffer));
-			
-			if(sessions.containsKey(pocketPacket.getSocketAddress().toString())){
-				sessions.get(pocketPacket.getSocketAddress().toString()).handlePacket(in);
-			} else {
-				switch(PacketID) {
-					case PocketPacketIDList.ID_CONNECTED_PING_OPEN_CONNECTIONS:
-						new ServerListPingResponse(socket, pocketPacket, ServerID);
-						break;
-					case PocketPacketIDList.ID_OPEN_CONNECTION_REQUEST_1:
-						new JoinRequestStage1Response(socket, pocketPacket, ServerID);
-						break;
-					case PocketPacketIDList.ID_OPEN_CONNECTION_REQUEST_2:
-						new JoinRequestStage2Response(socket, pocketPacket, ServerID);
-						break;
-					default:
-						byte[] test = PocketPacketUtils.toByteArray(new PocketDisconnectPacket("lol").encode().getInputStream());
-						socket.send(new DatagramPacket(test, test.length, pocketPacket.getAddress(), pocketPacket.getPort()));
-						/*byte pid = (byte) PacketID;
-						if(pid <= PocketPacketIDList.RAKNET_CUSTOM_PACKET_MAX){
-							//Must be a 0x09, create a new session for it.
-							PocketSession session = new PocketSession(server, this, pocketPacket.getSocketAddress());
-							sessions.put(pocketPacket.getSocketAddress().toString(), session);
-							session.handlePacket(in);
-						} else {
-							logger.warn("Received unkown PacketID: " + PacketID);
-						}*/
-						break;
+				//Strip extra null bytes
+				pocketPacket.setData(Arrays.copyOf(pocketPacket.getData(), pocketPacket.getLength()));
+					
+				// Now handle it
+				byte packetID = pocketPacket.getData()[0];
+				BinaryReader in = new BinaryReader(new ByteArrayInputStream(pocketBuffer));
+				
+				if(sessions.containsKey(pocketPacket.getSocketAddress().toString())){
+					sessions.get(pocketPacket.getSocketAddress().toString()).handlePacket(in);
+				} else {
+					switch(packetID) {
+						case PocketPacketIDList.ID_CONNECTED_PING_OPEN_CONNECTIONS:
+							new ServerListPingResponse(socket, pocketPacket, ServerID);
+							break;
+						case PocketPacketIDList.ID_OPEN_CONNECTION_REQUEST_1:
+							new JoinRequestStage1Response(socket, pocketPacket, ServerID);
+							break;
+						case PocketPacketIDList.ID_OPEN_CONNECTION_REQUEST_2:
+							new JoinRequestStage2Response(socket, pocketPacket, ServerID);
+							break;
+						default:
+							byte[] test = PocketPacketUtils.toByteArray(new PocketDisconnectPacket("lol").encode().getInputStream());
+							socket.send(new DatagramPacket(test, test.length, pocketPacket.getAddress(), pocketPacket.getPort()));
+							/*byte pid = (byte) PacketID;
+							if(pid <= PocketPacketIDList.RAKNET_CUSTOM_PACKET_MAX){
+								//Must be a 0x09, create a new session for it.
+								PocketSession session = new PocketSession(server, this, pocketPacket.getSocketAddress());
+								sessions.put(pocketPacket.getSocketAddress().toString(), session);
+								session.handlePacket(in);
+							} else {
+								logger.warn("Received unkown PacketID: " + PacketID);
+							}*/
+							break;
+					}
 				}
 			}
+			catch(SocketTimeoutException e) {
+				/*Ignore, this will happen sometimes.*/
+			}
+			catch(IOException E) {
+				E.printStackTrace();
+			}
 		}
-		catch(SocketTimeoutException e) {
-			/*Ignore, this will happen sometimes.*/
-		}
-		catch(IOException E) {
-			E.printStackTrace();
-		}			
 	}
 	
 }

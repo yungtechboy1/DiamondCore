@@ -33,10 +33,9 @@ import java.io.IOException;
  * <p>Signed values are further encoded using so-called zig-zag encoding
  * in order to make them "compatible" with variable-length encoding.</p>
  */
-public final class Varint {
+public final class VarInt {
 
-    private Varint() {
-    }
+    private VarInt() {}
 
     /**
      * Encodes a value using the variable-length encoding from
@@ -193,7 +192,11 @@ public final class Varint {
         }
         return value | (b << i);
     }
-
+    
+    public static int readSignedVarInt(byte b) {
+    	return readSignedVarInt(new byte[] {b});
+    }
+    
     public static int readSignedVarInt(byte[] bytes) {
         int raw = readUnsignedVarInt(bytes);
         // This undoes the trick in writeSignedVarInt()
@@ -203,7 +206,11 @@ public final class Varint {
         // Must re-flip the top bit if the original read value had it set.
         return temp ^ (raw & (1 << 31));
     }
-
+    
+    public static int readUnsignedVarInt(byte b) {
+    	return readUnsignedVarInt(new byte[] {b});
+    }
+    
     public static int readUnsignedVarInt(byte[] bytes) {
         int value = 0;
         int i = 0;

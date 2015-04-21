@@ -13,6 +13,7 @@ package net.trenterprises.diamondcore;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.ServerSocket;
 
 import net.trenterprises.diamondcore.cross.Ticker;
 import net.trenterprises.diamondcore.cross.api.PluginLoader;
@@ -26,6 +27,7 @@ import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 import net.trenterprises.diamondcore.cross.world.time.WorldTime;
+import net.trenterprises.diamondcore.desktop.network.DesktopPacketHandler;
 import net.trenterprises.diamondcore.pocket.network.PocketPacketHandler;
 
 /* NOTE: In order to load the server in debug mode in eclipse,
@@ -45,8 +47,10 @@ public class DiamondCoreServer {
 	private static DiamondLogger Logger = new Log4j2Logger("DiamondCore");
 	
 	// Threads
-	static PocketPacketHandler packetHandler;
+	static PocketPacketHandler pocketPacketHandler;
 	static DatagramSocket pocketSocket;
+	static DesktopPacketHandler desktopPacketHandler;
+	static ServerSocket desktopSocket;
 	
 	public DiamondCoreServer(boolean shouldDebug) throws IOException, InterruptedException, InvalidCommandException {
 		debug = shouldDebug;
@@ -63,13 +67,11 @@ public class DiamondCoreServer {
 		
 		// Open Socket
 		pocketSocket = new DatagramSocket(ServerSettings.getPEPort());
+		desktopSocket = new ServerSocket(ServerSettings.getPCPort());
 		
 		// Load plugins
 		PluginLoader.loadPlugins();
 		HTMLLoader.loadPlugins();
-		
-		running = true;
-		Logger.info("Started Pocket Server!");
 		
 		// Initialize everything
 		ConsoleInputReader consoleInput = new ConsoleInputReader();
@@ -77,7 +79,10 @@ public class DiamondCoreServer {
 		
 		// Finish startup
 		new MainTicker(consoleInput, pocketListener).start();
-		new PocketPacketHandlerThread(this).start();
+		new PacketHandlerThread(this).start();
+		
+		running = true;
+		Logger.info("Started Server!");
 	}
 	
 	/**
@@ -144,19 +149,19 @@ class MainTicker extends Thread {
 }
 
 // Packet Thread
-class PocketPacketHandlerThread extends Thread {
+class PacketHandlerThread extends Thread {
 	private DiamondCoreServer server;
 
-	public PocketPacketHandlerThread(DiamondCoreServer server){
+	public PacketHandlerThread(DiamondCoreServer server){
 		this.server = server;
 	}
 
 	public void run() {
 		try {
-			DiamondCoreServer.packetHandler = new PocketPacketHandler(DiamondCoreServer.pocketSocket, server);
-			while(DiamondCoreServer.isRunning()) {
-				DiamondCoreServer.packetHandler.tick();
-			}
+			DiamondCoreServer.pocketPacketHandler = new PocketPacketHandler(DiamondCoreServer.pocketSocket, server);
+			DiamondCoreServer.pocketPacketHandler.start();
+			DiamondCoreServer.desktopPacketHandler = new DesktopPacketHandler(DiamondCoreServer.desktopSocket, server);
+			DiamondCoreServer.desktopPacketHandler.start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

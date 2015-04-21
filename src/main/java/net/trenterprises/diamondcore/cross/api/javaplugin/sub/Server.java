@@ -11,7 +11,7 @@
 
 package net.trenterprises.diamondcore.cross.api.javaplugin.sub;
 
-import net.trenterprises.diamondcore.cross.api.Diamond;
+import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.api.diamondcore.sub.Whitelist;
 import net.trenterprises.diamondcore.cross.api.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
