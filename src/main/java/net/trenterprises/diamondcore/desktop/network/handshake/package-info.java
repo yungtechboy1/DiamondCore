@@ -5,13 +5,12 @@
 | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
 | |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
 | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|                                                                                                        
-
-*/
+|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\| 
+                                                                                                       
+ */
 
 /**
- * This package contains code for packets which
- * are sent to Desktop clients at random times, unlike
- * other packets
+ * Used to store data related with Handshake packets for
+ * Minecraft desktop clients
  */
-package net.trenterprises.diamondcore.desktop.network.other;
+package net.trenterprises.diamondcore.desktop.network.handshake;

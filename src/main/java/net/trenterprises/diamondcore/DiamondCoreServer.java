@@ -78,8 +78,8 @@ public class DiamondCoreServer {
 		PocketPacketHandler pocketListener = new PocketPacketHandler(DiamondCoreServer.pocketSocket, this);
 		
 		// Finish startup
-		new MainTicker(consoleInput, pocketListener).start();
 		new PacketHandlerThread(this).start();
+		new MainTicker(consoleInput, pocketListener).start();
 		
 		running = true;
 		Logger.info("Started Server!");
@@ -120,7 +120,7 @@ public class DiamondCoreServer {
 	
 }
 
-class MainTicker extends Thread {
+class MainTicker extends Thread implements Runnable {
 	// Initialize everything before startup
 	Ticker ticker = new Ticker(20);
 	ConsoleInputReader consoleInput = null;
@@ -141,15 +141,13 @@ class MainTicker extends Thread {
 				consoleInput.tick();
 				lastTick = currentTick;
 			}
-			if(!DiamondCoreServer.isRunning()) {
-				PluginLoader.unloadPlugins();
-			}
+			if(!DiamondCoreServer.isRunning()) PluginLoader.unloadPlugins();
 		}
 	}
 }
 
 // Packet Thread
-class PacketHandlerThread extends Thread {
+class PacketHandlerThread extends Thread implements Runnable {
 	private DiamondCoreServer server;
 
 	public PacketHandlerThread(DiamondCoreServer server){

@@ -28,6 +28,11 @@ public final class BanCommand extends Command {
 	private final String username;
 	private final String reason;
 	
+	public BanCommand() {
+		this.username = null;
+		this.reason = null;
+	}
+	
 	public BanCommand(String username) {
 		this.username = username;
 		this.reason = null;

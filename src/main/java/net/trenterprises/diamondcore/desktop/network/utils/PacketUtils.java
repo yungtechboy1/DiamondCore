@@ -31,7 +31,7 @@ public final class PacketUtils {
 		int length = VarInt.readUnsignedVarInt(input.readByte());
 		byte[] rawString = new byte[length];
 		for(int i = 0; i < length; i++) rawString[i] = input.readByte();
-		return new String(rawString);
+		return new String(rawString, "UTF-8");
 	}
 	
 }

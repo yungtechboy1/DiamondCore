@@ -41,6 +41,9 @@ public abstract class Diamond {
 	// Minecraft: Pocket Edition
 	public static final int PocketProtocol = 5;
 	
+	// Global
+	protected static ArrayList<String> players = new ArrayList<String>();
+	
 	
 	/**
 	 * Used to get the online players
@@ -50,8 +53,6 @@ public abstract class Diamond {
 	 * @version 1.0
 	 */
 	public static final ArrayList<String> getOnlinePlayers() {
-		ArrayList<String> players = new ArrayList<String>();
-		players.add("TEST-PLAYER");
 		return players;
 	}
 	

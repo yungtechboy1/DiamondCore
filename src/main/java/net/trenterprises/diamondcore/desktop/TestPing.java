@@ -2,14 +2,19 @@ package net.trenterprises.diamondcore.desktop;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import net.trenterprises.diamondcore.cross.borrowed.VarInt;
 
+import org.apache.commons.io.FileUtils;
+
 public class TestPing {
-	
+	public static void main(String[] args) throws IOException {
+		new TestThread(new ServerSocket(25565), FileUtils.readFileToString(new File("/Users/Trent/Desktop/json.txt"))).start();
+	}
 }
 
 class TestThread extends Thread {

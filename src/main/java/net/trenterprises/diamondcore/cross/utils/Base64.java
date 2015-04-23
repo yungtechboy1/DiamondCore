@@ -1,4 +1,4 @@
-package net.trenterprises.diamondcore.desktop.network.utils;
+package net.trenterprises.diamondcore.cross.utils;
 
 //////////////////////license & copyright header/////////////////////////
 ////

@@ -11,16 +11,13 @@
 
 package net.trenterprises.diamondcore.cross.settings;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.imageio.ImageIO;
-
 import net.trenterprises.diamondcore.cross.file.FileList;
+import net.trenterprises.diamondcore.cross.utils.ImageUtils;
 import net.trenterprises.diamondcore.cross.world.GeneratorType;
 import net.trenterprises.diamondcore.cross.world.LevelType;
 
@@ -34,6 +31,7 @@ import net.trenterprises.diamondcore.cross.world.LevelType;
 public abstract class ServerSettings {
 	
 	protected static Properties Properties = new Properties();
+	protected static String serverIcon = null;
 	
 	/**
 	 * Loads the properties folder into the system
@@ -42,7 +40,11 @@ public abstract class ServerSettings {
 	 * @throws IOException
 	 */
 	public static void load() throws FileNotFoundException, IOException {
+		// Load properties
 		Properties.load(new FileInputStream(FileList.serverProperties));
+		
+		// Load BASE64 image
+		if(FileList.serverFavicon.exists()) serverIcon = ("data:image/png;base64," + ImageUtils.toString(FileList.serverFavicon));
 	}
 	
 	// Player related
@@ -158,20 +160,15 @@ public abstract class ServerSettings {
 	}
 	
 	/**
-	 * Get the MCPC server favicon (Will return null if no the favicon is invalid)
+	 * Get the MCPC server favicon (Will return null if there is no favicon)
 	 * 
 	 * @return Server MCPC favicon
 	 * @author Trent Summerlin
 	 * @version 1.0
 	 * @throws IOException 
 	 */
-	public static File getServerFavicon() throws IOException {
-		if(FileList.serverFavicon.exists()) {
-			BufferedImage image = ImageIO.read(FileList.serverFavicon);
-			if(image.getWidth() == 64 && image.getHeight() == 64) return FileList.serverFavicon;
-			else return null;
-		}
-		else return null;
+	public static String getServerFavicon() throws IOException {
+		return serverIcon;
 	}
 	
 	/**
