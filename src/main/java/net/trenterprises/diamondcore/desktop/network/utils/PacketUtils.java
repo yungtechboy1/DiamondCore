@@ -1,6 +1,7 @@
 package net.trenterprises.diamondcore.desktop.network.utils;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 
 import net.trenterprises.diamondcore.cross.borrowed.VarInt;
@@ -32,6 +33,38 @@ public final class PacketUtils {
 		byte[] rawString = new byte[length];
 		for(int i = 0; i < length; i++) rawString[i] = input.readByte();
 		return new String(rawString, "UTF-8");
+	}
+	
+	/**
+	 * Used to write a string to a OutputStream
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @param string
+	 * 		String to encode
+	 * @param output
+	 * 		OutputStream to write to
+	 * @throws IOException
+	 * @returns Encoded String
+	 */
+	public static void writeString(String string, DataOutputStream output) throws IOException {
+		output.write(VarInt.writeUnsignedVarInt(string.getBytes().length));
+		output.write(string.getBytes());
+	}
+	
+	/**
+	 * Used to write a short to a OutputStream
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @param number
+	 * 		Short to encode
+	 * @param output
+	 * 		OutputStream to write to
+	 * @throws IOException
+	 */
+	public static void writeUnsignedShort(short number, DataOutputStream output) throws IOException {
+		output.writeChar(number);
 	}
 	
 }

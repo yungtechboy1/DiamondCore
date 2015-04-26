@@ -3,13 +3,14 @@ package net.trenterprises.diamondcore.cross.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Base64;
 
 public final class ImageUtils {
 	
 	private ImageUtils() {}
 	
 	public static String toString(File image) throws IOException {
-        return new String(Base64.encode(toByteArray(image)));  
+        return new String(Base64.getEncoder().encode(toByteArray(image)));  
     } 
 	
 	protected static byte[] toByteArray(File file) {

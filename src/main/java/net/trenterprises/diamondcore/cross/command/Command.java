@@ -19,6 +19,7 @@ import net.trenterprises.diamondcore.cross.command.diamond.PluginlistCommand;
 import net.trenterprises.diamondcore.cross.command.diamond.ReloadCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.BanCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.HelpCommand;
+import net.trenterprises.diamondcore.cross.command.vanilla.PardonCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.SayCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.StopCommand;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
@@ -35,7 +36,7 @@ public abstract class Command {
 	static DiamondLogger logger = new Log4j2Logger("CONSOLE");
 	public static Command[] commandList = new Command[] {
 			// Vanilla commands
-			new BanCommand(""), new SayCommand(new String[] {}), new HelpCommand(),
+			new BanCommand(""), new PardonCommand(""), new SayCommand(new String[] {}), new HelpCommand(),
 			// Vanilla (DiamondCore) comands
 			new PluginlistCommand(), new ReloadCommand()
 	};
@@ -209,7 +210,17 @@ public abstract class Command {
 			
 		}
 		else if(commandType.equals(CommandType.PARDON)) {
-			
+			if(args.length == 1) {
+				PardonCommand command = new PardonCommand(args[0]);
+				boolean shouldRun = sender.equals(CommandSender.CONSOLE);
+				if(!shouldRun) {
+					// Check if it should be true
+				}
+				if(shouldRun) command.execute(sender, logger); 
+			}
+			else {
+				logger.err("INSUFFICIENT ARGS");
+			}
 		}
 		else if(commandType.equals(CommandType.PARDON_IP)) {
 			

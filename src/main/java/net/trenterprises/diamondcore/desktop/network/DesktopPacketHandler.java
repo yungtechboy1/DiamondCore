@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 import net.trenterprises.diamondcore.DiamondCoreServer;
@@ -72,7 +71,7 @@ public class DesktopPacketHandler extends Thread implements Runnable {
 							LoginResponseTest test = (LoginResponseTest) packet.getHandshakePacket();
 							Player player = new Player(test.getPlayerName());
 							String reason = (player.isBanned() ? "You are banned!" : "This server is still in the works!");
-							new ClientDisconnectPacket(socket, reason).sendResponse();
+							//new ClientDisconnectPacket(socket, reason).sendResponse();
 						
 						}
 						break;

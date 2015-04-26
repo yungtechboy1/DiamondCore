@@ -1,9 +1,10 @@
-19:57:38 [INFO] [DiamondCore] Starting Pocket Server!
-19:57:38 [INFO] [DiamondCore] Debug: activated
-19:57:38 [INFO] [DiamondCore] Starting file checkup!
-19:57:38 [INFO] [DiamondCore] Finished file checkup with no errors!
-19:57:38 [INFO] [DiamondCore] Starting Server Properties checkup!
-19:57:38 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
-19:57:38 [INFO] [DiamondCore] Loading plugins!
-19:57:38 [INFO] [DiamondCore] Finished loading plugins!
-19:57:38 [INFO] [DiamondCore] Started Server!
+12:01:57 [INFO] [DiamondCore] Starting Pocket Server!
+12:01:57 [INFO] [DiamondCore] Debug: activated
+12:01:57 [INFO] [DiamondCore] Starting file checkup!
+12:01:57 [INFO] [DiamondCore] Finished file checkup with no errors!
+12:01:57 [INFO] [DiamondCore] Starting Server Properties checkup!
+12:01:57 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
+12:01:57 [INFO] [DiamondCore] Loading plugins!
+12:01:57 [INFO] [DiamondCore] Finished loading plugins!
+12:01:57 [INFO] [DiamondCore] Started Server!
+12:03:10 [INFO] [CONSOLE] Can't keep up! Did the system time change, or is the server overloaded? Skipping 1 ticks

@@ -38,5 +38,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/jars/log4j-api-2.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jars/log4j-core-2.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/jars/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/jars/netty-all-5.0.0.Alpha2.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

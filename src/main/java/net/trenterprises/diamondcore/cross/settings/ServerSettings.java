@@ -156,7 +156,13 @@ public abstract class ServerSettings {
 	 * @version 1.0
 	 */
 	public static String getPCMOTD() {
-		return Properties.get("motd-pc").toString();
+		char[] raw = Properties.get("motd-pc").toString().toCharArray();
+		StringBuilder b = new StringBuilder();
+		for(int i = 0; i <raw.length; i++) {
+			if(raw[i] == '\u00A7' || raw[i] == '\u00C2') b.append('\u00C2' + "" + '\u00A7');
+			else b.append(raw[i]);
+		}
+		return b.toString();
 	}
 	
 	/**
@@ -181,7 +187,10 @@ public abstract class ServerSettings {
 	public static String getPEMOTD() {
 		char[] raw = Properties.get("motd-pe").toString().toCharArray();
 		StringBuilder b = new StringBuilder();
-		for(int i = 0; i < raw.length; i++) b.append(raw[i]);
+		for(int i = 0; i <raw.length; i++) {
+			if(raw[i] == '\u00A7' || raw[i] == '\u00C2') b.append('\u00C2' + "" + '\u00A7');
+			else b.append(raw[i]);
+		}
 		return b.toString();
 	}
 	
@@ -469,4 +478,5 @@ public abstract class ServerSettings {
 		else if(LTS.equals("FLAT")) {return LevelType.FLAT;}
 		return LevelType.UNKNOWN;
 	}
+	
 }
