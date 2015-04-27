@@ -2,8 +2,8 @@ package net.trenterprises.diamondcore.cross.command.vanilla;
 
 import java.util.ArrayList;
 
-import net.trenterprises.diamondcore.cross.api.PluginSession;
-import net.trenterprises.diamondcore.cross.api.html.HTMLSession;
+import net.trenterprises.diamondcore.cross.api.java.JavaSession;
+import net.trenterprises.diamondcore.cross.api.xml.XMLSession;
 import net.trenterprises.diamondcore.cross.command.Command;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
@@ -35,7 +35,7 @@ public class StopCommand extends Command {
 		logger.info("Stopping the server...");
 		
 		// Unload Java plugins
-		ArrayList<PluginSession> pluginSession = PluginSession.sessionList;
+		ArrayList<JavaSession> pluginSession = JavaSession.sessionList;
 		for(int i = 0; i < pluginSession.size(); i++) {
 			try {
 				pluginSession.get(i).unloadSession();
@@ -45,7 +45,7 @@ public class StopCommand extends Command {
 		}
 		
 		// Unload HTML plugins
-		ArrayList<HTMLSession> htmlSession = HTMLSession.sessionList;
+		ArrayList<XMLSession> htmlSession = XMLSession.sessionList;
 		for(int k = 0; k < htmlSession.size(); k++) htmlSession.get(k).unloadSession();
 		
 		// Save world

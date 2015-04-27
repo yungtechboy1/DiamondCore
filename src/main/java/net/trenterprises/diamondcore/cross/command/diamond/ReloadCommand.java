@@ -2,8 +2,9 @@ package net.trenterprises.diamondcore.cross.command.diamond;
 
 import java.io.IOException;
 
-import net.trenterprises.diamondcore.cross.api.PluginLoader;
 import net.trenterprises.diamondcore.cross.api.html.HTMLLoader;
+import net.trenterprises.diamondcore.cross.api.java.JavaLoader;
+import net.trenterprises.diamondcore.cross.api.xml.XMLLoader;
 import net.trenterprises.diamondcore.cross.command.Command;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 import net.trenterprises.diamondcore.cross.command.custom.CustomCommand;
@@ -39,7 +40,8 @@ public class ReloadCommand extends Command {
 		
 		try {
 			// Unload plugins
-			PluginLoader.unloadPlugins();
+			JavaLoader.unloadPlugins();
+			XMLLoader.unloadPlugins();
 			HTMLLoader.unloadPlugins();
 			
 			// Clear custom commands
@@ -51,14 +53,15 @@ public class ReloadCommand extends Command {
 			// Reload server settings
 			ServerSettings.load();
 						
-			// Reload properties
-			PluginLoader.loadPlugins();
+			// Reload plugins
+			JavaLoader.loadPlugins();
+			XMLLoader.loadPlugins();
 			HTMLLoader.loadPlugins();
 			
 			logger.info("Reload complete!");
 		}
 		catch(IOException e) {
-			logger.warn("There was a error reloading the plugins! Error: " + e.getMessage());
+			logger.warn("There was a error reloading the server! Error: " + e.getMessage());
 		}
 	}
 	

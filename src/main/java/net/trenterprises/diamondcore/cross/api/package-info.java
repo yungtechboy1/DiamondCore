@@ -10,6 +10,6 @@
 */
 
 /**
- * This is the main class where all events are trigerred and held for both MCPE and MCPC
+ * This is the main package where all plugins are ran for DiamondCore
  */
 package net.trenterprises.diamondcore.cross.api;

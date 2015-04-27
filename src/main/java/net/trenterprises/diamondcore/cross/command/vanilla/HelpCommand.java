@@ -11,7 +11,7 @@
 
 package net.trenterprises.diamondcore.cross.command.vanilla;
 
-import net.trenterprises.diamondcore.cross.api.chat.ChatColor;
+import net.trenterprises.diamondcore.cross.api.java.chat.ChatColor;
 import net.trenterprises.diamondcore.cross.command.Command;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 import net.trenterprises.diamondcore.cross.command.custom.CustomCommand;

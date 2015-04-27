@@ -13,7 +13,7 @@ package net.trenterprises.diamondcore.cross.command;
 
 import java.util.ArrayList;
 
-import net.trenterprises.diamondcore.cross.api.javaplugin.sub.CommandManager;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.CommandManager;
 import net.trenterprises.diamondcore.cross.command.custom.CustomCommand;
 import net.trenterprises.diamondcore.cross.command.diamond.PluginlistCommand;
 import net.trenterprises.diamondcore.cross.command.diamond.ReloadCommand;

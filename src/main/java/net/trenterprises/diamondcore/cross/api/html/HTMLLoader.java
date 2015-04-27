@@ -17,23 +17,14 @@ import java.util.ArrayList;
 
 import net.trenterprises.diamondcore.run;
 import net.trenterprises.diamondcore.cross.file.FileList;
-import net.trenterprises.diamondcore.cross.file.FileUtils;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.parser.Parser;
 
 /**
- * Used to load get all of the HTML plugins
- * <br>
- * ready for deployment in the server
+ * Used to load all of the HTML plugins for DiamondCore
  * 
  * @author Trent Summerlin
- * @verson 0.1.0-SNAPSHOT
+ * @version 1.0
  */
-public abstract class HTMLLoader {
-	
-	protected final static String DOCTYPE_VERSION = "<!doctype diamondcore>";
+public final class HTMLLoader {
 	
 	public static void loadPlugins() throws IOException {
 		ArrayList<File> htmlPluginFiles = listHTMLFiles();
@@ -45,11 +36,7 @@ public abstract class HTMLLoader {
 	public static void unloadPlugins() {
 		ArrayList<HTMLSession> sessions = HTMLSession.sessionList;
 		for(int i = 0; i < sessions.size(); i++) {
-			try {
-				sessions.get(i).unloadSession();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			sessions.get(i).unloadSession();
 		}
 	}
 	
@@ -61,11 +48,7 @@ public abstract class HTMLLoader {
 		File[] pluginFiles = pluginFolderList.listFiles(); 
 		for (int i = 0; i < pluginFiles.length; i++) {
 			if (pluginFiles[i].isFile()) {
-				if(pluginFiles[i].getName().endsWith(".html")){
-					Document html = Jsoup.parse(FileUtils.readFromFile(pluginFiles[i]), "UTF-8", Parser.htmlParser());
-					String doctype = html.childNodes().toArray()[0].toString();
-					if(doctype.equals(DOCTYPE_VERSION)) fileListArray.add(pluginFiles[i]);
-				}
+				if(pluginFiles[i].getName().endsWith(".html")) fileListArray.add(pluginFiles[i]);
 			}
 		}
 		return fileListArray;

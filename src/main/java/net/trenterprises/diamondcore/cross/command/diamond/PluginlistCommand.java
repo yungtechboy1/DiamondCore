@@ -2,8 +2,8 @@ package net.trenterprises.diamondcore.cross.command.diamond;
 
 import java.util.ArrayList;
 
-import net.trenterprises.diamondcore.cross.api.PluginSession;
-import net.trenterprises.diamondcore.cross.api.html.HTMLSession;
+import net.trenterprises.diamondcore.cross.api.java.JavaSession;
+import net.trenterprises.diamondcore.cross.api.xml.XMLSession;
 import net.trenterprises.diamondcore.cross.command.Command;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
@@ -33,8 +33,8 @@ public class PluginlistCommand extends Command {
 	@Override
 	public void execute(CommandSender sender, DiamondLogger logger) {
 		StringBuilder pluginBuilder = new StringBuilder();
-		ArrayList<PluginSession> plugins = PluginSession.sessionList;
-		ArrayList<HTMLSession> html = HTMLSession.sessionList;
+		ArrayList<JavaSession> plugins = JavaSession.sessionList;
+		ArrayList<XMLSession> html = XMLSession.sessionList;
 		pluginBuilder.append("Plugins(" + (plugins.size()+html.size()) + "): ");
 		// Java plugins
 		for(int i = 0; i < plugins.size(); i++) {

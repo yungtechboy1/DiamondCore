@@ -11,9 +11,6 @@
 
 package net.trenterprises.diamondcore.desktop.network.handlers;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -26,8 +23,6 @@ import net.trenterprises.diamondcore.desktop.network.handshake.HandshakeType;
 import net.trenterprises.diamondcore.desktop.network.handshake.LoginResponseTest;
 import net.trenterprises.diamondcore.desktop.network.handshake.ServerListPingResponse;
 import net.trenterprises.diamondcore.desktop.network.utils.PacketUtils;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * This is the first packet sent by the server in response

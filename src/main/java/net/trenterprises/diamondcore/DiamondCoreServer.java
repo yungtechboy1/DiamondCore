@@ -16,8 +16,9 @@ import java.net.DatagramSocket;
 import java.net.ServerSocket;
 
 import net.trenterprises.diamondcore.cross.Ticker;
-import net.trenterprises.diamondcore.cross.api.PluginLoader;
 import net.trenterprises.diamondcore.cross.api.html.HTMLLoader;
+import net.trenterprises.diamondcore.cross.api.java.JavaLoader;
+import net.trenterprises.diamondcore.cross.api.xml.XMLLoader;
 import net.trenterprises.diamondcore.cross.command.custom.exception.InvalidCommandException;
 import net.trenterprises.diamondcore.cross.console.ConsoleInputReader;
 import net.trenterprises.diamondcore.cross.file.FileCheckup;
@@ -70,7 +71,8 @@ public class DiamondCoreServer {
 		desktopSocket = new ServerSocket(ServerSettings.getPCPort());
 		
 		// Load plugins
-		PluginLoader.loadPlugins();
+		JavaLoader.loadPlugins();
+		XMLLoader.loadPlugins();
 		HTMLLoader.loadPlugins();
 		
 		// Initialize everything
@@ -147,7 +149,7 @@ class MainTicker extends Thread implements Runnable {
 				}
 				lastTick = currentTick;
 			}
-			if(!DiamondCoreServer.isRunning()) PluginLoader.unloadPlugins();
+			if(!DiamondCoreServer.isRunning()) JavaLoader.unloadPlugins();
 		}
 	}
 }

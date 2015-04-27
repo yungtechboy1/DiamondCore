@@ -5,12 +5,12 @@
 | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
 | |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
 | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|                                                                                                        
- 
-*/
+|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\| 
+                                                                                                       
+ */
 
 /**
- * This package contains all of the code required in order to run plugins
- * created in HTML for DiamondCore
+ * This is the main package where all HTML plugins/webpages are ran
+ * for DiamondCore
  */
 package net.trenterprises.diamondcore.cross.api.html;

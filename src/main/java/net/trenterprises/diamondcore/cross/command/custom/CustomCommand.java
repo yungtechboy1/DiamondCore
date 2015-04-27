@@ -13,8 +13,8 @@ package net.trenterprises.diamondcore.cross.command.custom;
 
 import java.util.ArrayList;
 
-import net.trenterprises.diamondcore.cross.api.PluginSession;
-import net.trenterprises.diamondcore.cross.api.html.HTMLSession;
+import net.trenterprises.diamondcore.cross.api.java.JavaSession;
+import net.trenterprises.diamondcore.cross.api.xml.XMLSession;
 import net.trenterprises.diamondcore.cross.command.custom.exception.ExistentCommandException;
 import net.trenterprises.diamondcore.cross.command.custom.exception.InvalidCommandException;
 
@@ -33,10 +33,10 @@ public final class CustomCommand {
 	private final String commandName;
 	private final String commandDescription;
 	private final String commandUsage;
-	private final PluginSession pluginSession;
-	private final HTMLSession htmlSession;
+	private final JavaSession pluginSession;
+	private final XMLSession htmlSession;
 	
-	public CustomCommand(String commandName, String commandDescription, String commandUsage, PluginSession session) throws InvalidCommandException {
+	public CustomCommand(String commandName, String commandDescription, String commandUsage, JavaSession session) throws InvalidCommandException {
 		this.commandName = commandName;
 		this.commandDescription = commandDescription;
 		this.commandUsage = commandUsage;
@@ -51,7 +51,7 @@ public final class CustomCommand {
 		commands.add(this);
 	}
 	
-	public CustomCommand(String commandName, String commandDescription, String commandUsage, HTMLSession session) throws InvalidCommandException {
+	public CustomCommand(String commandName, String commandDescription, String commandUsage, XMLSession session) throws InvalidCommandException {
 		this.commandName = commandName;
 		this.commandDescription = commandDescription;
 		this.commandUsage = commandUsage;
@@ -118,7 +118,7 @@ public final class CustomCommand {
 	 * @version 1.0
 	 * @return Command plugin session
 	 */
-	public PluginSession getPluginSession() {
+	public JavaSession getPluginSession() {
 		if(this.htmlSession.equals(null)) return this.pluginSession;
 		else return null;
 	}
@@ -132,7 +132,7 @@ public final class CustomCommand {
 	 * @version 1.0
 	 * @return Command plugin session
 	 */
-	public HTMLSession getHTMLSession() {
+	public XMLSession getHTMLSession() {
 		if(this.pluginSession.equals(null)) return this.htmlSession;
 		else return null;
 	}

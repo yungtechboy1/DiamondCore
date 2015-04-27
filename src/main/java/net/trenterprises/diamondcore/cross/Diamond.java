@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import net.trenterprises.diamondcore.cross.api.diamondcore.sub.Whitelist;
-import net.trenterprises.diamondcore.cross.api.diamondcore.sub.World;
+import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.Whitelist;
+import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.World;
 import net.trenterprises.diamondcore.cross.file.FileList;
 
 import org.json.simple.JSONObject;
