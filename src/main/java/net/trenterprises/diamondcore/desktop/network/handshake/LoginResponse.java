@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.net.Socket;
 
 import net.trenterprises.diamondcore.cross.Diamond;
+import net.trenterprises.diamondcore.cross.api.java.event.desktop.DesktopPlayerLoginEvent;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
+import net.trenterprises.diamondcore.cross.settings.ServerSettings;
+import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPacket;
 import net.trenterprises.diamondcore.desktop.network.utils.PacketUtils;
 
 /**
@@ -25,7 +29,7 @@ import net.trenterprises.diamondcore.desktop.network.utils.PacketUtils;
  * @author Trent Summerlin
  * @version 1.0
  */
-public class LoginResponseTest extends HandshakePacket {
+public class LoginResponse extends HandshakePacket {
 	
 	// Socket info
 	protected Socket s;
@@ -35,13 +39,21 @@ public class LoginResponseTest extends HandshakePacket {
 	// Packet info
 	protected String username;
 	
-	public LoginResponseTest(Socket s) throws IOException {
+	public LoginResponse(Socket s) throws IOException {
 		this.s = s;
 		this.input = new DataInputStream(this.s.getInputStream());
 		this.output = new DataOutputStream(this.s.getOutputStream());
 		
 		// Decode packet
 		this.decode();
+		
+		// Throw event
+		try {
+			PluginManager.throwEvent(new DesktopPlayerLoginEvent(this.username, s));
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		if(!Diamond.getOnlinePlayers().contains(this.username)) Diamond.getOnlinePlayers().add(this.username);
 	}
 	
@@ -66,6 +78,8 @@ public class LoginResponseTest extends HandshakePacket {
 	@Override
 	public void sendResponse() throws IOException {
 		// Response not completed yet
+		if(Diamond.getOnlinePlayers().indexOf(this.username) != -1 && Diamond.getOnlinePlayers().size() < ServerSettings.getMaxPlayers()) Diamond.getOnlinePlayers().add(this.username);
+		if(Diamond.getOnlinePlayers().size() >= ServerSettings.getMaxPlayers()) new ClientDisconnectPacket(this.s, "The server is full!");
 	}
 
 }

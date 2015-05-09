@@ -50,7 +50,7 @@ public final class PluginManager {
 	 * @author Trent Summerlin
 	 * @version 1.0
 	 */
-	public void regsiterEvents(JavaPlugin JavaPluginObjectClass, Object ListenerClass) {
+	public void registerEvents(JavaPlugin JavaPluginObjectClass, Object ListenerClass) {
 		if(ListenerClass.getClass() instanceof Class) {
 			Class<?>[] InterfacesList = ListenerClass.getClass().getInterfaces();
 			ArrayList<Class<?>> InterfaceArray = new ArrayList<Class<?>>(Arrays.asList(InterfacesList));
@@ -103,8 +103,7 @@ public final class PluginManager {
 						try {	
 							if(ClassMethods[j].isAnnotationPresent(EventHandler.class)) {
 								String methodName = ClassMethods[j].getName();
-								if(e instanceof PocketEvent)  session.executeEvent(classObject, methodName, (PocketEvent) e);  // Execute event casted to PocketEvent
-								if(e instanceof DesktopEvent) session.executeEvent(classObject, methodName, (DesktopEvent) e); // Execute event casted to DesktopEvent
+								session.executeEvent(classObject, methodName, e);  // Execute event casted to PocketEvent
 							}
 						}
 						catch(NoSuchMethodException e1) {

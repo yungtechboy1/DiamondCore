@@ -45,7 +45,7 @@ public class DiamondCoreServer {
 	protected static boolean debug = false;
 	
 	// Logger
-	protected static DiamondLogger Logger = new Log4j2Logger("DiamondCore");
+	protected static DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	
 	// Threads
 	protected static PocketPacketHandler pocketPacketHandler;
@@ -55,8 +55,8 @@ public class DiamondCoreServer {
 	
 	public DiamondCoreServer(boolean shouldDebug) throws IOException, InterruptedException, InvalidCommandException {
 		debug = shouldDebug;
-		Logger.info("Starting Pocket Server!");
-		Logger.info("Debug: " + (debug ? "activated" : "de-activated"));
+		logger.info("Starting Pocket Server!");
+		logger.info("Debug: " + (debug ? "activated" : "de-activated"));
 		
 		// Check Files and Properties
 		FileList.setDebug(shouldDebug);
@@ -65,6 +65,9 @@ public class DiamondCoreServer {
 		
 		// Load Server Settings
 		ServerSettings.load();
+		
+		// Check if port is no less than 1024
+		if(ServerSettings.getWebPort() <= 1024) logger.warn("The port " + ServerSettings.getWebPort() + " is reserved for root programs of the computer! Closing web-socket...");
 		
 		// Open Socket
 		pocketSocket = new DatagramSocket(ServerSettings.getPEPort());
@@ -83,7 +86,7 @@ public class DiamondCoreServer {
 		new MainTicker().start();
 		
 		running = true;
-		Logger.info("Started Server!");
+		logger.info("Started Server!");
 	}
 	
 	/**
@@ -98,25 +101,25 @@ public class DiamondCoreServer {
 	}
 	
 	/**
-	 * Used to see if the server is running in debug mode
+	 * Used to retrieve the MCPE server socket so it can be managed
 	 * 
 	 * @author Trent Summerlin
 	 * @version 1.0
-	 * @return Server debug state
-	 */
-	public static boolean isDebug() {
-		return debug;
-	}
-	
-	/**
-	 * Used to retrieve the MCPE server socket so it can be maganged
-	 * 
-	 * @author Trent Summerlin
-	 * @version 1.0
-	 * @return Server MCPE socket
+	 * @return MCPE server socket
 	 */
 	public static DatagramSocket getPocketSocket() {
 		return pocketSocket;
+	}
+	
+	/**
+	 * Used to retrieve the Minecraft server socket so it can be managed
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @return Minecraft desktop server socket
+	 */
+	public static ServerSocket getDesktopSocket() {
+		return desktopSocket;
 	}
 	
 }

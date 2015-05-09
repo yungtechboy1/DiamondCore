@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import net.trenterprises.diamondcore.cross.Diamond;
+import net.trenterprises.diamondcore.cross.api.java.event.desktop.DesktopServerListPingEvent;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.cross.borrowed.VarInt;
 import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 import net.trenterprises.diamondcore.desktop.network.DesktopPacketIDList;
@@ -25,8 +27,19 @@ public class ServerListPingResponse extends HandshakePacket {
 	// Packet info
 	JSONObject object = new JSONObject();
 	
+	// Event side
+	DesktopServerListPingEvent DSLPE;
+	
 	@SuppressWarnings("unchecked")
 	public ServerListPingResponse(Socket s) throws IOException {
+		// Throw event before putting together json because something might be changed by a plugin
+		DSLPE = new DesktopServerListPingEvent(this, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD(), ServerSettings.getServerFavicon());
+		try {
+			PluginManager.throwEvent(DSLPE);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		this.s = s;
 		this.input = new DataInputStream(this.s.getInputStream());
 		this.output = new DataOutputStream(this.s.getOutputStream());
@@ -55,10 +68,10 @@ public class ServerListPingResponse extends HandshakePacket {
 										
 		// Description and favicon
 		JSONObject info = new JSONObject();
-		info.put("text", ServerSettings.getPCMOTD());
+		info.put("text", DSLPE.getMOTD());
 			
 		// Put icon if available
-		if(ServerSettings.getServerFavicon() != null) object.put("favicon", ServerSettings.getServerFavicon());
+		if(DSLPE.getFavicon() != null) object.put("favicon", DSLPE.getFavicon());
 					
 		// Now put everything all toghether
 		object.put("version", versionMap);

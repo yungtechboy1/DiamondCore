@@ -28,10 +28,10 @@ public abstract class PocketPacketIDList {
 	 * 
 	 * S <-> C : Not a packet ID
 	 */
-	public static final int PROTOCOL_ID = 21; // MY NAME IS JEFF
+	public static final int PROTOCOL_ID = 22;
 	
 	// MAGIC
-	public final static byte[] MAGIC = new byte[] {(byte) 0x00, (byte) 0xff, (byte) 0xff, 0x00, (byte) 0xfe, (byte) 0xfe, (byte) 0xfe, (byte) 0xfe, (byte) 0xfd, (byte) 0xfd, (byte) 0xfd, (byte) 0xfd, 0x12, 0x34, 0x56, 0x78};
+	public final static byte[] MAGIC = new byte[] {(byte) 0x00, (byte) 0xff, (byte) 0xff, 0x00, (byte) 0xfe, (byte) 0xfe, (byte) 0xfe, (byte) 0xfe, (byte) 0xfd, (byte) 0xfd, (byte) 0xfd, (byte) 0xfd, (byte) 0x12, (byte) 0x34, (byte) 0x56, (byte) 0x78};
 	
 	/* Login Packets */
 	

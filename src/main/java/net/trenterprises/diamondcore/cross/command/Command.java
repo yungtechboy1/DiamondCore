@@ -22,6 +22,7 @@ import net.trenterprises.diamondcore.cross.command.vanilla.HelpCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.PardonCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.SayCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.StopCommand;
+import net.trenterprises.diamondcore.cross.command.vanilla.TimeCommand;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
@@ -37,6 +38,7 @@ public abstract class Command {
 	public static Command[] commandList = new Command[] {
 			// Vanilla commands
 			new BanCommand(""), new PardonCommand(""), new SayCommand(new String[] {}), new HelpCommand(),
+			new TimeCommand(new String[] {}), new StopCommand(),
 			// Vanilla (DiamondCore) comands
 			new PluginlistCommand(), new ReloadCommand()
 	};
@@ -154,7 +156,9 @@ public abstract class Command {
 			if(shouldRun) command.execute(sender, logger);
 		}
 		else if(commandType.equals(CommandType.TIME)) {
-			
+			TimeCommand command = new TimeCommand(args);
+			boolean shouldRun = sender.equals(CommandSender.CONSOLE);
+			if(shouldRun) command.execute(sender, logger);
 		}
 		else if(commandType.equals(CommandType.SAVE_ALL)) {
 			

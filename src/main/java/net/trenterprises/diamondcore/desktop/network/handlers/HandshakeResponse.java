@@ -20,7 +20,7 @@ import net.trenterprises.diamondcore.cross.borrowed.VarInt;
 import net.trenterprises.diamondcore.desktop.network.DesktopPacketIDList;
 import net.trenterprises.diamondcore.desktop.network.handshake.HandshakePacket;
 import net.trenterprises.diamondcore.desktop.network.handshake.HandshakeType;
-import net.trenterprises.diamondcore.desktop.network.handshake.LoginResponseTest;
+import net.trenterprises.diamondcore.desktop.network.handshake.LoginResponse;
 import net.trenterprises.diamondcore.desktop.network.handshake.ServerListPingResponse;
 import net.trenterprises.diamondcore.desktop.network.utils.PacketUtils;
 
@@ -138,7 +138,7 @@ public final class HandshakeResponse implements BaseDesktopPacket {
 	@Override
 	public void sendResponse() throws IOException {
 		if(this.nextState == 1) this.packet = new ServerListPingResponse(this.socket);
-		else if(this.nextState == 2) this.packet = new LoginResponseTest(this.socket);
+		else if(this.nextState == 2) this.packet = new LoginResponse(this.socket);
 	} 
 
 }

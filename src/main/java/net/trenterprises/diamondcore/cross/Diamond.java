@@ -11,15 +11,18 @@
 
 package net.trenterprises.diamondcore.cross;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Iterator;
 
 import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.Whitelist;
 import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.World;
 import net.trenterprises.diamondcore.cross.file.FileList;
 
+import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -98,4 +101,19 @@ public abstract class Diamond {
 		return new World();
 	}
 	
+	/**
+	 * Used to load a server icon from a Java File object
+	 * 
+	 * @return Server base64 Icon
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 */
+	public static final String loadServerIcon(File icon) {
+		try {
+			return Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(icon));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

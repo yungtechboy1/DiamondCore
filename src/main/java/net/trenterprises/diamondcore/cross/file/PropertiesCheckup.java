@@ -209,6 +209,16 @@ public class PropertiesCheckup {
 			PropertiesAdded++;
 		}
 		
+		if(Properties.get("web-enabled") == null) {
+			Properties.setProperty("web-enabled", "true");
+			PropertiesAdded++;
+		}
+		
+		if(Properties.get("server-port-web") == null) {
+			Properties.setProperty("server-port-web", "8080");
+			PropertiesAdded++;
+		}
+		
 		Properties.store(new FileOutputStream(FileList.serverProperties), null);
 		
 		/* End of checkup */

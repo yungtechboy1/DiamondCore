@@ -28,7 +28,8 @@ public class WorldTime {
 	 * @version 1.0
 	 */
 	public static void tick() {
-		time++;
+		if(time >= 24000) time = 0;
+		else time++;
 	}
 	
 	/**

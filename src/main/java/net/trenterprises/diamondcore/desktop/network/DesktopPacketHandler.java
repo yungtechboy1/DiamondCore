@@ -25,7 +25,7 @@ import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 import net.trenterprises.diamondcore.desktop.network.handlers.HandshakeResponse;
-import net.trenterprises.diamondcore.desktop.network.handshake.LoginResponseTest;
+import net.trenterprises.diamondcore.desktop.network.handshake.LoginResponse;
 import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPacket;
 
 /**
@@ -67,8 +67,8 @@ public class DesktopPacketHandler extends Thread implements Runnable {
 				switch(packetID) {
 					case DesktopPacketIDList.HANDSHAKE_PACKET:
 						HandshakeResponse packet = new HandshakeResponse(socket); // Also handles login as well
-						if(packet.getHandshakePacket() instanceof LoginResponseTest) {
-							LoginResponseTest test = (LoginResponseTest) packet.getHandshakePacket();
+						if(packet.getHandshakePacket() instanceof LoginResponse) {
+							LoginResponse test = (LoginResponse) packet.getHandshakePacket();
 							Player player = new Player(test.getPlayerName());
 							String reason = (player.isBanned() ? "You are banned!" : "This server is still in the works!");
 							//new ClientDisconnectPacket(socket, reason).sendResponse();
