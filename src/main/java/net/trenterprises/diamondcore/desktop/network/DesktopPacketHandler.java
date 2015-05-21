@@ -43,7 +43,7 @@ public class DesktopPacketHandler extends Thread implements Runnable {
 	public DesktopPacketHandler(ServerSocket socket, DiamondCoreServer server) throws IOException {
 		// Set socket Settings
 		this.serverSocket = socket;
-		if (!socket.isBound()) socket.bind(new InetSocketAddress(ServerSettings.getServerIP(),ServerSettings.getPCPort()));
+		if (!socket.isBound()) socket.bind(new InetSocketAddress(ServerSettings.getServerIP(), ServerSettings.getPCPort()));
 	}
 
 	/**

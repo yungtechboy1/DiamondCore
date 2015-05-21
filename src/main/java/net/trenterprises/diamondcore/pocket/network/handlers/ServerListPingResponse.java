@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
+import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.api.java.event.pocket.PocketServerListPingEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.cross.settings.ServerSettings;
@@ -70,7 +71,7 @@ public class ServerListPingResponse implements BasePocketPacket {
 	public void sendResponse() throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		BinaryWriter writer = new BinaryWriter(output);
-		String identifier = "MCCPP;MINECON;" + PSLPE.getMOTD();
+		String identifier = "MCPE;" + PSLPE.getMOTD() + ";" + Diamond.pocketProtocol + ";" + Diamond.pocketVersionTag + ";01";
 		writer.writeByte(PocketPacketIDList.ID_UNCONNECTED_PING_OPEN_CONNECTIONS);
 		writer.writeLong(PingID);
 		writer.writeLong(ServerID);

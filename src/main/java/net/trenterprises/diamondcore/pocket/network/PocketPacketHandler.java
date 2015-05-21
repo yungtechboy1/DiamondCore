@@ -17,6 +17,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
@@ -29,9 +30,11 @@ import net.trenterprises.diamondcore.pocket.network.handlers.JoinRequestStage1Re
 import net.trenterprises.diamondcore.pocket.network.handlers.JoinRequestStage2Response;
 import net.trenterprises.diamondcore.pocket.network.handlers.ServerListPingResponse;
 import net.trenterprises.diamondcore.pocket.network.other.PocketDisconnectPacket;
+import net.trenterprises.diamondcore.pocket.network.utils.BitUtils;
 import net.trenterprises.diamondcore.pocket.network.utils.PocketPacketUtils;
 
 import org.blockserver.io.BinaryReader;
+import org.junit.experimental.theories.DataPoint;
 
 /**
  * This is the listener for packets sent by Minecraft Pocket Edition clients
@@ -91,7 +94,14 @@ public class PocketPacketHandler extends Thread implements Runnable {
 						case PocketPacketIDList.ID_OPEN_CONNECTION_REQUEST_2:
 							new JoinRequestStage2Response(socket, pocketPacket, ServerID);
 							break;
+						case -124:
+							byte[] d = pocketPacket.getData();
+							byte r = (byte) (getBit(d, 0) + getBit(d, 1) + getBit(d, 2) + getBit(d, 3) + getBit(d, 4));
+							int reliability = (r & 0b11100000) >> 5;
+							System.out.println("Reliability: " + reliability);
+							break;
 						default:
+							logger.warn("RECEIVED UNKNOWN PACKET ID: " + pocketPacket.getData()[0]);
 							byte[] test = PocketPacketUtils.toByteArray(new PocketDisconnectPacket("lol").encode().getInputStream());
 							socket.send(new DatagramPacket(test, test.length, pocketPacket.getAddress(), pocketPacket.getPort()));
 							/*byte pid = (byte) PacketID;
@@ -115,5 +125,13 @@ public class PocketPacketHandler extends Thread implements Runnable {
 			}
 		}
 	}
+	
+	private static int getBit(byte[] data, int pos) {
+	      int posByte = pos/8; 
+	      int posBit = pos%8;
+	      byte valByte = data[posByte];
+	      int valInt = valByte>>(8-(posBit+1)) & 0x0001;
+	      return valInt;
+	   }
 	
 }

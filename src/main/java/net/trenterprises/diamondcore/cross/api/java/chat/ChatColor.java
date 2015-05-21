@@ -13,117 +13,117 @@ package net.trenterprises.diamondcore.cross.api.java.chat;
 
 public enum ChatColor {
 	
-	RAW("§") {
+	RAW("Â§") {
 		public String toString() {
 			return RAW.value();
 		}
 	},
-	BLACK("§0") {
+	BLACK("Â§0") {
 		public String toString() {
 			return BLACK.value();
 		}
 	},
-	DARK_BLUE("§1") {
+	DARK_BLUE("Â§1") {
 		public String toString() {
 			return DARK_BLUE.value();
 		}
 	},
-	DARK_GREEN("§2") {
+	DARK_GREEN("Â§2") {
 		public String toString() {
 			return DARK_GREEN.value();
 		}
 	},
-	DARK_AQUA("§3") {
+	DARK_AQUA("Â§3") {
 		public String toString() {
 			return DARK_AQUA.value();
 		}
 	},
-	DARK_RED("§4") {
+	DARK_RED("Â§4") {
 		public String toString() {
 			return DARK_RED.value();
 		}
 	},
-	DARK_PURPLE("§5") {
+	DARK_PURPLE("Â§5") {
 		public String toString() {
 			return DARK_PURPLE.value();
 		}
 	},
-	GOLD("§6") {
+	GOLD("Â§6") {
 		public String toString() {
 			return GOLD.value();
 		}
 	},
-	GREY("§7") {
+	GREY("Â§7") {
 		public String toString() {
 			return GREY.value();
 		}
 	},
-	DARK_GREY("§8") {
+	DARK_GREY("Â§8") {
 		public String toString() {
 			return DARK_GREY.value();
 		}
 	},
-	BLUE("§9") {
+	BLUE("Â§9") {
 		public String toString() {
 			return BLUE.value();
 		}
 	},
-	GREEN("§a") {
+	GREEN("Â§a") {
 		public String toString() {
 			return GREEN.value();
 		}
 	},
-	AQUA("§b") {
+	AQUA("Â§b") {
 		public String toString() {
 			return AQUA.value();
 		}
 	},
-	RED("§c") {
+	RED("Â§c") {
 		public String toString() {
 			return RED.value();
 		}
 	},
-	LIGHT_PURPLE("§d") {
+	LIGHT_PURPLE("Â§d") {
 		public String toString() {
 			return LIGHT_PURPLE.value();
 		}
 	},
-	YELLOW("§e") {
+	YELLOW("Â§e") {
 		public String toString() {
 			return YELLOW.value();
 		}
 	},
-	WHITE("§f") {
+	WHITE("Â§f") {
 		public String toString() {
 			return WHITE.value();
 		}
 	},
-	OBFUSCATED("§k") {
+	OBFUSCATED("Â§k") {
 		public String toString() {
 			return OBFUSCATED.value();
 		}
 	},
-	BOLD("§l") {
+	BOLD("Â§l") {
 		public String toString() {
 			return BOLD.value();
 		}
 	},
-	STRIKETHROUGH("§m") {
+	STRIKETHROUGH("Â§m") {
 		public String toString() {
 			return STRIKETHROUGH.value();
 		}
 	},
-	UNDERLINE("§n") {
+	UNDERLINE("Â§n") {
 		public String toString() {
 			return UNDERLINE.value();
 		}
 	},
-	ITALIC("§o") {
+	ITALIC("Â§o") {
 		public String toString() {
 			return ITALIC.value();
 		}
 	},
-	RESET("§r") {
+	RESET("Â§r") {
 		public String toString() {
 			return RESET.value();
 		}
@@ -147,5 +147,4 @@ public enum ChatColor {
 		}
 		return builder.toString();
 	}
-	
 }

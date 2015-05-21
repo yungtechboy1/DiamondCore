@@ -38,15 +38,19 @@ import org.json.simple.parser.ParseException;
 public abstract class Diamond {
 	
 	// Minecraft Desktop
-	public static final String versionTag = "DiamondCore Unstable 1.8";
-	public static final int DesktopProtocol = 47;
+	public static final String desktopVersionTag = "DiamondCore Unstable 1.8";
+	public static final String desktopVersion = "1.8";
+	public static final int desktopProtocol = 47;
 	
 	// Minecraft: Pocket Edition
-	public static final int PocketProtocol = 5;
+	public static final String pocketVersionTag = "DiamondCore Unstable";
+	public static final String pocketVersion = "0.11.0";
+	public static final int pocketProtocol = 5;
 	
 	// Global
 	protected static ArrayList<String> players = new ArrayList<String>();
 	
+	private Diamond() {}
 	
 	/**
 	 * Used to get the online players

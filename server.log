@@ -1,19 +1,5 @@
-20:27:03 [INFO] [DiamondCore] Starting Pocket Server!
-20:27:03 [INFO] [DiamondCore] Debug: activated
-20:27:03 [INFO] [DiamondCore] Starting file checkup!
-20:27:03 [INFO] [DiamondCore] Finished file checkup with no errors!
-20:27:03 [INFO] [DiamondCore] Starting Server Properties checkup!
-20:27:03 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
-20:27:03 [INFO] [DiamondCore] Loading plugins!
-20:27:04 [INFO] [DiamondCore] Loading plugin TestColors v0.1 by Trent Summerlin
-20:27:04 [INFO] [TestColors] Loading MOTD Changer!
-20:27:04 [INFO] [DiamondCore] Finished loading plugins!
-20:27:04 [INFO] [DiamondCore] Started Server!
-20:27:05 [INFO] [TestColors] Got connection from /127.0.0.1
-20:27:07 [INFO] [TestColors] Added SuperstarGamer from /127.0.0.1
-20:27:07 [WARN] [TestColors] TESTING: SuperstarGamer
-20:27:09 [INFO] [TestColors] Got connection from /127.0.0.1
-20:27:11 [INFO] [TestColors] Got connection from /127.0.0.1
-20:27:13 [INFO] [TestColors] Added SuperstarGamer from /127.0.0.1
-20:27:13 [WARN] [TestColors] TESTING: SuperstarGamer
-20:27:17 [INFO] [TestColors] Got connection from /127.0.0.1
+18:43:23 [INFO] [DiamondCore] Starting...
+18:43:23 [INFO] [DiamondCore] Started! Port
+18:43:23 [INFO] [DiamondCore] Loading handler on port 25833...
+18:43:23 [INFO] [DiamondCore] Waiting for connection from python!
+18:43:34 [INFO] [DiamondCore] Received connection from python!

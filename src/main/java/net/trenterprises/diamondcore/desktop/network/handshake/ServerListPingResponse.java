@@ -46,8 +46,8 @@ public class ServerListPingResponse extends HandshakePacket {
 		
 		// Create MOTD JSON Object
 		JSONObject versionMap = new JSONObject();
-		versionMap.put("name", Diamond.versionTag);
-		versionMap.put("protocol", Diamond.DesktopProtocol-10);
+		versionMap.put("name", Diamond.desktopVersionTag);
+		versionMap.put("protocol", Diamond.desktopProtocol-10);
 								
 		// Players
 		ArrayList<String> playerList = Diamond.getOnlinePlayers();
