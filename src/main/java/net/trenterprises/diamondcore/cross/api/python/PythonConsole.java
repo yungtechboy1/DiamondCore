@@ -1,6 +1,6 @@
 package net.trenterprises.diamondcore.cross.api.python;
 
-import net.trenterprises.diamondcore.cross.api.PluginPacketHandler;
+import java.util.Scanner;
 
 
 /**
@@ -25,8 +25,10 @@ public final class PythonConsole extends Thread implements Runnable {
 		 */
 		
 		try {
-			ProcessBuilder pb = new ProcessBuilder("python", "plugin_python_bridge/run.py", PluginPacketHandler.listenerPort + "");
-			pb.start();
+			ProcessBuilder pb = new ProcessBuilder("python", "plugin_python_bridge/run.py", 64977 + "");
+			Process p = pb.start();
+			Scanner s = new Scanner(p.getInputStream());
+			while(s.hasNextLine()) System.out.println(s.nextLine());
 		}
 		catch(Exception e) {
 			e.printStackTrace();
