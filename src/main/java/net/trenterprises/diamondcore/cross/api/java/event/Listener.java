@@ -11,6 +11,7 @@
 
 package net.trenterprises.diamondcore.cross.api.java.event;
 
+
 /**
  * Just a interface used in the Event API to check if a class is listening for events.
  * 

@@ -114,7 +114,7 @@ public abstract class Diamond {
 	 */
 	public static final String loadServerIcon(File icon) {
 		try {
-			return Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(icon));
+			return ("data:image/png;base64," + Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(icon)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

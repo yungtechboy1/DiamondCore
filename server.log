@@ -1,7 +1,11 @@
-11:31:13 [INFO] [DiamondCore] Starting...
-11:31:13 [INFO] [DiamondCore] Started!
-11:31:13 [INFO] [DiamondCore] Loading handler on port 49442...
-11:31:13 [INFO] [DiamondCore] Waiting for connection from python!
-11:32:42 [ERROR] [DiamondCore] LOG THIS INFO NOW!
-11:32:48 [WARN] [DiamondCore] LOG THIS INFO NOW!
-11:32:53 [INFO] [DiamondCore] LOG THIS INFO NOW!
+20:04:52 [INFO] [DiamondCore] Starting Pocket Server!
+20:04:52 [INFO] [DiamondCore] Debug: activated
+20:04:52 [INFO] [DiamondCore] Starting file checkup!
+20:04:52 [INFO] [DiamondCore] Finished file checkup with no errors!
+20:04:52 [INFO] [DiamondCore] Starting Server Properties checkup!
+20:04:52 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
+20:04:52 [INFO] [DiamondCore] Loading plugins!
+20:04:52 [INFO] [DiamondCore] Loading plugin MONKEYTEST v0.1.0 by Vegeta
+20:04:52 [INFO] [MONKEYTEST] Get rekt m8
+20:04:52 [INFO] [DiamondCore] Finished loading plugins!
+20:04:52 [INFO] [DiamondCore] Started Server!

@@ -2,7 +2,6 @@ package net.trenterprises.diamondcore.cross.command.diamond;
 
 import java.io.IOException;
 
-import net.trenterprises.diamondcore.cross.api.html.HTMLLoader;
 import net.trenterprises.diamondcore.cross.api.java.JavaLoader;
 import net.trenterprises.diamondcore.cross.api.xml.XMLLoader;
 import net.trenterprises.diamondcore.cross.command.Command;
@@ -42,7 +41,6 @@ public class ReloadCommand extends Command {
 			// Unload plugins
 			JavaLoader.unloadPlugins();
 			XMLLoader.unloadPlugins();
-			HTMLLoader.unloadPlugins();
 			
 			// Clear custom commands
 			CustomCommand.commands.clear();
@@ -56,7 +54,6 @@ public class ReloadCommand extends Command {
 			// Reload plugins
 			JavaLoader.loadPlugins();
 			XMLLoader.loadPlugins();
-			HTMLLoader.loadPlugins();
 			
 			logger.info("Reload complete!");
 		}

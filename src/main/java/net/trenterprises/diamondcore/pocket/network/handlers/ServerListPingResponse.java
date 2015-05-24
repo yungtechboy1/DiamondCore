@@ -50,7 +50,8 @@ public class ServerListPingResponse implements BasePocketPacket {
 		this.Socket = Socket;
 		this.Packet = Packet;
 		this.ServerID = ServerID;
-		this.throwEvent();
+		PSLPE = new PocketServerListPingEvent(this, Packet.getAddress(), Packet.getPort(), ServerSettings.getPEMOTD());
+		PluginManager.throwEvent(PSLPE);
 		if(PSLPE.shouldBroadcast()) this.sendResponse();
 	}
 
@@ -81,16 +82,6 @@ public class ServerListPingResponse implements BasePocketPacket {
 		Socket.send(new DatagramPacket(output.toByteArray(), output.toByteArray().length, Packet.getAddress(), Packet.getPort()));
 		writer.close();
 		output.close();
-	}
-	
-	private void throwEvent() {
-		PSLPE = new PocketServerListPingEvent(this, Packet.getAddress(), Packet.getPort(), ServerSettings.getPEMOTD());
-		try {
-			PluginManager.throwEvent(PSLPE);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 }

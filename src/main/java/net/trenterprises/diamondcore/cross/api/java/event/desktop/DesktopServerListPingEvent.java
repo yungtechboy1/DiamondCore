@@ -2,9 +2,7 @@ package net.trenterprises.diamondcore.cross.api.java.event.desktop;
 
 import java.net.InetAddress;
 
-import net.trenterprises.diamondcore.cross.api.java.event.Event;
-
-public final class DesktopServerListPingEvent extends Event {
+public final class DesktopServerListPingEvent extends DesktopEvent {
 	
 	private InetAddress address;
 	private int port = 0;

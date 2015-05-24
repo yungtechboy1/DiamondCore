@@ -12,12 +12,9 @@
 package net.trenterprises.diamondcore.cross.api.java.javaplugin.sub;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-import net.trenterprises.diamondcore.cross.api.java.JavaSession;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.CommandExecutor;
 import net.trenterprises.diamondcore.cross.api.xml.XMLSession;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 
@@ -43,11 +40,7 @@ public class CommandManager {
 	 * @param commandExecutor
 	 */
 	public void addExecutor(Object commandExecutor) {
-		if(commandExecutor.getClass() instanceof Class) {
-			Class<?> commandExecutorClass = commandExecutor.getClass();
-			if(commandExecutorClass.isAssignableFrom(CommandExecutor.class)) commandExecutors.add((Class<?>) commandExecutor);
-	
-		}
+		// Add executor
 	}
 	
 	/**
@@ -68,26 +61,7 @@ public class CommandManager {
 	 * @throws NoSuchMethodException 
 	 */
 	public static void throwCommand(CommandSender sender, String commandLabel, String[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, MalformedURLException, InstantiationException, ClassNotFoundException, NoSuchMethodException, SecurityException{
-		// Java plugin command
-		for(int i = 0; i < JavaSession.sessionList.size(); i++) {
-			JavaSession session = JavaSession.sessionList.get(i);
-			Class<?> mainClassObject = session.getClassFromPlugin(session.getMainClass());
-			Method mainClassMethod = mainClassObject.getMethod("onCommand", sender.getClass(), commandLabel.getClass(), args.getClass());
-			mainClassMethod.invoke(mainClassObject.newInstance(), sender, commandLabel, args);
-			for(int k = 0; k < commandExecutors.size(); k++) {
-				try {
-					Class<?> classObject = session.getClassFromPlugin(commandExecutors.get(k).getName());
-					try {
-						Method commandMethod = classObject.getMethod("onCommand");
-						commandMethod.invoke("onCommand", sender, commandLabel, args);
-					} catch(NoSuchMethodException e) {
-						// Ignore, will happen
-					}
-				} catch(ClassNotFoundException e) {
-					// Ignore, will happen
-				}
-			}
-		}
+		// Execute java command
 		
 		// HTML plugin command
 		ArrayList<XMLSession> html = XMLSession.sessionList;

@@ -13,6 +13,7 @@ import java.util.Scanner;
  * @author Trent Summerlin
  * @version 0.1.0-SNAPSHOT
  */
+@Deprecated
 public final class PythonConsole extends Thread implements Runnable {
 
 	public void run() {

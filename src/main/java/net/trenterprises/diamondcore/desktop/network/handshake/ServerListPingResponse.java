@@ -32,17 +32,13 @@ public class ServerListPingResponse extends HandshakePacket {
 	
 	@SuppressWarnings("unchecked")
 	public ServerListPingResponse(Socket s) throws IOException {
-		// Throw event before putting together json because something might be changed by a plugin
-		DSLPE = new DesktopServerListPingEvent(this, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD(), ServerSettings.getServerFavicon());
-		try {
-			PluginManager.throwEvent(DSLPE);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
 		this.s = s;
 		this.input = new DataInputStream(this.s.getInputStream());
 		this.output = new DataOutputStream(this.s.getOutputStream());
+		
+		// Throw event before putting together json because something might be changed by a plugin
+		DSLPE = new DesktopServerListPingEvent(this, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD(), ServerSettings.getServerFavicon());
+		PluginManager.throwEvent(DSLPE);
 		
 		// Create MOTD JSON Object
 		JSONObject versionMap = new JSONObject();
@@ -91,7 +87,7 @@ public class ServerListPingResponse extends HandshakePacket {
 	public void sendResponse() throws IOException {
 		String json = object.toJSONString();
 		output.write(VarInt.writeUnsignedVarInt(3 + json.getBytes().length));
-		output.writeByte((byte) DesktopPacketIDList.HANDSHAKE_PACKET);
+		output.writeByte(DesktopPacketIDList.HANDSHAKE_PACKET);
 		output.write(VarInt.writeUnsignedVarInt(json.getBytes().length));
 		output.write(json.getBytes());
 		output.flush();

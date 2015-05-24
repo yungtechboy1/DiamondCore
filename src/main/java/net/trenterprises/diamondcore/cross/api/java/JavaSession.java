@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-import net.trenterprises.diamondcore.cross.api.java.event.Event;
 import net.trenterprises.diamondcore.cross.api.java.exception.InvalidConstructorException;
 import net.trenterprises.diamondcore.cross.api.java.exception.InvalidPluginDescriptorException;
 import net.trenterprises.diamondcore.cross.api.java.exception.PluginDuplicateException;
@@ -46,12 +45,10 @@ public class JavaSession {
 	// Plugin list
 	public static ArrayList<JavaSession> sessionList = new ArrayList<JavaSession>();
 	protected static ArrayList<String> mainClassList = new ArrayList<String>();
-	protected static ArrayList<String> mainPackageList = new ArrayList<String>();
 	protected static ArrayList<String> pluginNames = new ArrayList<String>();
 	
 	// Advanced plugin info
 	protected String mainClass;
-	protected String mainPackage;
 	protected File jarFile;
 	
 	// General plugin info
@@ -89,9 +86,6 @@ public class JavaSession {
 		if(mainClassCheck == null || JavaSession.mainClassList.size() == 0) {
 			// Issue a warning if the main-class is different (Indicating it's a different plugin) but the name is taken by another plugin.
 			if(pluginNames.contains(this.pluginName)) logger.warn("Warning: A there are multiple plugins with the name \"" + this.pluginName + "\"!");
-			
-			if(mainPackageList.contains(this.mainPackage)) throw new PluginDuplicateException(this.pluginName, this.mainClass);
-			else mainPackageList.add(this.mainPackage);
 			pluginNames.add(this.pluginName);
 			
 			// Throw exception if class has more than one constructor
@@ -124,24 +118,17 @@ public class JavaSession {
 	 */
 	protected void loadPluginYML() throws IOException, PluginDuplicateException, InvalidPluginDescriptorException {
 		// Load plugin YAML
-		Yaml PluginYML = new Yaml();
-		URL PluginURL = new URL("jar:file:" + this.jarFile.getAbsolutePath() + "!/plugin.yml");
-		InputStream PluginInputStream = PluginURL.openStream();
-		Map<?, ?> PluginMap = (Map<?, ?>) PluginYML.load(PluginInputStream);
+		Yaml pluginYML = new Yaml();
+		URL pluginURL = new URL("jar:file:" + this.jarFile.getAbsolutePath() + "!/plugin.yml");
+		InputStream PluginInputStream = pluginURL.openStream();
+		Map<?, ?> pluginMap = (Map<?, ?>) pluginYML.load(PluginInputStream);
 		
-		// Get main package
-		mainClass = PluginMap.get("main").toString();
-		String[] RawMainPackage = mainClass.split("\\.");
-		StringBuilder b = new StringBuilder();
-		for(int i = 0; i < RawMainPackage.length-1; i++) {
-			b.append((i == RawMainPackage.length-1 ? (RawMainPackage[i]+ ".") : (RawMainPackage[i])));
-		}
-		mainPackage = b.toString();
+		mainClass = pluginMap.get("main").toString();
 		
 		// Get plugin info, throw exceptions if neccessary
-		pluginName = PluginMap.get("name").toString();
-		pluginVersion = PluginMap.get("version").toString();
-		pluginAuthor = PluginMap.get("author").toString();
+		pluginName = pluginMap.get("name").toString();
+		pluginVersion = pluginMap.get("version").toString();
+		pluginAuthor = pluginMap.get("author").toString();
 		if(mainClass.equals(null)) throw new InvalidPluginDescriptorException("main");
 		if(pluginName.equals(null)) throw new InvalidPluginDescriptorException("name");
 		if(pluginVersion.equals(null)) throw new InvalidPluginDescriptorException("version");
@@ -149,8 +136,8 @@ public class JavaSession {
 		
 		// Register commands
 		try {
-			if(PluginMap.containsKey("commands")) {
-				Map<?, ?> CommandMap = (Map<?, ?>) PluginMap.get("commands");
+			if(pluginMap.containsKey("commands")) {
+				Map<?, ?> CommandMap = (Map<?, ?>) pluginMap.get("commands");
 				Iterator<?> commandIterator = CommandMap.entrySet().iterator();
 				while(commandIterator.hasNext()) {
 					Map.Entry<?, ?> command = (Map.Entry<?, ?>) commandIterator.next();
@@ -176,17 +163,6 @@ public class JavaSession {
 	 */
 	public String getMainClass() {
 		return this.mainClass;
-	}
-	
-	/**
-	 * Used to get the main package of the plugin
-	 * 
-	 * @author Trent Summerlin
-	 * @version 1.0
-	 * @return The main package of the plugin
-	 */
-	public String getMainPackage() {
-		return this.mainPackage;
 	}
 	
 	/**
@@ -273,29 +249,6 @@ public class JavaSession {
 	}
 	
 	/**
-	 * Used to execute a event from a class
-	 * 
-	 * @author Trent Summerlin
-	 * @version 1.0
-	 * @param classObject
-	 * 		Class to execute event from
-	 * @param methodName
-	 * 		Name of the method to execute
-	 * @param event
-	 * 		Event object being thrown
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
-	 * @throws InvocationTargetException
-	 * @throws InstantiationException
-	 */
-	public void executeEvent(Class<?> classObject, String methodName, Event e) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
-		Method Method = classObject.getMethod(methodName, e.getClass());
-		Method.invoke(classObject.newInstance(), e);
-	}
-	
-	/**
 	 * Used to unload the current session
 	 * 
 	 * @author Trent Summerlin
@@ -318,7 +271,6 @@ public class JavaSession {
 		int index = sessionList.indexOf(this);
 		sessionList.remove(index);
 		mainClassList.remove(index);
-		mainPackageList.remove(index);
 		pluginNames.remove(index);
 	}
 	

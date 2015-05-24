@@ -38,7 +38,7 @@ public abstract class JavaPlugin {
 	 * @return DiamondCore server running
 	 */
 	public Server getServer() {
-		return new Server();
+		return new Server(this);
 	}
 	
 	/**

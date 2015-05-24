@@ -16,7 +16,6 @@ import java.net.DatagramSocket;
 import java.net.ServerSocket;
 
 import net.trenterprises.diamondcore.cross.Ticker;
-import net.trenterprises.diamondcore.cross.api.html.HTMLLoader;
 import net.trenterprises.diamondcore.cross.api.java.JavaLoader;
 import net.trenterprises.diamondcore.cross.api.xml.XMLLoader;
 import net.trenterprises.diamondcore.cross.command.custom.exception.InvalidCommandException;
@@ -76,7 +75,6 @@ public class DiamondCoreServer {
 		// Load plugins
 		JavaLoader.loadPlugins();
 		XMLLoader.loadPlugins();
-		HTMLLoader.loadPlugins();
 		
 		// Initialize everything
 		ConsoleInputReader consoleInput = new ConsoleInputReader();
@@ -139,7 +137,7 @@ class MainTicker extends Thread implements Runnable {
 			int currentTick = ticker.getTick();
 			if(currentTick != lastTick) {
 				WorldTime.tick();
-				if(currentTick > lastTick+1) {
+				if(currentTick > lastTick+2) {
 					int skippedTicks = (currentTick - lastTick - 1); /* Subtract 1 more because the current tick will ALWAYS be 1 or more than the last one */
 					if(!runningSlow || ticksRanSlow >= tickReset) logger.info("Can't keep up! Did the system time change, or is the server overloaded? Skipping " + skippedTicks + " ticks");
 					if(ticksRanSlow >= tickReset) ticksRanSlow = 0;

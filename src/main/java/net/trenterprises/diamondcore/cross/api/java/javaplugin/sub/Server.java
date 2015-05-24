@@ -12,6 +12,7 @@
 package net.trenterprises.diamondcore.cross.api.java.javaplugin.sub;
 
 import net.trenterprises.diamondcore.cross.Diamond;
+import net.trenterprises.diamondcore.cross.api.java.JavaPlugin;
 import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.Whitelist;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
@@ -26,6 +27,8 @@ import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
  */
 public class Server {
 	
+	public Server(JavaPlugin plugin) {}
+	
 	/**
 	 * Used to retrieve the plugin manager
 	 * 
@@ -34,7 +37,7 @@ public class Server {
 	 * @return The server plugin manager
 	 */
 	public PluginManager getPluginManager() {
-		return new PluginManager();
+		return new PluginManager(this);
 	}
 	
 	/**
