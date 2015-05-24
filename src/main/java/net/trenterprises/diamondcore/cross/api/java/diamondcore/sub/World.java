@@ -11,7 +11,7 @@
 
 package net.trenterprises.diamondcore.cross.api.java.diamondcore.sub;
 
-import net.trenterprises.diamondcore.cross.settings.ServerSettings;
+import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.world.time.DayStage;
 import net.trenterprises.diamondcore.cross.world.time.WorldTime;
 

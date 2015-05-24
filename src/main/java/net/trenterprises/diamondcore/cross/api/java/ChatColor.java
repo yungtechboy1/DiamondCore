@@ -9,7 +9,7 @@
 
 */
 
-package net.trenterprises.diamondcore.cross.api.java.chat;
+package net.trenterprises.diamondcore.cross.api.java;
 
 public enum ChatColor {
 	

@@ -17,9 +17,9 @@ import java.io.IOException;
 import java.net.Socket;
 
 import net.trenterprises.diamondcore.cross.Diamond;
+import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.api.java.event.desktop.DesktopPlayerLoginEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
-import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPacket;
 import net.trenterprises.diamondcore.desktop.network.utils.PacketUtils;
 

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import net.trenterprises.diamondcore.cross.Diamond;
+import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.api.java.event.desktop.DesktopServerListPingEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.cross.borrowed.VarInt;
-import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 import net.trenterprises.diamondcore.desktop.network.DesktopPacketIDList;
 
 import org.json.simple.JSONArray;

@@ -9,14 +9,13 @@
 
 */
 
-package net.trenterprises.diamondcore.cross.command.custom;
+package net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command;
 
 import java.util.ArrayList;
 
 import net.trenterprises.diamondcore.cross.api.java.JavaSession;
-import net.trenterprises.diamondcore.cross.api.xml.XMLSession;
-import net.trenterprises.diamondcore.cross.command.custom.exception.ExistentCommandException;
-import net.trenterprises.diamondcore.cross.command.custom.exception.InvalidCommandException;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.exception.ExistentCommandException;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.exception.InvalidCommandException;
 
 /**
  * This class is used to create a store custom commands
@@ -32,35 +31,18 @@ public final class Command {
 	
 	// Final values, do not change
 	private final String commandName;
-	private final String commandDescription;
 	private final String commandUsage;
+	private final String commandDescription;
 	private final JavaSession pluginSession;
-	private final XMLSession htmlSession;
 	
 	// Subject to change
 	private CommandExecutor executor = null;
 	
-	public Command(String commandName, String commandDescription, String commandUsage, JavaSession session) throws InvalidCommandException {
-		this.commandName = commandName;
-		this.commandDescription = commandDescription;
-		this.commandUsage = commandUsage;
+	public Command(JavaSession session, String commandName, String commandUsage, String commandDescription) throws InvalidCommandException {
 		this.pluginSession = session;
-		this.htmlSession = null;
-		
-		// Check to make sure the command is valid
-		for(int i = 0; i < commands.size(); i++) {
-			Command command = commands.get(i);
-			if(command.getName().equalsIgnoreCase(this.getName())) throw new ExistentCommandException(this.getName());
-		}
-		commands.add(this);
-	}
-	
-	public Command(String commandName, String commandDescription, String commandUsage, XMLSession session) throws InvalidCommandException {
 		this.commandName = commandName;
-		this.commandDescription = commandDescription;
 		this.commandUsage = commandUsage;
-		this.pluginSession = null;
-		this.htmlSession = session;
+		this.commandDescription = commandDescription;
 		
 		// Check to make sure the command is valid
 		for(int i = 0; i < commands.size(); i++) {
@@ -147,21 +129,6 @@ public final class Command {
 	 * @return Command plugin session
 	 */
 	public JavaSession getPluginSession() {
-		if(this.htmlSession.equals(null)) return this.pluginSession;
-		else return null;
-	}
-
-	/**
-	 * Used to get the plugin session that the command
-	 * <br>
-	 * is stored in. If null is returned, try using getPluginSession()
-	 * 
-	 * @author Trent Summerlin
-	 * @version 1.0
-	 * @return Command plugin session
-	 */
-	public XMLSession getHTMLSession() {
-		if(this.pluginSession.equals(null)) return this.htmlSession;
-		else return null;
+		return this.pluginSession;
 	}
 }

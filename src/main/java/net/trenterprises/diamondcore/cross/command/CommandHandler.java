@@ -11,10 +11,7 @@
 
 package net.trenterprises.diamondcore.cross.command;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-
-import net.trenterprises.diamondcore.cross.command.custom.Command;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.Command;
 import net.trenterprises.diamondcore.cross.command.diamond.PluginlistCommand;
 import net.trenterprises.diamondcore.cross.command.diamond.ReloadCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.BanCommand;
@@ -25,6 +22,7 @@ import net.trenterprises.diamondcore.cross.command.vanilla.StopCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.TimeCommand;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
+import net.trenterprises.diamondcore.cross.utils.ArrayUtils;
 
 /**
  * Used to execute the commands which are received from the console input
@@ -203,7 +201,7 @@ public final class CommandHandler {
 			}
 			if(shouldRun) {
 				if(args.length == 1) command = new BanCommand(args[0]);
-				else if(args.length == 2) command = new BanCommand(args[0], args[1]);
+				else if(args.length >= 2) command = new BanCommand(args[0], ArrayUtils.stitchArray(args, 1));
 				command.execute(sender, logger);
 			} else {
 				if(sender.equals(CommandSender.POCKETPLAYER)) {
@@ -268,35 +266,22 @@ public final class CommandHandler {
 		}
 		else {
 			// Make sure the command entered isn't a custom command from a plugin
-			ArrayList<Command> commands = Command.commands;
 			boolean foundCommand = false;
-			for(Command command : commands) {
+			for(Command command : Command.commands) {
 				if(command.getName().equalsIgnoreCase(commandLabel)) {
-					try {
-						/*JavaSession session = command.getPluginSession();
-						Method toInvoke = null;
-						
-						/*
-						 * Try and load the executor as it was from the main class of the plugin.
-						 * If an exception is thrown, it's alright. As it's likely the command is
-						 * from another class.
-						
+					// If there is no specified executor, assume it is the main class of the plugin
+					if(command.getExecutor() == null) {
 						try {
-							toInvoke = session.getClassFromPlugin(
-							session.getMainClass()).getMethod("onCommand", 
-							sender.getClass(), commandLabel.getClass(), args.getClass());
+							command.getPluginSession().executeCommand(sender, commandLabel, args);
+						} catch (Exception e) {
+							logger.info(command.getUsage());
+							e.printStackTrace();
 						}
-						catch(Exception e) {
-							toInvoke = null; 
-						}*/
-						Method toInvoke = null;
-						if(command.getExecutor() != null) toInvoke = command.getExecutor().getClass().getMethod("onCommand", sender.getClass(), commandLabel.getClass(), args.getClass());
-						toInvoke.invoke(command.getExecutor(), sender, commandLabel, args);
-						foundCommand = true;
-					} catch(Exception e) {
-						foundCommand = false;
-					}
-					break;
+					} 
+					// If there is one, get it and then run it normally
+					else command.getExecutor().onCommand(sender, commandLabel, args);
+					
+					foundCommand = true;
 				}
 			}
 			if(!foundCommand) logger.info("Unknown command!");

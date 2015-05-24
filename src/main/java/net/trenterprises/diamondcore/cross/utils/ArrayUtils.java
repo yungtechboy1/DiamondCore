@@ -64,4 +64,18 @@ public abstract class ArrayUtils {
 		return contains;
 	}
 	
+	/**
+	 * Used to stich together arguments if needed
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @return Sticthed array
+	 */
+	public static String stitchArray(String[] args, int start) {
+		if(start == -1) start = 0;
+		StringBuilder builder = new StringBuilder();
+		for(int i = start; i < args.length; i++) builder.append(args[i] + (i+1 != args.length ? " " : ""));
+		return builder.toString();
+	}
+	
 }

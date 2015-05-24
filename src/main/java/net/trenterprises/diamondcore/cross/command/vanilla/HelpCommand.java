@@ -11,11 +11,11 @@
 
 package net.trenterprises.diamondcore.cross.command.vanilla;
 
-import net.trenterprises.diamondcore.cross.api.java.chat.ChatColor;
+import net.trenterprises.diamondcore.cross.api.java.ChatColor;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.Command;
 import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 import net.trenterprises.diamondcore.cross.command.NativeCommand;
-import net.trenterprises.diamondcore.cross.command.custom.Command;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 
 public class HelpCommand extends NativeCommand {

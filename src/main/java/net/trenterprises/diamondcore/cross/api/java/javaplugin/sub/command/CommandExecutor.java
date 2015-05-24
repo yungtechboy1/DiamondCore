@@ -24,7 +24,7 @@ import net.trenterprises.diamondcore.cross.command.CommandSender;
  * @version 1.0
  *
  */
-public abstract class CommandExecutor {
+public abstract interface CommandExecutor {
 	
 	/**
 	 * Function used to let the compiler know that it

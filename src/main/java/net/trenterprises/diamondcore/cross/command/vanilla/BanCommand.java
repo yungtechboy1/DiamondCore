@@ -20,6 +20,7 @@ import net.trenterprises.diamondcore.cross.command.CommandSender;
 import net.trenterprises.diamondcore.cross.command.NativeCommand;
 import net.trenterprises.diamondcore.cross.file.FileList;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
+import net.trenterprises.diamondcore.mojang.MojangUtils;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -80,17 +81,20 @@ public final class BanCommand extends NativeCommand {
 		try {
 			if(args.length >= 1) {
 				JSONObject BanObject = (JSONObject) new JSONParser().parse(new FileReader(FileList.bannedPlayerList));
-				if(BanObject.containsKey(args[0])) {
+				String uuid = MojangUtils.getUUID(args[0]);
+				if(BanObject.containsKey(uuid)) {
 					if(args.length == 1) logger.info("The player " + args[0] + " is already banned!");
 					else if(args.length == 2) logger.info("Ban reason for player " + args[0] + " set to: " + args[1]);
 				}
 				else {
-					String banReason = (args.length == 2 ? (" for reason: " + args[1]) : "");
-					BanObject.put(args[0], (args.length == 2 ? args[1] : null));
-					BufferedWriter BanWriter = new BufferedWriter(new FileWriter(FileList.bannedPlayerList));
-					BanWriter.write(BanObject.toJSONString());
-					BanWriter.close();
-					logger.info("Banned player " + args[0] + banReason);
+					if(uuid != null) {
+						String banReason = (args.length == 2 ? (" for reason: " + args[1]) : "");
+						BanObject.put(uuid, (args.length == 2 ? args[1] : null));
+						BufferedWriter BanWriter = new BufferedWriter(new FileWriter(FileList.bannedPlayerList));
+						BanWriter.write(BanObject.toJSONString());
+						BanWriter.close();
+						logger.info("Banned player " + args[0] + banReason);
+					} else logger.info("Sorry, but the player " + args[0] + " doesn't seem to exist!");
 				}
 			}
 			else logger.info("Usage: /ban <player> [reason]");

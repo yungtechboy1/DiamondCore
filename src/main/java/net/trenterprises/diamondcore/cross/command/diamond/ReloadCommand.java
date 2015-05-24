@@ -2,15 +2,15 @@ package net.trenterprises.diamondcore.cross.command.diamond;
 
 import java.io.IOException;
 
+import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.api.java.JavaLoader;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.Command;
 import net.trenterprises.diamondcore.cross.api.xml.XMLLoader;
 import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 import net.trenterprises.diamondcore.cross.command.NativeCommand;
-import net.trenterprises.diamondcore.cross.command.custom.Command;
 import net.trenterprises.diamondcore.cross.file.PropertiesCheckup;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
-import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 
 public class ReloadCommand extends NativeCommand {
 	

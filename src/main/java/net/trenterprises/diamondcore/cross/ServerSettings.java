@@ -9,7 +9,7 @@
 
 */
 
-package net.trenterprises.diamondcore.cross.settings;
+package net.trenterprises.diamondcore.cross;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -13,7 +13,7 @@
  * This class is used for reading input from the console
  * in order to handle commands.
  */
-package net.trenterprises.diamondcore.cross.console;
+package net.trenterprises.diamondcore.cross;
 
 import java.util.Scanner;
 

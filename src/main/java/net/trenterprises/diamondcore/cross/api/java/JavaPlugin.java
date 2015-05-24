@@ -15,7 +15,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Map;
 
+import net.trenterprises.diamondcore.cross.api.java.event.Listener;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.Server;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.CommandExecutor;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
 import org.yaml.snakeyaml.Yaml;
@@ -24,7 +26,7 @@ import org.yaml.snakeyaml.Yaml;
  * This is a abstract class in which the main class of all plugins extend
  * and is the heart of pretty much all the functions for a plugin.
  */
-public abstract class JavaPlugin {
+public abstract class JavaPlugin implements CommandExecutor, Listener {
 	
 	/**
 	 * This function can be used to retrieve server info.

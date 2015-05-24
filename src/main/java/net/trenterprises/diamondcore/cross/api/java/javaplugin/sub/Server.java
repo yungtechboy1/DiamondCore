@@ -14,6 +14,7 @@ package net.trenterprises.diamondcore.cross.api.java.javaplugin.sub;
 import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.api.java.JavaPlugin;
 import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.Whitelist;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.Command;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
@@ -38,6 +39,23 @@ public class Server {
 	 */
 	public PluginManager getPluginManager() {
 		return new PluginManager(this);
+	}
+	
+	/**
+	 * Used to get a command by it's name.
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @param command
+	 * @return Command object
+	 */
+	public Command getCommand(String commandLabel) {
+		for(Command command : Command.commands) {
+			if(command.getName().equalsIgnoreCase(commandLabel)) {
+				return command;
+			}
+		}
+		return null;
 	}
 	
 	/**

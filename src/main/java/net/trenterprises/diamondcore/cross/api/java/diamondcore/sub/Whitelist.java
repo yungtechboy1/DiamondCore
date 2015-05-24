@@ -17,9 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.file.FileList;
 import net.trenterprises.diamondcore.cross.file.FileUtils;
-import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

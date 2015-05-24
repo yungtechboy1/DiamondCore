@@ -1,4 +1,4 @@
-package net.trenterprises.diamondcore.cross.command.custom.exception;
+package net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.exception;
 
 public class InvalidCommandException extends Exception {
 	

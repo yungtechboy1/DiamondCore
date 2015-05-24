@@ -18,9 +18,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 import net.trenterprises.diamondcore.cross.Diamond;
+import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.api.java.event.pocket.PocketServerListPingEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
-import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 import net.trenterprises.diamondcore.pocket.network.PocketPacketIDList;
 
 import org.blockserver.io.BinaryReader;

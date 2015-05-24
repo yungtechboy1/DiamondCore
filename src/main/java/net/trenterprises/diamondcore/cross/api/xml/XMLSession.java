@@ -16,10 +16,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.trenterprises.diamondcore.cross.api.java.event.Event;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.exception.InvalidCommandException;
 import net.trenterprises.diamondcore.cross.api.xml.functions.XMLFunctionList;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
-import net.trenterprises.diamondcore.cross.command.custom.Command;
-import net.trenterprises.diamondcore.cross.command.custom.exception.InvalidCommandException;
 import net.trenterprises.diamondcore.cross.file.FileUtils;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
@@ -91,6 +90,7 @@ public class XMLSession {
 	 * @version 1.0
 	 * @throws InvalidCommandException
 	 */
+	@SuppressWarnings("unused")
 	private void getCommands() {
 		try {
 			for(Element command : this.pluginDoc.select("command")) {
@@ -98,8 +98,8 @@ public class XMLSession {
 				String commandDescription = command.attr("description");
 				String commandUsage = command.attr("usage");
 				try {
-					new Command(commandName, commandDescription, commandUsage, this);
-				} catch (InvalidCommandException e) {
+					//new Command(commandName, commandUsage, commandDescription);
+				} catch (Exception e) {
 					logger.warn("There was a error registering commands for the plugin \"" + this.pluginName + "\"!");
 				}
 			}

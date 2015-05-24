@@ -15,17 +15,17 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.ServerSocket;
 
+import net.trenterprises.diamondcore.cross.ConsoleInputReader;
+import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.Ticker;
 import net.trenterprises.diamondcore.cross.api.java.JavaLoader;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.exception.InvalidCommandException;
 import net.trenterprises.diamondcore.cross.api.xml.XMLLoader;
-import net.trenterprises.diamondcore.cross.command.custom.exception.InvalidCommandException;
-import net.trenterprises.diamondcore.cross.console.ConsoleInputReader;
 import net.trenterprises.diamondcore.cross.file.FileCheckup;
 import net.trenterprises.diamondcore.cross.file.FileList;
 import net.trenterprises.diamondcore.cross.file.PropertiesCheckup;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
-import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 import net.trenterprises.diamondcore.cross.world.time.WorldTime;
 import net.trenterprises.diamondcore.desktop.network.DesktopPacketHandler;
 import net.trenterprises.diamondcore.pocket.network.PocketPacketHandler;
@@ -171,7 +171,7 @@ class PacketHandlerThread extends Thread implements Runnable {
 			DiamondCoreServer.pocketPacketHandler.start();
 			DiamondCoreServer.desktopPacketHandler = new DesktopPacketHandler(DiamondCoreServer.desktopSocket, server);
 			DiamondCoreServer.desktopPacketHandler.start();
-			while(true) {
+			while(DiamondCoreServer.isRunning()) {
 				consoleInput.tick();
 			}
 		} catch (IOException e) {

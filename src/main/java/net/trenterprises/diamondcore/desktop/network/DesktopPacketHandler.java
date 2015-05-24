@@ -19,14 +19,12 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 import net.trenterprises.diamondcore.DiamondCoreServer;
-import net.trenterprises.diamondcore.cross.Player;
+import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.borrowed.VarInt;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
-import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 import net.trenterprises.diamondcore.desktop.network.handlers.HandshakeResponse;
 import net.trenterprises.diamondcore.desktop.network.handshake.LoginResponse;
-import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPacket;
 
 /**
  * This class is used to handle packets sent by Minecraft desktop clients
@@ -68,9 +66,9 @@ public class DesktopPacketHandler extends Thread implements Runnable {
 					case DesktopPacketIDList.HANDSHAKE_PACKET:
 						HandshakeResponse packet = new HandshakeResponse(socket); // Also handles login as well
 						if(packet.getHandshakePacket() instanceof LoginResponse) {
-							LoginResponse test = (LoginResponse) packet.getHandshakePacket();
-							Player player = new Player(test.getPlayerName());
-							String reason = (player.isBanned() ? "You are banned!" : "This server is still in the works!");
+							//LoginResponse test = (LoginResponse) packet.getHandshakePacket();
+							//Player player = new Player(test.getPlayerName());
+							//String reason = (player.isBanned() ? "You are banned!" : "This server is still in the works!");
 							//new ClientDisconnectPacket(socket, reason).sendResponse();
 						
 						}

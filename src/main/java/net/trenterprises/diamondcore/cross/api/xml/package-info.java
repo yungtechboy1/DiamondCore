@@ -11,6 +11,6 @@
 
 /**
  * This package contains all of the code required in order to run plugins
- * created in HTML for DiamondCore
+ * created in XML for DiamondCore
  */
 package net.trenterprises.diamondcore.cross.api.xml;

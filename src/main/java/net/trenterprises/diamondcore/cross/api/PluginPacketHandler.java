@@ -34,6 +34,7 @@ public class PluginPacketHandler extends Thread implements Runnable {
 		this.listenerPort = this.serverSocket.getLocalPort();
 	}
 
+	@SuppressWarnings("unused")
 	public void run() {
 		logger.info("Loading handler on port " + this.listenerPort + "...");
 		logger.info("Waiting for connection from python!");
@@ -80,6 +81,7 @@ public class PluginPacketHandler extends Thread implements Runnable {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private int randInt(int min, int max) {
 	    Random rand = new Random();
 	    int randomNum = rand.nextInt((max - min) + 1) + min;

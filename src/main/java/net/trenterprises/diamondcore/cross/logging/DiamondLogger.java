@@ -28,8 +28,6 @@ public abstract interface DiamondLogger{
 	void info(String msg);
 	void warn(String msg);
 	void err(String msg);
-	
-	@Deprecated
 	void debug(String msg);
 }
 

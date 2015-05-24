@@ -26,7 +26,8 @@ import java.util.Map;
 import net.trenterprises.diamondcore.cross.api.java.exception.InvalidConstructorException;
 import net.trenterprises.diamondcore.cross.api.java.exception.InvalidPluginDescriptorException;
 import net.trenterprises.diamondcore.cross.api.java.exception.PluginDuplicateException;
-import net.trenterprises.diamondcore.cross.command.custom.Command;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.Command;
+import net.trenterprises.diamondcore.cross.command.CommandSender;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
@@ -49,6 +50,7 @@ public class JavaSession {
 	
 	// Advanced plugin info
 	protected String mainClass;
+	protected Object mainInstance;
 	protected File jarFile;
 	
 	// General plugin info
@@ -69,13 +71,7 @@ public class JavaSession {
 		String mainClassCheck = null;
 		try {
 			int index = JavaSession.mainClassList.indexOf(mainClass);
-			try {
-				mainClassCheck = JavaSession.mainClassList.get(index);
-			}
-			catch(Exception e) {
-				if(e instanceof IndexOutOfBoundsException || e instanceof ArrayIndexOutOfBoundsException); 
-				else e.printStackTrace();
-			}
+			mainClassCheck = JavaSession.mainClassList.get(index);
 		}
 		catch(Exception E) {
 			if(E instanceof IndexOutOfBoundsException || E instanceof ArrayIndexOutOfBoundsException);
@@ -88,23 +84,27 @@ public class JavaSession {
 			if(pluginNames.contains(this.pluginName)) logger.warn("Warning: A there are multiple plugins with the name \"" + this.pluginName + "\"!");
 			pluginNames.add(this.pluginName);
 			
-			// Throw exception if class has more than one constructor
-			if(this.getClassFromPlugin(this.mainClass).getConstructors().length > 1) throw new InvalidConstructorException(this.getClassFromPlugin(this.mainClass));
+			// Load main class
+			URL[] PluginURLs = { this.jarFile.getAbsoluteFile().toURI().toURL() };
+		   	URLClassLoader classLoader = URLClassLoader.newInstance(PluginURLs);
+		   	Class<?> main = classLoader.loadClass(this.mainClass);
 			
-			// Try to instantianite the class
+		   	// Throw exception if class has more than one constructor
+		   	if(main.getConstructors().length > 1) throw new InvalidConstructorException(main);
+		   	
+			// Try to load the instance into an object for later
 			try {
-				this.getClassFromPlugin(this.mainClass).newInstance();
+			    this.mainInstance = main.newInstance();
 			} catch(InstantiationException e) {
-				throw new InvalidConstructorException(this.getClassFromPlugin(this.mainClass));
+				throw new InvalidConstructorException(main);
 			}
 			
 			// Add the plugin to the list
 			sessionList.add(this);
 			mainClassList.add(this.mainClass);
 			logger.info("Loading plugin " + this.pluginName + " v" + this.pluginVersion + " by " + this.pluginAuthor);
-			this.executeClassMethod(this.getClassFromPlugin(this.mainClass), this.enableMethod);
-		}
-		else throw new PluginDuplicateException(this.pluginName, this.mainClass);
+			this.executeMethod(this.enableMethod);
+		} else throw new PluginDuplicateException(this.pluginName, this.mainClass);
 	}
 	
 	/**
@@ -115,17 +115,19 @@ public class JavaSession {
 	 * @throws IOException
 	 * @throws PluginDuplicateException
 	 * @throws InvalidPluginDescriptorException 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	protected void loadPluginYML() throws IOException, PluginDuplicateException, InvalidPluginDescriptorException {
+	protected void loadPluginYML() throws IOException, PluginDuplicateException, InvalidPluginDescriptorException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		// Load plugin YAML
 		Yaml pluginYML = new Yaml();
 		URL pluginURL = new URL("jar:file:" + this.jarFile.getAbsolutePath() + "!/plugin.yml");
 		InputStream PluginInputStream = pluginURL.openStream();
 		Map<?, ?> pluginMap = (Map<?, ?>) pluginYML.load(PluginInputStream);
 		
-		mainClass = pluginMap.get("main").toString();
-		
 		// Get plugin info, throw exceptions if neccessary
+		mainClass = pluginMap.get("main").toString();
 		pluginName = pluginMap.get("name").toString();
 		pluginVersion = pluginMap.get("version").toString();
 		pluginAuthor = pluginMap.get("author").toString();
@@ -145,12 +147,12 @@ public class JavaSession {
 					String name = command.getKey().toString();
 					String description = (commandEntries.containsKey("description") ? commandEntries.get("description").toString() : "UNKNOWN-DESC");
 					String usage = (commandEntries.containsKey("usage") ? commandEntries.get("usage").toString() : "/<command>");
-					new Command(name, description, usage, this);
+					new Command(this, name, usage, description);
 				}
 			}
 		}
 		catch(Exception E) {
-			logger.warn("There was a error registering the commands for the plugin \"" + this.getPluginName() + "\"!");
+			logger.warn("There was a error registering the commands for the plugin \"" + this.pluginName + "\"!");
 		}
 	}
 	
@@ -205,30 +207,13 @@ public class JavaSession {
 	 * @version 1.0
 	 * @return The plugin JAR file
 	 */
+	@Deprecated
 	public File getJar() {
 		return this.jarFile;
 	}
 	
 	/**
-	 * Used to get a class from a specific plugin
-	 * 
-	 * @author Trent Summerlin
-	 * @version 1.0
-	 * @param classDirectory
-	 * 		Class package/directory
-	 * @return Class object from plugin
-	 * @throws ClassNotFoundException
-	 * @throws MalformedURLException
-	 */
-	public Class<?> getClassFromPlugin(String classDirectory) throws ClassNotFoundException, MalformedURLException {
-	    URL[] PluginURLs = { this.jarFile.getAbsoluteFile().toURI().toURL() };
-	   	URLClassLoader classLoader = URLClassLoader.newInstance(PluginURLs);
-	    Class<?> pluginClass = classLoader.loadClass(classDirectory);
-	    return pluginClass;
-	}
-	
-	/**
-	 * Used to execute a method from a class
+	 * Used to execute a command from the main class
 	 * 
 	 * @author Trent Summerlin
 	 * @version 1.0
@@ -242,10 +227,36 @@ public class JavaSession {
 	 * @throws InstantiationException
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
+	 * @throws MalformedURLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void executeClassMethod(Class<?> classObject, String methodName) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
-		 Method Method = classObject.getMethod(methodName);
-		 Method.invoke(classObject.newInstance());
+	public void executeCommand(CommandSender sender, String commandLabel, String[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		Method method = mainInstance.getClass().getMethod("onCommand", sender.getClass(), commandLabel.getClass(), args.getClass());
+		method.invoke(this.mainInstance, sender, commandLabel, args);
+	}
+	
+	
+	/**
+	 * Used to execute a method from the main class
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @param classObject
+	 * 		Class to execute method from
+	 * @param methodName
+	 * 		Name of the method
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws InstantiationException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws MalformedURLException 
+	 * @throws ClassNotFoundException 
+	 */
+	public void executeMethod(String methodName) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException, ClassNotFoundException, MalformedURLException {
+		Method Method = this.mainInstance.getClass().getMethod(methodName);
+		Method.invoke(this.mainInstance);
 	}
 	
 	/**
@@ -263,7 +274,7 @@ public class JavaSession {
 	 */
 	public void unloadSession() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, SecurityException, ClassNotFoundException, MalformedURLException {
 		try {
-			this.executeClassMethod(this.getClassFromPlugin(this.getMainClass()), this.disableMethod);
+			this.executeMethod(this.disableMethod);
 		}
 		catch(NoSuchMethodException e) {
 			e.printStackTrace();

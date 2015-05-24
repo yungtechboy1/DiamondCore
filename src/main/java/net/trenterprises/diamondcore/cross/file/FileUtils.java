@@ -76,8 +76,8 @@ public class FileUtils {
 	public static String readFromURL(URL url) throws IOException {
 		Scanner URLScanner = new Scanner(url.openStream());
 		StringBuilder Builder = new StringBuilder();
-		while(URLScanner.hasNextLine()) {
-			Builder.append(URLScanner.nextLine() + "\n");
+		while(URLScanner.hasNext()) {
+			Builder.append(URLScanner.next());
 		}
 		URLScanner.close();
 		return Builder.toString();

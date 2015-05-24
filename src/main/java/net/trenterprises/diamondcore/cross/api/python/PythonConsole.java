@@ -30,6 +30,7 @@ public final class PythonConsole extends Thread implements Runnable {
 			Process p = pb.start();
 			Scanner s = new Scanner(p.getInputStream());
 			while(s.hasNextLine()) System.out.println(s.nextLine());
+			s.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();

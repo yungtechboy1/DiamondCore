@@ -17,24 +17,21 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
-import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
 import net.trenterprises.diamondcore.DiamondCoreServer;
+import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
-import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 import net.trenterprises.diamondcore.pocket.network.handlers.JoinRequestStage1Response;
 import net.trenterprises.diamondcore.pocket.network.handlers.JoinRequestStage2Response;
 import net.trenterprises.diamondcore.pocket.network.handlers.ServerListPingResponse;
 import net.trenterprises.diamondcore.pocket.network.other.PocketDisconnectPacket;
-import net.trenterprises.diamondcore.pocket.network.utils.BitUtils;
 import net.trenterprises.diamondcore.pocket.network.utils.PocketPacketUtils;
 
 import org.blockserver.io.BinaryReader;
-import org.junit.experimental.theories.DataPoint;
 
 /**
  * This is the listener for packets sent by Minecraft Pocket Edition clients

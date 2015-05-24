@@ -10,6 +10,7 @@
 */
 
 /**
- * This package is used for the settings of both the MCPE and MCPC version of this software
+ * Contains the exceptions for the custom commands when something goes wrong
+ * with regestering them, running them, etc.
  */
-package net.trenterprises.diamondcore.cross.settings;
+package net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.exception;
