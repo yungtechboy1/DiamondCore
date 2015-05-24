@@ -26,7 +26,7 @@ import java.util.Map;
 import net.trenterprises.diamondcore.cross.api.java.exception.InvalidConstructorException;
 import net.trenterprises.diamondcore.cross.api.java.exception.InvalidPluginDescriptorException;
 import net.trenterprises.diamondcore.cross.api.java.exception.PluginDuplicateException;
-import net.trenterprises.diamondcore.cross.command.custom.CustomCommand;
+import net.trenterprises.diamondcore.cross.command.custom.Command;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
@@ -145,7 +145,7 @@ public class JavaSession {
 					String name = command.getKey().toString();
 					String description = (commandEntries.containsKey("description") ? commandEntries.get("description").toString() : "UNKNOWN-DESC");
 					String usage = (commandEntries.containsKey("usage") ? commandEntries.get("usage").toString() : "/<command>");
-					new CustomCommand(name, description, usage, this);
+					new Command(name, description, usage, this);
 				}
 			}
 		}

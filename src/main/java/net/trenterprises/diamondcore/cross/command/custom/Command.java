@@ -26,17 +26,21 @@ import net.trenterprises.diamondcore.cross.command.custom.exception.InvalidComma
  * @version 0.1.0-SNAPSHOT
  * @throws InvalidCommandException
  */
-public final class CustomCommand {
+public final class Command {
 	
-	public static ArrayList<CustomCommand> commands = new ArrayList<CustomCommand>();
+	public static ArrayList<Command> commands = new ArrayList<Command>();
 	
+	// Final values, do not change
 	private final String commandName;
 	private final String commandDescription;
 	private final String commandUsage;
 	private final JavaSession pluginSession;
 	private final XMLSession htmlSession;
 	
-	public CustomCommand(String commandName, String commandDescription, String commandUsage, JavaSession session) throws InvalidCommandException {
+	// Subject to change
+	private CommandExecutor executor = null;
+	
+	public Command(String commandName, String commandDescription, String commandUsage, JavaSession session) throws InvalidCommandException {
 		this.commandName = commandName;
 		this.commandDescription = commandDescription;
 		this.commandUsage = commandUsage;
@@ -45,13 +49,13 @@ public final class CustomCommand {
 		
 		// Check to make sure the command is valid
 		for(int i = 0; i < commands.size(); i++) {
-			CustomCommand command = commands.get(i);
+			Command command = commands.get(i);
 			if(command.getName().equalsIgnoreCase(this.getName())) throw new ExistentCommandException(this.getName());
 		}
 		commands.add(this);
 	}
 	
-	public CustomCommand(String commandName, String commandDescription, String commandUsage, XMLSession session) throws InvalidCommandException {
+	public Command(String commandName, String commandDescription, String commandUsage, XMLSession session) throws InvalidCommandException {
 		this.commandName = commandName;
 		this.commandDescription = commandDescription;
 		this.commandUsage = commandUsage;
@@ -60,11 +64,25 @@ public final class CustomCommand {
 		
 		// Check to make sure the command is valid
 		for(int i = 0; i < commands.size(); i++) {
-			CustomCommand command = commands.get(i);
+			Command command = commands.get(i);
 			if(command.getName().equalsIgnoreCase(this.getName())) throw new ExistentCommandException(this.getName());
 		}
 		commands.add(this);
 	}
+	
+	/**
+	 * Used to set the executor for the command
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 */
+	public void setExecutor(CommandExecutor executor) {
+		this.executor = executor;
+	}
+	
+	/**
+	 * Use
+	 */
 	
 	/**
 	 * Used to get the name of the command which
@@ -95,7 +113,7 @@ public final class CustomCommand {
 	}
 	
 	/**
-	 * Used to getthe usage of the command
+	 * Used to get the usage of the command
 	 * <br>
 	 * which is used in the "help" command
 	 * <br>
@@ -107,6 +125,16 @@ public final class CustomCommand {
 	 */
 	public String getUsage() {
 		return this.commandUsage;
+	}
+	
+	/**
+	 * Used to get the command executor
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 */
+	public CommandExecutor getExecutor() {
+		return this.executor;
 	}
 	
 	/**
@@ -136,7 +164,4 @@ public final class CustomCommand {
 		if(this.pluginSession.equals(null)) return this.htmlSession;
 		else return null;
 	}
-	
-	
-	
 }

@@ -1,11 +1,24 @@
-20:04:52 [INFO] [DiamondCore] Starting Pocket Server!
-20:04:52 [INFO] [DiamondCore] Debug: activated
-20:04:52 [INFO] [DiamondCore] Starting file checkup!
-20:04:52 [INFO] [DiamondCore] Finished file checkup with no errors!
-20:04:52 [INFO] [DiamondCore] Starting Server Properties checkup!
-20:04:52 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
-20:04:52 [INFO] [DiamondCore] Loading plugins!
-20:04:52 [INFO] [DiamondCore] Loading plugin MONKEYTEST v0.1.0 by Vegeta
-20:04:52 [INFO] [MONKEYTEST] Get rekt m8
-20:04:52 [INFO] [DiamondCore] Finished loading plugins!
-20:04:52 [INFO] [DiamondCore] Started Server!
+22:55:23 [INFO] [DiamondCore] Starting Pocket Server!
+22:55:23 [INFO] [DiamondCore] Debug: activated
+22:55:23 [INFO] [DiamondCore] Starting file checkup!
+22:55:23 [INFO] [DiamondCore] Finished file checkup with no errors!
+22:55:23 [INFO] [DiamondCore] Starting Server Properties checkup!
+22:55:23 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
+22:55:23 [INFO] [DiamondCore] Loading plugins!
+22:55:24 [INFO] [DiamondCore] Loading plugin MONKEYTEST v0.1.0 by Vegeta
+22:55:24 [INFO] [MONKEYTEST] Get rekt m8
+22:55:24 [INFO] [DiamondCore] Finished loading plugins!
+22:55:24 [INFO] [DiamondCore] Started Server!
+22:55:26 [INFO] [CONSOLE] Commands: 
+----------
+ban: used to make sure a player by name (uuid) cannot rejoin the server
+pardon: used to remove a player from the ban list
+say: used to broadcast a global message from the console
+help: used to list all of the commands available on the server
+time: used to get or set the time of the world
+stop: used to stop the server
+plugins: used to get the list of plugins being ran on the server at the moment
+reload: used to reload plugins quickly and easily, useful for plugin devs
+ping: PONG!
+----------
+End of commands

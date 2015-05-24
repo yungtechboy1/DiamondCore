@@ -4,17 +4,22 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-import net.trenterprises.diamondcore.cross.command.Command;
+import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
+import net.trenterprises.diamondcore.cross.command.NativeCommand;
 import net.trenterprises.diamondcore.cross.file.FileList;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class PardonCommand extends Command {
+public class PardonCommand extends NativeCommand {
 	
 	protected final String username;
+	
+	public PardonCommand(CommandHandler handler) {
+		this.username = null;
+	}
 	
 	public PardonCommand(String username) {
 		this.username = username;

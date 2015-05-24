@@ -11,10 +11,10 @@
 
 package net.trenterprises.diamondcore.cross.command;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.CommandManager;
-import net.trenterprises.diamondcore.cross.command.custom.CustomCommand;
+import net.trenterprises.diamondcore.cross.command.custom.Command;
 import net.trenterprises.diamondcore.cross.command.diamond.PluginlistCommand;
 import net.trenterprises.diamondcore.cross.command.diamond.ReloadCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.BanCommand;
@@ -32,16 +32,19 @@ import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
  * @author Trent Summerlin
  * @version 1.0
  */
-public abstract class Command {
+public final class CommandHandler {
 	
 	static DiamondLogger logger = new Log4j2Logger("CONSOLE");
-	public static Command[] commandList = new Command[] {
+	public final NativeCommand[] commandList = new NativeCommand[] {
 			// Vanilla commands
-			new BanCommand(""), new PardonCommand(""), new SayCommand(new String[] {}), new HelpCommand(),
-			new TimeCommand(new String[] {}), new StopCommand(),
+			new BanCommand(this), new PardonCommand(this),
+			new SayCommand(this), new HelpCommand(this),
+			new TimeCommand(this), new StopCommand(this),
 			// Vanilla (DiamondCore) comands
-			new PluginlistCommand(), new ReloadCommand()
+			new PluginlistCommand(this), new ReloadCommand(this)
 	};
+	
+	private CommandHandler() {}
 	
 	/**
 	 * Used to get the command type from a String
@@ -260,81 +263,43 @@ public abstract class Command {
 			
 		}
 		else if(commandType.equals(CommandType.HELP) || commandType.equals(CommandType.ALT_HELP)) {
-			HelpCommand command = new HelpCommand();
+			HelpCommand command = new HelpCommand(new CommandHandler().commandList);
 			command.execute(sender, logger);
 		}
 		else {
 			// Make sure the command entered isn't a custom command from a plugin
-			ArrayList<CustomCommand> commands = CustomCommand.commands;
+			ArrayList<Command> commands = Command.commands;
 			boolean foundCommand = false;
-			for(int i = 0; i < commands.size(); i++) {
-				CustomCommand command = commands.get(i);
-				if(command.getName().equalsIgnoreCase(commandLabel)) foundCommand = true;
-			}
-			if(foundCommand) {
-				try {
-					CommandManager.throwCommand(sender, commandLabel, args);
-				} catch(ClassNotFoundException e) {
-					// Ignore, will happen
-				} catch(NoSuchMethodException e) {
-					// Ignore, will happen
-				} catch(Exception e) {
-					e.printStackTrace();
+			for(Command command : commands) {
+				if(command.getName().equalsIgnoreCase(commandLabel)) {
+					try {
+						/*JavaSession session = command.getPluginSession();
+						Method toInvoke = null;
+						
+						/*
+						 * Try and load the executor as it was from the main class of the plugin.
+						 * If an exception is thrown, it's alright. As it's likely the command is
+						 * from another class.
+						
+						try {
+							toInvoke = session.getClassFromPlugin(
+							session.getMainClass()).getMethod("onCommand", 
+							sender.getClass(), commandLabel.getClass(), args.getClass());
+						}
+						catch(Exception e) {
+							toInvoke = null; 
+						}*/
+						Method toInvoke = null;
+						if(command.getExecutor() != null) toInvoke = command.getExecutor().getClass().getMethod("onCommand", sender.getClass(), commandLabel.getClass(), args.getClass());
+						toInvoke.invoke(command.getExecutor(), sender, commandLabel, args);
+						foundCommand = true;
+					} catch(Exception e) {
+						foundCommand = false;
+					}
+					break;
 				}
 			}
-			else logger.info("Unknown command!");
+			if(!foundCommand) logger.info("Unknown command!");
 		}
 	}
-	
-	/**
-	 * This is used to get the name of the
-	 * <br>
-	 * command if needed durin execution
-	 * 
-	 * @return Command name
-	 */
-	public abstract String getName();
-	
-	/**
-	 * This i used to get the description
-	 * <br>
-	 * of the plugin and/or it's use
-	 * 
-	 * @return Plugin description
-	 */
-	public abstract String getDescription();
-	
-	/**
-	 * This is used to get the default parameters
-	 * <br>
-	 * of the plugin, although not all of them are
-	 * <br>
-	 * required
-	 * 
-	 * @return Default parameters for the command
-	 */
-	public abstract String[] getDefaultParameters();
-	
-	/**
-	 * Used to get the current parameters of
-	 * <br>
-	 * the command
-	 * 
-	 * @return Current command parameters
-	 */
-	public abstract String[] getParameters();
-	
-	/**
-	 * Used to execute the command itself, it will
-	 * <br>
-	 * return a string response when doing so, causing
-	 * <br>
-	 * the logger to return the result of the method that
-	 * <br>
-	 * was ran
-	 * 
-	 * @param sender
-	 * @return Command execution result
-	 */
-	public abstract void execute(CommandSender sender, DiamondLogger logger);
 }

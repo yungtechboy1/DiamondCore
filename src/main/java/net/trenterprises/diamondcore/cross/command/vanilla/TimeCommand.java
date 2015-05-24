@@ -1,13 +1,16 @@
 package net.trenterprises.diamondcore.cross.command.vanilla;
 
-import net.trenterprises.diamondcore.cross.command.Command;
+import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
+import net.trenterprises.diamondcore.cross.command.NativeCommand;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.world.time.WorldTime;
 
-public class TimeCommand extends Command {
+public class TimeCommand extends NativeCommand {
 	
 	String[] args;
+	
+	public TimeCommand(CommandHandler handler) {}
 	
 	public TimeCommand(String[] args) {
 		this.args = args;

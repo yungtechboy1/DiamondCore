@@ -1,12 +1,17 @@
 package net.trenterprises.diamondcore.cross.command.vanilla;
 
-import net.trenterprises.diamondcore.cross.command.Command;
+import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
+import net.trenterprises.diamondcore.cross.command.NativeCommand;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 
-public class SayCommand extends Command {
+public class SayCommand extends NativeCommand {
 	
 	private final String[] args;
+	
+	public SayCommand(CommandHandler handler) {
+		this.args = null;
+	}
 	
 	public SayCommand(String[] args) {
 		this.args = args;

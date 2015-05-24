@@ -17,7 +17,7 @@ package net.trenterprises.diamondcore.cross.console;
 
 import java.util.Scanner;
 
-import net.trenterprises.diamondcore.cross.command.Command;
+import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 
 public class ConsoleInputReader {
@@ -32,7 +32,7 @@ public class ConsoleInputReader {
 	public void tick() {
 		if(input.hasNextLine()) nextCommand = input.nextLine();
 		if(nextCommand != null) {
-			Command.run(CommandSender.CONSOLE, nextCommand, Command.getArguments(nextCommand));
+			CommandHandler.run(CommandSender.CONSOLE, nextCommand, CommandHandler.getArguments(nextCommand));
 			nextCommand = null;
 		}
 	}

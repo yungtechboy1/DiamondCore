@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 import net.trenterprises.diamondcore.cross.api.java.JavaSession;
 import net.trenterprises.diamondcore.cross.api.xml.XMLSession;
-import net.trenterprises.diamondcore.cross.command.Command;
+import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
+import net.trenterprises.diamondcore.cross.command.NativeCommand;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 
-public class StopCommand extends Command {
-
+public class StopCommand extends NativeCommand {
+	
+	public StopCommand(CommandHandler handler) {}
+	public StopCommand() {}
+	
 	@Override
 	public String getName() {
 		return "stop";

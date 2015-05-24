@@ -4,15 +4,19 @@ import java.io.IOException;
 
 import net.trenterprises.diamondcore.cross.api.java.JavaLoader;
 import net.trenterprises.diamondcore.cross.api.xml.XMLLoader;
-import net.trenterprises.diamondcore.cross.command.Command;
+import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
-import net.trenterprises.diamondcore.cross.command.custom.CustomCommand;
+import net.trenterprises.diamondcore.cross.command.NativeCommand;
+import net.trenterprises.diamondcore.cross.command.custom.Command;
 import net.trenterprises.diamondcore.cross.file.PropertiesCheckup;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.settings.ServerSettings;
 
-public class ReloadCommand extends Command {
-
+public class ReloadCommand extends NativeCommand {
+	
+	public ReloadCommand(CommandHandler handler) {}
+	public ReloadCommand() {}
+	
 	@Override
 	public String getName() {
 		return "reload";
@@ -43,7 +47,7 @@ public class ReloadCommand extends Command {
 			XMLLoader.unloadPlugins();
 			
 			// Clear custom commands
-			CustomCommand.commands.clear();
+			Command.commands.clear();
 			
 			// Do a properties checkup
 			new PropertiesCheckup();

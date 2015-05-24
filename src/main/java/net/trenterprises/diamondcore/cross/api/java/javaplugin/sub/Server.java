@@ -41,23 +41,6 @@ public class Server {
 	}
 	
 	/**
-	 * Used to retrieve a command made by a plugin.
-	 * <br>
-	 * This can be used to set a command executer so the
-	 * <br>
-	 * compiler knows it should go there and execute the
-	 * <br>
-	 * onCommand() method
-	 * 
-	 * @author Trent Summerlin
-	 * @version 1.0
-	 * @return Command object
-	 */
-	public CommandManager getCommandManager() {
-		return new CommandManager();
-	}
-	
-	/**
 	 * Used to retrieve the server logger
 	 * 
 	 * @author Trent Summerlin

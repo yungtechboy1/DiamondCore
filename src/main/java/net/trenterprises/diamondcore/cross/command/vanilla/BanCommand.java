@@ -15,20 +15,21 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-import net.trenterprises.diamondcore.cross.command.Command;
+import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
+import net.trenterprises.diamondcore.cross.command.NativeCommand;
 import net.trenterprises.diamondcore.cross.file.FileList;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public final class BanCommand extends Command {
+public final class BanCommand extends NativeCommand {
 	
 	private final String username;
 	private final String reason;
 	
-	public BanCommand() {
+	public BanCommand(CommandHandler handler) {
 		this.username = null;
 		this.reason = null;
 	}
