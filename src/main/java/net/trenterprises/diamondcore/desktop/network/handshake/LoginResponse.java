@@ -19,8 +19,8 @@ import java.net.Socket;
 import java.util.Random;
 
 import net.trenterprises.diamondcore.cross.Diamond;
+import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.ServerSettings;
-import net.trenterprises.diamondcore.cross.api.java.event.TriggerCause;
 import net.trenterprises.diamondcore.cross.api.java.event.player.PlayerLoginEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.cross.borrowed.RSA;
@@ -56,7 +56,7 @@ public class LoginResponse extends HandshakePacket {
 		this.decode();
 		
 		// Throw event
-		this.event = new PlayerLoginEvent(TriggerCause.DESKTOP, this.s, this.s.getInetAddress(), this.s.getPort());
+		this.event = new PlayerLoginEvent(PlayerType.DESKTOP, this.s, this.s.getInetAddress(), this.s.getPort());
 		PluginManager.throwEvent(this.event);
 		if(!Diamond.getOnlinePlayers().contains(this.username) && event.getLoginCancelled()) Diamond.getOnlinePlayers().add(this.username);
 	}

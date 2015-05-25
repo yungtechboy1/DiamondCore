@@ -18,8 +18,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 import net.trenterprises.diamondcore.cross.Diamond;
+import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.ServerSettings;
-import net.trenterprises.diamondcore.cross.api.java.event.TriggerCause;
 import net.trenterprises.diamondcore.cross.api.java.event.server.ServerListPingEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.pocket.network.PocketPacketIDList;
@@ -51,7 +51,7 @@ public class ServerListPingResponse implements BasePocketPacket {
 		this.socket = socket;
 		this.packet = packet;
 		this.serverID = serverID;
-		event = new ServerListPingEvent(TriggerCause.POCKET, packet.getAddress(), packet.getPort(), ServerSettings.getPEMOTD(), null);
+		event = new ServerListPingEvent(PlayerType.POCKET, packet.getAddress(), packet.getPort(), ServerSettings.getPEMOTD());
 		PluginManager.throwEvent(this.event);
 		this.sendResponse();
 	}

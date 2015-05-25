@@ -1,4 +1,4 @@
-package net.trenterprises.diamondcore.cross.api.java.event;
+package net.trenterprises.diamondcore.cross;
 
 /**
  * This enumeration is used in events so certain code
@@ -7,7 +7,7 @@ package net.trenterprises.diamondcore.cross.api.java.event;
  * @author Trent Summerlin
  * @version 1.0
  */
-public enum TriggerCause {
+public enum PlayerType {
 	
 	POCKET, DESKTOP
 	

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-import net.trenterprises.diamondcore.cross.api.java.event.TriggerCause;
+import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.api.java.event.player.PlayerLoginEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.pocket.network.PocketPacketIDList;
@@ -90,7 +90,7 @@ public class JoinRequestStage2Response implements BasePocketPacket {
 	}
 	
 	public void throwEvent() {
-		this.event = new PlayerLoginEvent(TriggerCause.POCKET, this.socket, packet.getAddress(), packet.getPort());
+		this.event = new PlayerLoginEvent(PlayerType.POCKET, this.socket, packet.getAddress(), packet.getPort());
 		PluginManager.throwEvent(this.event);
 	}
 	

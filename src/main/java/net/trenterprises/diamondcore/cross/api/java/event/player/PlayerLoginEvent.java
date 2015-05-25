@@ -16,8 +16,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.api.java.event.Event;
-import net.trenterprises.diamondcore.cross.api.java.event.TriggerCause;
 import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPacket;
 
 /**
@@ -29,7 +29,7 @@ import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPack
  */
 public final class PlayerLoginEvent extends Event {
 	
-	protected final TriggerCause cause;
+	protected final PlayerType playerType;
 	private final Socket desktop;
 	@SuppressWarnings("unused")
 	private final DatagramSocket pocket;
@@ -38,16 +38,16 @@ public final class PlayerLoginEvent extends Event {
 	
 	private boolean isCancelled = false;
 	
-	public PlayerLoginEvent(TriggerCause cause, Socket desktop, InetAddress address, int port) {
-		this.cause = cause;
+	public PlayerLoginEvent(PlayerType playerType, Socket desktop, InetAddress address, int port) {
+		this.playerType = playerType;
 		this.desktop = desktop;
 		this.pocket = null;
 		this.address = address;
 		this.port = port;
 	}
 	
-	public PlayerLoginEvent(TriggerCause cause, DatagramSocket pocket, InetAddress address, int port) {
-		this.cause = cause;
+	public PlayerLoginEvent(PlayerType playerType, DatagramSocket pocket, InetAddress address, int port) {
+		this.playerType = playerType;
 		this.desktop = null;
 		this.pocket = pocket;
 		this.address = address;
@@ -65,9 +65,9 @@ public final class PlayerLoginEvent extends Event {
 	 * @version 1.0
 	 */
 	public void cancelLogin(String reason) {
-		if(cause == TriggerCause.POCKET) {
+		if(playerType == PlayerType.POCKET) {
 			this.getLogger().warn("Note, this proccess can not be done as this code has not been finished yet");
-		} else if(cause == TriggerCause.DESKTOP) {
+		} else if(playerType == PlayerType.DESKTOP) {
 			try {
 				new ClientDisconnectPacket(desktop, reason);
 			} catch (IOException e) {
@@ -108,6 +108,12 @@ public final class PlayerLoginEvent extends Event {
 	 */
 	public final int getPort() {
 		return port;
+	}
+	
+	// TODO: Add getPlayer();
+	
+	public final PlayerType getPlayerType() {
+		return playerType;
 	}
 	
 }

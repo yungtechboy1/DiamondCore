@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import net.trenterprises.diamondcore.cross.Diamond;
+import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.ServerSettings;
-import net.trenterprises.diamondcore.cross.api.java.event.TriggerCause;
 import net.trenterprises.diamondcore.cross.api.java.event.server.ServerListPingEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.cross.borrowed.VarInt;
@@ -38,7 +38,7 @@ public class ServerListPingResponse extends HandshakePacket {
 		this.output = new DataOutputStream(this.s.getOutputStream());
 		
 		// Throw event before putting together json because something might be changed by a plugin
-		this.event = new ServerListPingEvent(TriggerCause.DESKTOP, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD(), ServerSettings.getServerFavicon());
+		this.event = new ServerListPingEvent(PlayerType.DESKTOP, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD(), ServerSettings.getServerFavicon());
 		PluginManager.throwEvent(this.event);
 		
 		// Create MOTD JSON Object
