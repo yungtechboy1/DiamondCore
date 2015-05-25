@@ -1,11 +1,20 @@
-13:54:14 [INFO] [DiamondCore] Starting Pocket Server!
-13:54:14 [INFO] [DiamondCore] Debug: activated
-13:54:14 [INFO] [DiamondCore] Starting file checkup!
-13:54:14 [INFO] [DiamondCore] Finished file checkup with no errors!
-13:54:14 [INFO] [DiamondCore] Starting Server Properties checkup!
-13:54:14 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
-13:54:14 [INFO] [DiamondCore] Loading plugins!
-13:54:14 [INFO] [DiamondCore] Loading plugin MONKEYTEST v0.1.0 by Vegeta
-13:54:14 [INFO] [MONKEYTEST] Get rekt m8
-13:54:14 [INFO] [DiamondCore] Finished loading plugins!
-13:54:14 [INFO] [DiamondCore] Started Server!
+10:01:32 [INFO] [DiamondCore] Starting Pocket Server!
+10:01:32 [INFO] [DiamondCore] Debug: activated
+10:01:32 [INFO] [DiamondCore] Starting file checkup!
+10:01:32 [INFO] [DiamondCore] Finished file checkup with no errors!
+10:01:32 [INFO] [DiamondCore] Starting Server Properties checkup!
+10:01:32 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
+10:01:32 [INFO] [DiamondCore] Loading plugins!
+10:01:32 [INFO] [DiamondCore] Loading plugin PluginTest v0.1.0 by Trent Summerlin
+10:01:32 [INFO] [PluginTest] Test plugin loaded!
+10:01:32 [INFO] [DiamondCore] Finished loading plugins!
+10:01:32 [INFO] [DiamondCore] Started Server!
+10:01:35 [INFO] [CONSOLE] Reloading...
+10:01:35 [INFO] [PluginTest] Test plugin unloaded!
+10:01:35 [INFO] [DiamondCore] Starting Server Properties checkup!
+10:01:35 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
+10:01:35 [INFO] [DiamondCore] Loading plugins!
+10:01:35 [INFO] [DiamondCore] Loading plugin PluginTest v0.1.0 by Trent Summerlin
+10:01:35 [INFO] [PluginTest] Test plugin loaded!
+10:01:35 [INFO] [DiamondCore] Finished loading plugins!
+10:01:35 [INFO] [CONSOLE] Reload complete!

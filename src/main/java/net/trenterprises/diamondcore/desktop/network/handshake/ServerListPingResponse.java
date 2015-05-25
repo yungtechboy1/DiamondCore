@@ -9,7 +9,8 @@ import java.util.UUID;
 
 import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.ServerSettings;
-import net.trenterprises.diamondcore.cross.api.java.event.desktop.DesktopServerListPingEvent;
+import net.trenterprises.diamondcore.cross.api.java.event.TriggerCause;
+import net.trenterprises.diamondcore.cross.api.java.event.server.ServerListPingEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.cross.borrowed.VarInt;
 import net.trenterprises.diamondcore.desktop.network.DesktopPacketIDList;
@@ -28,7 +29,7 @@ public class ServerListPingResponse extends HandshakePacket {
 	JSONObject object = new JSONObject();
 	
 	// Event side
-	DesktopServerListPingEvent DSLPE;
+	ServerListPingEvent event;
 	
 	@SuppressWarnings("unchecked")
 	public ServerListPingResponse(Socket s) throws IOException {
@@ -37,8 +38,8 @@ public class ServerListPingResponse extends HandshakePacket {
 		this.output = new DataOutputStream(this.s.getOutputStream());
 		
 		// Throw event before putting together json because something might be changed by a plugin
-		DSLPE = new DesktopServerListPingEvent(this, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD(), ServerSettings.getServerFavicon());
-		PluginManager.throwEvent(DSLPE);
+		this.event = new ServerListPingEvent(TriggerCause.DESKTOP, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD(), ServerSettings.getServerFavicon());
+		PluginManager.throwEvent(this.event);
 		
 		// Create MOTD JSON Object
 		JSONObject versionMap = new JSONObject();
@@ -64,10 +65,10 @@ public class ServerListPingResponse extends HandshakePacket {
 										
 		// Description and favicon
 		JSONObject info = new JSONObject();
-		info.put("text", DSLPE.getMOTD());
+		info.put("text", event.getMOTD());
 			
 		// Put icon if available
-		if(DSLPE.getFavicon() != null) object.put("favicon", DSLPE.getFavicon());
+		if(event.getFavicon() != null) object.put("favicon", event.getFavicon());
 					
 		// Now put everything all toghether
 		object.put("version", versionMap);

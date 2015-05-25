@@ -20,10 +20,10 @@ package net.trenterprises.diamondcore.cross.logging;
  */
 public abstract interface DiamondLogger{
 	
-	String SoftwareTag = "DiamondCore";
-	String InfoTag = "MSG";
-	String WarnTag = "WARN";
-	String ErrorTag = "ERR";
+	String softwareTag = "DiamondCore";
+	String infoTag = "INFO";
+	String warnTag = "WARN";
+	String errorTag = "ERR";
 	
 	void info(String msg);
 	void warn(String msg);

@@ -150,16 +150,11 @@ public final class CommandHandler {
 		CommandType commandType = getByName(commandLabel);
 		if(commandType.equals(CommandType.SAY)) {
 			SayCommand command = new SayCommand(args);
-			boolean shouldRun = sender.equals(CommandSender.CONSOLE);
-			if(!shouldRun) {
-				// Check other things to see if should run should be true
-			}
-			if(shouldRun) command.execute(sender, logger);
+			command.execute(sender, logger);
 		}
 		else if(commandType.equals(CommandType.TIME)) {
 			TimeCommand command = new TimeCommand(args);
-			boolean shouldRun = sender.equals(CommandSender.CONSOLE);
-			if(shouldRun) command.execute(sender, logger);
+			command.execute(sender, logger);
 		}
 		else if(commandType.equals(CommandType.SAVE_ALL)) {
 			
@@ -182,34 +177,20 @@ public final class CommandHandler {
 		}
 		else if(commandType.equals(CommandType.RELOAD)) {
 			ReloadCommand command = new ReloadCommand();
-			boolean shouldRun = sender.equals(CommandSender.CONSOLE);
-			if(shouldRun) command.execute(sender, logger);
+			command.execute(sender, logger);
 		}
 		else if(commandType.equals(CommandType.STOP)) {
 			StopCommand command = new StopCommand();
-			boolean shouldRun = sender.equals(CommandSender.CONSOLE);
-			if(shouldRun) command.execute(sender, logger);
+			command.execute(sender, logger);
 		}
 		else if(commandType.equals(CommandType.KICK)) {
 			
 		}
 		else if(commandType.equals(CommandType.BAN)) {
 			BanCommand command = null;
-			boolean shouldRun = sender.equals(CommandSender.CONSOLE);
-			if(!shouldRun) {
-				// Check other things to see if should run should be true
-			}
-			if(shouldRun) {
-				if(args.length == 1) command = new BanCommand(args[0]);
-				else if(args.length >= 2) command = new BanCommand(args[0], ArrayUtils.stitchArray(args, 1));
-				command.execute(sender, logger);
-			} else {
-				if(sender.equals(CommandSender.POCKETPLAYER)) {
-					// Send PE packet result
-				} else if(sender.equals(CommandSender.DESKTOPPLAYER)) {
-					// Send PC packet result
-				}
-			}
+			if(args.length == 1) command = new BanCommand(args[0]);
+			else if(args.length >= 2) command = new BanCommand(args[0], ArrayUtils.stitchArray(args, 1));
+			command.execute(sender, logger);
 		}
 		else if(commandType.equals(CommandType.BAN_IP)) {
 			
@@ -217,15 +198,9 @@ public final class CommandHandler {
 		else if(commandType.equals(CommandType.PARDON)) {
 			if(args.length == 1) {
 				PardonCommand command = new PardonCommand(args[0]);
-				boolean shouldRun = sender.equals(CommandSender.CONSOLE);
-				if(!shouldRun) {
-					// Check if it should be true
-				}
-				if(shouldRun) command.execute(sender, logger); 
+				command.execute(sender, logger); 
 			}
-			else {
-				logger.err("INSUFFICIENT ARGS");
-			}
+			else logger.err("INSUFFICIENT ARGS");
 		}
 		else if(commandType.equals(CommandType.PARDON_IP)) {
 			
@@ -275,7 +250,6 @@ public final class CommandHandler {
 							command.getPluginSession().executeCommand(sender, commandLabel, args);
 						} catch (Exception e) {
 							logger.info(command.getUsage());
-							e.printStackTrace();
 						}
 					} 
 					// If there is one, get it and then run it normally

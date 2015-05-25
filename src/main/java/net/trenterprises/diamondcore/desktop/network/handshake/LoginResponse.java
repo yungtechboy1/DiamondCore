@@ -14,12 +14,17 @@ package net.trenterprises.diamondcore.desktop.network.handshake;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.Socket;
+import java.util.Random;
 
 import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.ServerSettings;
-import net.trenterprises.diamondcore.cross.api.java.event.desktop.DesktopPlayerLoginEvent;
+import net.trenterprises.diamondcore.cross.api.java.event.TriggerCause;
+import net.trenterprises.diamondcore.cross.api.java.event.player.PlayerLoginEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
+import net.trenterprises.diamondcore.cross.borrowed.RSA;
+import net.trenterprises.diamondcore.cross.borrowed.VarInt;
 import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPacket;
 import net.trenterprises.diamondcore.desktop.network.utils.PacketUtils;
 
@@ -39,6 +44,9 @@ public class LoginResponse extends HandshakePacket {
 	// Packet info
 	protected String username;
 	
+	// Event info
+	protected PlayerLoginEvent event;
+	
 	public LoginResponse(Socket s) throws IOException {
 		this.s = s;
 		this.input = new DataInputStream(this.s.getInputStream());
@@ -48,13 +56,9 @@ public class LoginResponse extends HandshakePacket {
 		this.decode();
 		
 		// Throw event
-		try {
-			PluginManager.throwEvent(new DesktopPlayerLoginEvent(this.username, s));
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		if(!Diamond.getOnlinePlayers().contains(this.username)) Diamond.getOnlinePlayers().add(this.username);
+		this.event = new PlayerLoginEvent(TriggerCause.DESKTOP, this.s, this.s.getInetAddress(), this.s.getPort());
+		PluginManager.throwEvent(this.event);
+		if(!Diamond.getOnlinePlayers().contains(this.username) && event.getLoginCancelled()) Diamond.getOnlinePlayers().add(this.username);
 	}
 	
 	/**
@@ -78,8 +82,22 @@ public class LoginResponse extends HandshakePacket {
 	@Override
 	public void sendResponse() throws IOException {
 		// Response not completed yet
-		if(Diamond.getOnlinePlayers().indexOf(this.username) != -1 && Diamond.getOnlinePlayers().size() < ServerSettings.getMaxPlayers()) Diamond.getOnlinePlayers().add(this.username);
-		if(Diamond.getOnlinePlayers().size() >= ServerSettings.getMaxPlayers()) new ClientDisconnectPacket(this.s, "The server is full!");
+		if(!event.getLoginCancelled()) {
+			if(Diamond.getOnlinePlayers().indexOf(this.username) != -1 && Diamond.getOnlinePlayers().size() < ServerSettings.getMaxPlayers()) Diamond.getOnlinePlayers().add(this.username);
+			if(Diamond.getOnlinePlayers().size() >= ServerSettings.getMaxPlayers()) new ClientDisconnectPacket(this.s, "The server is full!");
+		}
+		
+		if(!event.getLoginCancelled()) {
+			output.write(VarInt.writeUnsignedVarInt(0));
+			output.write("".getBytes());
+			BigInteger keyOne = RSA.generateKey(new Random().nextInt(10));
+			output.write(VarInt.writeUnsignedVarInt(keyOne.toByteArray().length));
+			output.write(keyOne.toByteArray());
+			BigInteger keyTwo = RSA.generateKey(new Random().nextInt(10));
+			output.write(VarInt.writeUnsignedVarInt(keyTwo.toByteArray().length));
+			output.write(keyTwo.toByteArray());
+			output.flush();
+		}
 	}
 
 }

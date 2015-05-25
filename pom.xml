@@ -21,6 +21,12 @@
     </repositories>
 
     <dependencies>
+    	<dependency>
+			<groupId>org.kohsuke</groupId>
+			<artifactId>github-api</artifactId>
+			<version>1.68</version>
+	</dependency>
+    	
         <dependency>
     		<groupId>org.apache.commons</groupId>
     		<artifactId>commons-collections4</artifactId>

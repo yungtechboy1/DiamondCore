@@ -17,7 +17,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-import net.trenterprises.diamondcore.cross.api.java.event.pocket.PocketPlayerLoginEvent;
+import net.trenterprises.diamondcore.cross.api.java.event.TriggerCause;
+import net.trenterprises.diamondcore.cross.api.java.event.player.PlayerLoginEvent;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.pocket.network.PocketPacketIDList;
 
@@ -33,43 +34,43 @@ import org.blockserver.io.BinaryWriter;
 public class JoinRequestStage2Response implements BasePocketPacket {
 	
 	// Server Side
-	protected DatagramSocket Socket;
-	protected DatagramPacket Packet;
-	protected long ServerID;
+	protected DatagramSocket socket;
+	protected DatagramPacket packet;
+	protected long serverID;
 		
 	// Client Side
-	protected byte[] Magic;
-	protected byte SecurityCookie;
-	protected short ServerUDPPort;
+	protected byte[] magic;
+	protected byte securityCookie;
+	protected short serverUDPPort;
 	protected short MTU;
-	protected long ClientID;
-	protected short ClientPort;
+	protected long clientID;
+	protected short clientPort;
 	
-	// Event side
-	PocketPlayerLoginEvent PPLE;
+	// Event info
+	PlayerLoginEvent event;
 	
-	public JoinRequestStage2Response(DatagramSocket Socket, DatagramPacket Packet, long ServerID) throws IOException {
-		this.Socket = Socket;
-		this.Packet = Packet;
-		this.ServerID = ServerID;
-		this.ClientPort = (short) Packet.getPort();
+	public JoinRequestStage2Response(DatagramSocket socket, DatagramPacket packet, long serverID) throws IOException {
+		this.socket = socket;
+		this.packet = packet;
+		this.serverID = serverID;
+		this.clientPort = (short) packet.getPort();
 		this.throwEvent();
 		this.sendResponse();
 	}
 
 	@Override
 	public int getPacketID() {
-		return Packet.getData()[0];
+		return packet.getData()[0];
 	}
 
 	@Override
 	public void decode() throws IOException {
-		BinaryReader reader = new BinaryReader(new ByteArrayInputStream(Packet.getData()));
-		Magic = reader.read(PocketPacketIDList.MAGIC.length);
-		SecurityCookie = reader.readByte();
-		ServerUDPPort = reader.readShort();
+		BinaryReader reader = new BinaryReader(new ByteArrayInputStream(packet.getData()));
+		magic = reader.read(PocketPacketIDList.MAGIC.length);
+		securityCookie = reader.readByte();
+		serverUDPPort = reader.readShort();
 		MTU = reader.readShort();
-		ClientID = reader.readLong();
+		clientID = reader.readLong();
 		reader.close();
 	}
 
@@ -79,22 +80,18 @@ public class JoinRequestStage2Response implements BasePocketPacket {
 		BinaryWriter writer = new BinaryWriter(output);
 		writer.writeByte(PocketPacketIDList.ID_OPEN_CONNECTION_REPLY_2);
 		writer.write(PocketPacketIDList.MAGIC);
-		writer.writeLong(ServerID);
-		writer.writeShort(ClientPort);
+		writer.writeLong(serverID);
+		writer.writeShort(clientPort);
 		writer.writeShort(MTU);
 		writer.writeByte((byte) 0);
-		Socket.send(new DatagramPacket(output.toByteArray(), output.toByteArray().length, Packet.getAddress(), Packet.getPort()));
+		socket.send(new DatagramPacket(output.toByteArray(), output.toByteArray().length, packet.getAddress(), packet.getPort()));
 		writer.close();
 		output.close();
 	}
 	
 	public void throwEvent() {
-		PPLE = new PocketPlayerLoginEvent(this, Packet.getAddress(), Packet.getPort(), ClientID, MTU);
-		try {
-			PluginManager.throwEvent(PPLE);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.event = new PlayerLoginEvent(TriggerCause.POCKET, this.socket, packet.getAddress(), packet.getPort());
+		PluginManager.throwEvent(this.event);
 	}
 	
 	
