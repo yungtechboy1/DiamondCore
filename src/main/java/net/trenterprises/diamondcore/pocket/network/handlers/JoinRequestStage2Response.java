@@ -18,8 +18,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 import net.trenterprises.diamondcore.cross.PlayerType;
+import net.trenterprises.diamondcore.cross.api.java.event.EventDispatcher;
 import net.trenterprises.diamondcore.cross.api.java.event.player.PlayerLoginEvent;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.pocket.network.PocketPacketIDList;
 
 import org.blockserver.io.BinaryReader;
@@ -54,7 +54,9 @@ public class JoinRequestStage2Response implements BasePocketPacket {
 		this.packet = packet;
 		this.serverID = serverID;
 		this.clientPort = (short) packet.getPort();
-		this.throwEvent();
+		
+		this.event = new PlayerLoginEvent(PlayerType.POCKET, this.socket, packet.getAddress(), packet.getPort());
+		EventDispatcher.throwEvent(this.event);
 		this.sendResponse();
 	}
 
@@ -87,11 +89,6 @@ public class JoinRequestStage2Response implements BasePocketPacket {
 		socket.send(new DatagramPacket(output.toByteArray(), output.toByteArray().length, packet.getAddress(), packet.getPort()));
 		writer.close();
 		output.close();
-	}
-	
-	public void throwEvent() {
-		this.event = new PlayerLoginEvent(PlayerType.POCKET, this.socket, packet.getAddress(), packet.getPort());
-		PluginManager.throwEvent(this.event);
 	}
 	
 	

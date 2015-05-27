@@ -69,7 +69,8 @@ public final class PlayerLoginEvent extends Event {
 			this.getLogger().warn("Note, this proccess can not be done as this code has not been finished yet");
 		} else if(playerType == PlayerType.DESKTOP) {
 			try {
-				new ClientDisconnectPacket(desktop, reason);
+				ClientDisconnectPacket packet = new ClientDisconnectPacket(desktop, reason);
+				packet.sendResponse();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -1,10 +1,11 @@
 package net.trenterprises.diamondcore.desktop.network.utils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import net.trenterprises.diamondcore.cross.borrowed.VarInt;
+import net.trenterprises.diamondcore.cross.utils.VarInt;
 
 /**
  * This class is used to work with features quickly
@@ -29,7 +30,7 @@ public final class PacketUtils {
 	 * @return Decoded String
 	 */
 	public static String readString(DataInputStream input) throws IOException {
-		int length = VarInt.readUnsignedVarInt(input.readByte());
+		int length = VarInt.readUnsignedVarInt(input, true);
 		byte[] rawString = new byte[length];
 		for(int i = 0; i < length; i++) rawString[i] = input.readByte();
 		return new String(rawString, "UTF-8");
@@ -65,6 +66,24 @@ public final class PacketUtils {
 	 */
 	public static void writeUnsignedShort(short number, DataOutputStream output) throws IOException {
 		output.writeChar(number);
+	}
+	
+	/**
+	 * Used to read multiple bytes from a InputStream at once
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @param input
+	 * 		InputStream to read from
+	 * @param length
+	 * 		Amount of bytes to read
+	 * @return Bytes read
+	 * @throws IOException 
+	 */
+	public static byte[] readBytes(DataInputStream input, int length) throws IOException {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		for(int i = 0; i < length; i++) output.write(input.readByte());
+		return output.toByteArray();
 	}
 	
 }

@@ -1,20 +1,9 @@
-10:01:32 [INFO] [DiamondCore] Starting Pocket Server!
-10:01:32 [INFO] [DiamondCore] Debug: activated
-10:01:32 [INFO] [DiamondCore] Starting file checkup!
-10:01:32 [INFO] [DiamondCore] Finished file checkup with no errors!
-10:01:32 [INFO] [DiamondCore] Starting Server Properties checkup!
-10:01:32 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
-10:01:32 [INFO] [DiamondCore] Loading plugins!
-10:01:32 [INFO] [DiamondCore] Loading plugin PluginTest v0.1.0 by Trent Summerlin
-10:01:32 [INFO] [PluginTest] Test plugin loaded!
-10:01:32 [INFO] [DiamondCore] Finished loading plugins!
-10:01:32 [INFO] [DiamondCore] Started Server!
-10:01:35 [INFO] [CONSOLE] Reloading...
-10:01:35 [INFO] [PluginTest] Test plugin unloaded!
-10:01:35 [INFO] [DiamondCore] Starting Server Properties checkup!
-10:01:35 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
-10:01:35 [INFO] [DiamondCore] Loading plugins!
-10:01:35 [INFO] [DiamondCore] Loading plugin PluginTest v0.1.0 by Trent Summerlin
-10:01:35 [INFO] [PluginTest] Test plugin loaded!
-10:01:35 [INFO] [DiamondCore] Finished loading plugins!
-10:01:35 [INFO] [CONSOLE] Reload complete!
+19:54:38 [INFO] [DiamondCore] Starting Pocket Server!
+19:54:38 [INFO] [DiamondCore] Debug: activated
+19:54:38 [INFO] [DiamondCore] Starting file checkup!
+19:54:38 [INFO] [DiamondCore] Finished file checkup with no errors!
+19:54:38 [INFO] [DiamondCore] Starting Server Properties checkup!
+19:54:38 [INFO] [DiamondCore] Finished Server Properties checkup with no errors!
+19:54:38 [INFO] [DiamondCore] Loading plugins!
+19:54:38 [INFO] [DiamondCore] Finished loading plugins!
+19:54:38 [INFO] [DiamondCore] Started Server!

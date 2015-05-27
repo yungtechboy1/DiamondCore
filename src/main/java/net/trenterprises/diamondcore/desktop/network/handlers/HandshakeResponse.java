@@ -16,7 +16,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import net.trenterprises.diamondcore.cross.borrowed.VarInt;
+import net.trenterprises.diamondcore.cross.utils.VarInt;
 import net.trenterprises.diamondcore.desktop.network.DesktopPacketIDList;
 import net.trenterprises.diamondcore.desktop.network.handshake.HandshakePacket;
 import net.trenterprises.diamondcore.desktop.network.handshake.HandshakeType;

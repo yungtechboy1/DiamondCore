@@ -1,4 +1,4 @@
-package net.trenterprises.diamondcore.cross.borrowed;
+package net.trenterprises.diamondcore.cross.utils;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -18,6 +18,7 @@ package net.trenterprises.diamondcore.cross.borrowed;
  */
 
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -33,6 +34,8 @@ import java.io.IOException;
  * <p>Signed values are further encoded using so-called zig-zag encoding
  * in order to make them "compatible" with variable-length encoding.</p>
  */
+
+// NOTE: This class has been modified for the use of DiamondCore
 public final class VarInt {
 
     private VarInt() {}
@@ -209,6 +212,20 @@ public final class VarInt {
     
     public static int readUnsignedVarInt(byte b) {
     	return readUnsignedVarInt(new byte[] {b});
+    }
+    
+    public static int readUnsignedVarInt(DataInput in, boolean secure) throws IOException {
+    	ByteArrayOutputStream data = new ByteArrayOutputStream();
+		data.write(in.readByte());
+		int var = VarInt.readUnsignedVarInt(data.toByteArray());
+		if(secure) {
+			// Keep reading until the length is 0 or bigger
+			while(var < 0) {
+				data.write(in.readByte());
+				var = VarInt.readUnsignedVarInt(data.toByteArray());
+			}
+		}
+		return var;
     }
     
     public static int readUnsignedVarInt(byte[] bytes) {

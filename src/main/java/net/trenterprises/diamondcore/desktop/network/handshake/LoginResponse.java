@@ -11,21 +11,20 @@
 
 package net.trenterprises.diamondcore.desktop.network.handshake;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.Socket;
-import java.util.Random;
+import java.security.NoSuchAlgorithmException;
 
 import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.ServerSettings;
+import net.trenterprises.diamondcore.cross.api.java.event.EventDispatcher;
 import net.trenterprises.diamondcore.cross.api.java.event.player.PlayerLoginEvent;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
-import net.trenterprises.diamondcore.cross.borrowed.RSA;
-import net.trenterprises.diamondcore.cross.borrowed.VarInt;
-import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPacket;
+import net.trenterprises.diamondcore.cross.utils.RSA;
+import net.trenterprises.diamondcore.cross.utils.VarInt;
 import net.trenterprises.diamondcore.desktop.network.utils.PacketUtils;
 
 /**
@@ -57,8 +56,10 @@ public class LoginResponse extends HandshakePacket {
 		
 		// Throw event
 		this.event = new PlayerLoginEvent(PlayerType.DESKTOP, this.s, this.s.getInetAddress(), this.s.getPort());
-		PluginManager.throwEvent(this.event);
-		if(!Diamond.getOnlinePlayers().contains(this.username) && event.getLoginCancelled()) Diamond.getOnlinePlayers().add(this.username);
+		EventDispatcher.throwEvent(this.event);
+		if(!Diamond.getOnlinePlayers().contains(this.username) && !event.getLoginCancelled()) Diamond.getOnlinePlayers().add(this.username);
+		
+		this.sendResponse();
 	}
 	
 	/**
@@ -81,22 +82,47 @@ public class LoginResponse extends HandshakePacket {
 
 	@Override
 	public void sendResponse() throws IOException {
+		
 		// Response not completed yet
 		if(!event.getLoginCancelled()) {
 			if(Diamond.getOnlinePlayers().indexOf(this.username) != -1 && Diamond.getOnlinePlayers().size() < ServerSettings.getMaxPlayers()) Diamond.getOnlinePlayers().add(this.username);
-			if(Diamond.getOnlinePlayers().size() >= ServerSettings.getMaxPlayers()) new ClientDisconnectPacket(this.s, "The server is full!");
+			if(Diamond.getOnlinePlayers().size() >= ServerSettings.getMaxPlayers()) event.cancelLogin("The server is full!");
 		}
 		
 		if(!event.getLoginCancelled()) {
-			output.write(VarInt.writeUnsignedVarInt(0));
-			output.write("".getBytes());
-			BigInteger keyOne = RSA.generateKey(new Random().nextInt(10));
-			output.write(VarInt.writeUnsignedVarInt(keyOne.toByteArray().length));
-			output.write(keyOne.toByteArray());
-			BigInteger keyTwo = RSA.generateKey(new Random().nextInt(10));
-			output.write(VarInt.writeUnsignedVarInt(keyTwo.toByteArray().length));
-			output.write(keyTwo.toByteArray());
+			// Create key
+			byte[] publicKey = null;
+			byte[] privateKey = null;
+			try {
+				RSA key = new RSA();
+				publicKey = key.publicKey;
+				privateKey = key.privateKey;
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			
+			// Write data
+			ByteArrayOutputStream data = new ByteArrayOutputStream();
+			data.write(0x01);
+			data.write(VarInt.writeUnsignedVarInt(15));
+			data.write("                    ".getBytes());
+			data.write(VarInt.writeUnsignedVarInt(publicKey.length));
+			data.write(publicKey);
+			data.write(VarInt.writeUnsignedVarInt(privateKey.length));
+			data.write(privateKey);
+			data.flush();
+			
+			// Send packet
+			output.write(VarInt.writeUnsignedVarInt(data.size()));
+			output.write(data.toByteArray());
 			output.flush();
+			
+			// Wait for response, and verify tokens
+			while(input.available() < 0);
+			byte[] publicToken = PacketUtils.readBytes(input, VarInt.readUnsignedVarInt(input, true));
+			byte[] privateToken = PacketUtils.readBytes(input, VarInt.readUnsignedVarInt(input, true));
+			
+			System.out.println("Valid token?: " + (publicToken == publicKey && privateToken == privateKey));
 		}
 	}
 

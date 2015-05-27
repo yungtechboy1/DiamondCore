@@ -1,5 +1,6 @@
 package net.trenterprises.diamondcore.desktop.network.handshake;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -10,9 +11,9 @@ import java.util.UUID;
 import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.ServerSettings;
+import net.trenterprises.diamondcore.cross.api.java.event.EventDispatcher;
 import net.trenterprises.diamondcore.cross.api.java.event.server.ServerListPingEvent;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
-import net.trenterprises.diamondcore.cross.borrowed.VarInt;
+import net.trenterprises.diamondcore.cross.utils.VarInt;
 import net.trenterprises.diamondcore.desktop.network.DesktopPacketIDList;
 
 import org.json.simple.JSONArray;
@@ -39,7 +40,7 @@ public class ServerListPingResponse extends HandshakePacket {
 		
 		// Throw event before putting together json because something might be changed by a plugin
 		this.event = new ServerListPingEvent(PlayerType.DESKTOP, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD(), ServerSettings.getServerFavicon());
-		PluginManager.throwEvent(this.event);
+		EventDispatcher.throwEvent(this.event);
 		
 		// Create MOTD JSON Object
 		JSONObject versionMap = new JSONObject();
@@ -87,10 +88,17 @@ public class ServerListPingResponse extends HandshakePacket {
 	@Override
 	public void sendResponse() throws IOException {
 		String json = object.toJSONString();
-		output.write(VarInt.writeUnsignedVarInt(3 + json.getBytes().length));
-		output.writeByte(DesktopPacketIDList.HANDSHAKE_PACKET);
-		output.write(VarInt.writeUnsignedVarInt(json.getBytes().length));
-		output.write(json.getBytes());
+		
+		// Write Data
+		ByteArrayOutputStream data = new ByteArrayOutputStream();
+		data.write(DesktopPacketIDList.HANDSHAKE_PACKET);
+		data.write(VarInt.writeUnsignedVarInt(json.getBytes().length));
+		data.write(json.getBytes());
+		data.flush();
+		
+		// Send packet
+		output.write(VarInt.writeUnsignedVarInt(data.size()));
+		output.write(data.toByteArray());
 		output.flush();
 	}
 	

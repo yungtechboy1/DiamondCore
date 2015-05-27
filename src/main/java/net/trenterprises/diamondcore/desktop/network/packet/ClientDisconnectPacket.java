@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import net.trenterprises.diamondcore.cross.borrowed.VarInt;
+import net.trenterprises.diamondcore.cross.utils.VarInt;
 
 import org.json.simple.JSONObject;
 

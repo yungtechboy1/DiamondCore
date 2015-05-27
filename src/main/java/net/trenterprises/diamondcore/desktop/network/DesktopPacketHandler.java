@@ -20,9 +20,9 @@ import java.net.SocketTimeoutException;
 
 import net.trenterprises.diamondcore.DiamondCoreServer;
 import net.trenterprises.diamondcore.cross.ServerSettings;
-import net.trenterprises.diamondcore.cross.borrowed.VarInt;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
+import net.trenterprises.diamondcore.cross.utils.VarInt;
 import net.trenterprises.diamondcore.desktop.network.handlers.HandshakeResponse;
 import net.trenterprises.diamondcore.desktop.network.handshake.LoginResponse;
 

@@ -20,8 +20,8 @@ import java.net.DatagramSocket;
 import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.ServerSettings;
+import net.trenterprises.diamondcore.cross.api.java.event.EventDispatcher;
 import net.trenterprises.diamondcore.cross.api.java.event.server.ServerListPingEvent;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.pocket.network.PocketPacketIDList;
 
 import org.blockserver.io.BinaryReader;
@@ -51,8 +51,9 @@ public class ServerListPingResponse implements BasePocketPacket {
 		this.socket = socket;
 		this.packet = packet;
 		this.serverID = serverID;
+		
 		event = new ServerListPingEvent(PlayerType.POCKET, packet.getAddress(), packet.getPort(), ServerSettings.getPEMOTD());
-		PluginManager.throwEvent(this.event);
+		EventDispatcher.throwEvent(this.event);
 		this.sendResponse();
 	}
 

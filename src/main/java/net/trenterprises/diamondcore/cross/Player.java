@@ -1,28 +1,31 @@
 package net.trenterprises.diamondcore.cross;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 import net.trenterprises.diamondcore.cross.file.FileList;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public final class Player {
 	
-	protected final String username;
+	protected final String uuid;
 	
-	public Player(String username) {
-		this.username = username;
+	// Ban list
+	protected JSONObject banObject = null;
+	
+	public Player(String uuid) throws FileNotFoundException, IOException, ParseException {
+		this.uuid = uuid;
+		
+		// Load everything
+		this.banObject = (JSONObject) new JSONParser().parse(new FileReader(FileList.bannedPlayerList));
 	}
 	
 	public boolean isBanned() {
-		try {
-			JSONObject BanObject = (JSONObject) new JSONParser().parse(new FileReader(FileList.bannedPlayerList));
-			return BanObject.containsKey(this.username);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
+		return banObject.containsKey(uuid);
 	}
 	
 }
