@@ -28,6 +28,7 @@ import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 import net.trenterprises.diamondcore.cross.world.time.WorldTime;
 import net.trenterprises.diamondcore.desktop.network.DesktopPacketHandler;
+import net.trenterprises.diamondcore.mojang.MojangAuth;
 import net.trenterprises.diamondcore.pocket.network.PocketPacketHandler;
 
 /* NOTE: In order to load the server in debug mode in eclipse,
@@ -53,9 +54,15 @@ public class DiamondCoreServer {
 	protected static ServerSocket desktopSocket;
 	
 	public DiamondCoreServer(boolean shouldDebug) throws IOException, InterruptedException, InvalidCommandException {
+		// Start server
 		debug = shouldDebug;
-		logger.info("Starting Pocket Server!");
+		logger.info("Starting Server!");
 		logger.info("Debug: " + (debug ? "activated" : "de-activated"));
+		
+		// Make sure Mojang Auth Server is online
+		logger.info("Making sure Mojang Auth server is online...");
+		if(MojangAuth.isOnline()) logger.info("Server is online! [" + MojangAuth.getImplementationVersion() + "]");
+		else logger.warn("The Mojang Auth server is currently offline, players can not join the server until it is back up!");
 		
 		// Check Files and Properties
 		FileList.setDebug(shouldDebug);

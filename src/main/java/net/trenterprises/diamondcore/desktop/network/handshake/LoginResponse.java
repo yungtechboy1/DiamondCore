@@ -16,14 +16,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.security.NoSuchAlgorithmException;
+import java.security.KeyPair;
 
 import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.api.java.event.EventDispatcher;
 import net.trenterprises.diamondcore.cross.api.java.event.player.PlayerLoginEvent;
-import net.trenterprises.diamondcore.cross.utils.RSA;
+import net.trenterprises.diamondcore.cross.utils.MinecraftEncryption;
 import net.trenterprises.diamondcore.cross.utils.VarInt;
 import net.trenterprises.diamondcore.desktop.network.utils.PacketUtils;
 
@@ -94,18 +94,18 @@ public class LoginResponse extends HandshakePacket {
 			byte[] publicKey = null;
 			byte[] privateKey = null;
 			try {
-				RSA key = new RSA();
-				publicKey = key.publicKey;
-				privateKey = key.privateKey;
-			} catch (NoSuchAlgorithmException e) {
+				KeyPair pair = MinecraftEncryption.b();
+				publicKey = MinecraftEncryption.a(pair.getPublic().getEncoded()).getEncoded();
+				privateKey = MinecraftEncryption.a(pair.getPrivate().getEncoded()).getEncoded();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
 			// Write data
 			ByteArrayOutputStream data = new ByteArrayOutputStream();
 			data.write(0x01);
-			data.write(VarInt.writeUnsignedVarInt(15));
-			data.write("                    ".getBytes());
+			data.write(VarInt.writeUnsignedVarInt(0));
+			data.write("".getBytes());
 			data.write(VarInt.writeUnsignedVarInt(publicKey.length));
 			data.write(publicKey);
 			data.write(VarInt.writeUnsignedVarInt(privateKey.length));
@@ -124,6 +124,7 @@ public class LoginResponse extends HandshakePacket {
 			
 			System.out.println("Valid token?: " + (publicToken == publicKey && privateToken == privateKey));
 		}
+		
 	}
 
 }
