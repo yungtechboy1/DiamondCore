@@ -23,13 +23,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.api.java.exception.InvalidConstructorException;
 import net.trenterprises.diamondcore.cross.api.java.exception.InvalidPluginDescriptorException;
 import net.trenterprises.diamondcore.cross.api.java.exception.PluginDuplicateException;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.Command;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
-import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
-import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
 import org.yaml.snakeyaml.Yaml;
 
@@ -40,8 +39,6 @@ import org.yaml.snakeyaml.Yaml;
  * @version 1.0
  */
 public class JavaSession {
-	
-	protected static DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	
 	// Plugin list
 	public static ArrayList<JavaSession> sessionList = new ArrayList<JavaSession>();
@@ -81,7 +78,7 @@ public class JavaSession {
 		// See if the main class is already in use #2
 		if(mainClassCheck == null || JavaSession.mainClassList.size() == 0) {
 			// Issue a warning if the main-class is different (Indicating it's a different plugin) but the name is taken by another plugin.
-			if(pluginNames.contains(this.pluginName)) logger.warn("Warning: A there are multiple plugins with the name \"" + this.pluginName + "\"!");
+			if(pluginNames.contains(this.pluginName)) Diamond.logger.warn("Warning: A there are multiple plugins with the name \"" + this.pluginName + "\"!");
 			pluginNames.add(this.pluginName);
 			
 			// Load main class
@@ -102,7 +99,7 @@ public class JavaSession {
 			// Add the plugin to the list
 			sessionList.add(this);
 			mainClassList.add(this.mainClass);
-			logger.info("Loading plugin " + this.pluginName + " v" + this.pluginVersion + " by " + this.pluginAuthor);
+			Diamond.logger.info("Loading plugin " + this.pluginName + " v" + this.pluginVersion + " by " + this.pluginAuthor);
 			this.executeMethod(this.enableMethod);
 		} else throw new PluginDuplicateException(this.pluginName, this.mainClass);
 	}
@@ -152,7 +149,7 @@ public class JavaSession {
 			}
 		}
 		catch(Exception E) {
-			logger.warn("There was a error registering the commands for the plugin \"" + this.pluginName + "\"!");
+			Diamond.logger.warn("There was a error registering the commands for the plugin \"" + this.pluginName + "\"!");
 		}
 	}
 	

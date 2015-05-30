@@ -9,10 +9,6 @@
 
 */
 
-/**
- * This class is used for reading input from the console
- * in order to handle commands.
- */
 package net.trenterprises.diamondcore.cross;
 
 import java.util.Scanner;
@@ -20,21 +16,23 @@ import java.util.Scanner;
 import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 
+/**
+ * Used to read input from the console for command execution
+ * 
+ * @author Trent Summerlin
+ * @version 1.0
+ */
 public class ConsoleInputReader {
 	
-	protected Scanner input;
-	protected String nextCommand = null;
+	protected final Scanner input;
 	
 	public ConsoleInputReader() {
 		input = new Scanner(System.in);
 	}
 	
 	public void tick() {
-		if(input.hasNextLine()) nextCommand = input.nextLine();
-		if(nextCommand != null) {
-			CommandHandler.run(CommandSender.CONSOLE, nextCommand, CommandHandler.getArguments(nextCommand));
-			nextCommand = null;
-		}
+		String nextCommand = input.nextLine();
+		if(nextCommand != null) CommandHandler.run(CommandSender.CONSOLE, nextCommand, CommandHandler.getArguments(nextCommand));
 	}
 	
 	public void close() {

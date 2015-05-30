@@ -22,6 +22,7 @@ import org.blockserver.io.BinaryReader;
  * @version 0.1.0-SNAPSHOT
  */
 public abstract class ClientSession {
+	
     public DiamondCoreServer server;
 
     public ClientSession(DiamondCoreServer server){

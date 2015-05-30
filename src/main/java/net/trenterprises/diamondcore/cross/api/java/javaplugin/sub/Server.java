@@ -11,12 +11,14 @@
 
 package net.trenterprises.diamondcore.cross.api.java.javaplugin.sub;
 
+import net.trenterprises.diamondcore.DiamondCoreServer;
 import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.api.java.JavaPlugin;
 import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.Whitelist;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.Command;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
+import net.trenterprises.diamondcore.desktop.network.LocalServerBroadcaster;
 
 /**
  * This class is used to do things like get server info, get its logger
@@ -51,9 +53,7 @@ public class Server {
 	 */
 	public Command getCommand(String commandLabel) {
 		for(Command command : Command.commands) {
-			if(command.getName().equalsIgnoreCase(commandLabel)) {
-				return command;
-			}
+			if(command.getName().equalsIgnoreCase(commandLabel)) return command;
 		}
 		return null;
 	}
@@ -69,12 +69,16 @@ public class Server {
 		return new Log4j2Logger("DiamondCore");
 	}
 	
-	/*
-	 * The following code down below belongs to the Diamond Class
-	 * Normally, the class "Diamond" would just be extended. But.
-	 * Eclipse will throw a pesky warning at the user telling it should
-	 * be accessed in a static way. So the info will be gotten like this. 
+	/**
+	 * Used to get the LAN broadcaster and set properties
+	 *
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @return Server LAN broadcaster
 	 */
+	public LocalServerBroadcaster getLocalServerBroadcaster() {
+		return DiamondCoreServer.getLocalServerBroadcaster();
+	}
 	
 	/**
 	 * This method is used to retrieve the server whitelist as a object with functions.

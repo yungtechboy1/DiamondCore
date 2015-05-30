@@ -13,15 +13,15 @@ package net.trenterprises.diamondcore.desktop.network;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 import net.trenterprises.diamondcore.DiamondCoreServer;
+import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.ServerSettings;
-import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
-import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 import net.trenterprises.diamondcore.cross.utils.VarInt;
 import net.trenterprises.diamondcore.desktop.network.handlers.HandshakeResponse;
 import net.trenterprises.diamondcore.desktop.network.handshake.LoginResponse;
@@ -35,9 +35,8 @@ import net.trenterprises.diamondcore.desktop.network.handshake.LoginResponse;
  */
 public class DesktopPacketHandler extends Thread implements Runnable {
 
-	private ServerSocket serverSocket;
-	public DiamondLogger logger = new Log4j2Logger("DiamondCore");
-
+	protected final ServerSocket serverSocket;
+	
 	public DesktopPacketHandler(ServerSocket socket, DiamondCoreServer server) throws IOException {
 		// Set socket Settings
 		this.serverSocket = socket;
@@ -55,11 +54,13 @@ public class DesktopPacketHandler extends Thread implements Runnable {
 	public void run() {
 		while (true) {
 			try {
+				// Set socket data
 				serverSocket.setSoTimeout(1);
 				Socket socket = serverSocket.accept();
 				DataInputStream input = new DataInputStream(socket.getInputStream());
 				
-				input.readByte(); // Bump up
+				// Read packet data
+				VarInt.readUnsignedVarInt(input, true); // Read the unused VarInt sent by Minecraft
 				int packetID = VarInt.readUnsignedVarInt(input.readByte());
 				
 				switch(packetID) {
@@ -74,7 +75,7 @@ public class DesktopPacketHandler extends Thread implements Runnable {
 						}
 						break;
 					default:
-						logger.info("Received unknown ID: " + packetID);
+						Diamond.logger.info("Received unknown ID: " + packetID);
 						break;
 				}
 			} catch (SocketTimeoutException e) {

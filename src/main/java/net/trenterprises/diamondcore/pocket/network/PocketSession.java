@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.SocketAddress;
 
 import net.trenterprises.diamondcore.DiamondCoreServer;
+import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.network.ClientSession;
 import net.trenterprises.diamondcore.pocket.network.utils.PocketPacketUtils;
 
@@ -24,13 +25,11 @@ public class PocketSession extends ClientSession{
     @SuppressWarnings("unused")
 	private int lastSeqNum = 0;
 
-    private PocketPacketHandler handler;
     @SuppressWarnings("unused")
 	private SocketAddress clientAddress;
 
-    public PocketSession(DiamondCoreServer server, PocketPacketHandler handler, SocketAddress client){
+    public PocketSession(DiamondCoreServer server, SocketAddress client){
         super(server);
-        this.handler = handler;
         clientAddress = client;
     }
 
@@ -38,19 +37,19 @@ public class PocketSession extends ClientSession{
     public void handlePacket(BinaryReader in){
         try {
             byte pid = in.readByte();
-            handler.logger.debug("Handling Packet: "+pid);
+            Diamond.logger.debug("Handling Packet: "+pid);
             switch(pid){
 
                 default:
                     if(pid <= PocketPacketIDList.RAKNET_CUSTOM_PACKET_MAX){
                         handleCustomPacket(in);
                     } else {
-                        handler.logger.warn("Unknown Packet: "+pid);
+                        Diamond.logger.warn("Unknown Packet: "+pid);
                     }
                     break;
             }
         } catch (IOException e) {
-            handler.logger.warn("IOException while handling packets: "+e.getMessage());
+            Diamond.logger.warn("IOException while handling packets: "+e.getMessage());
             e.printStackTrace();
         }
     }

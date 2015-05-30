@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import net.trenterprises.diamondcore.cross.api.java.JavaPlugin;
 import net.trenterprises.diamondcore.cross.api.java.event.Listener;
 import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.Server;
-import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
-import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
 /**
  * This class is used for for managing plugins and doing things <br>
@@ -27,10 +25,9 @@ import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
  * @version 0.1.0-SNAPSHOT
  */
 public final class PluginManager {
-	public PluginManager(Server s) {
-	}
+	
+	public PluginManager(Server s) {}
 
-	protected static DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	protected static ArrayList<Listener> listeners = new ArrayList<Listener>();
 
 	/**

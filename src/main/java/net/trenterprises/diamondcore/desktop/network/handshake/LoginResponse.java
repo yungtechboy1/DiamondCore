@@ -23,8 +23,9 @@ import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.api.java.event.EventDispatcher;
 import net.trenterprises.diamondcore.cross.api.java.event.player.PlayerLoginEvent;
-import net.trenterprises.diamondcore.cross.utils.MinecraftEncryption;
+import net.trenterprises.diamondcore.cross.utils.SecurityUtils;
 import net.trenterprises.diamondcore.cross.utils.VarInt;
+import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPacket;
 import net.trenterprises.diamondcore.desktop.network.utils.PacketUtils;
 
 /**
@@ -36,7 +37,7 @@ import net.trenterprises.diamondcore.desktop.network.utils.PacketUtils;
 public class LoginResponse extends HandshakePacket {
 	
 	// Socket info
-	protected Socket s;
+	protected Socket playerSocket;
 	protected DataInputStream input;
 	protected DataOutputStream output;
 	
@@ -47,15 +48,15 @@ public class LoginResponse extends HandshakePacket {
 	protected PlayerLoginEvent event;
 	
 	public LoginResponse(Socket s) throws IOException {
-		this.s = s;
-		this.input = new DataInputStream(this.s.getInputStream());
-		this.output = new DataOutputStream(this.s.getOutputStream());
+		this.playerSocket = s;
+		this.input = new DataInputStream(playerSocket.getInputStream());
+		this.output = new DataOutputStream(playerSocket.getOutputStream());
 		
 		// Decode packet
 		this.decode();
 		
 		// Throw event
-		this.event = new PlayerLoginEvent(PlayerType.DESKTOP, this.s, this.s.getInetAddress(), this.s.getPort());
+		this.event = new PlayerLoginEvent(PlayerType.DESKTOP, this.playerSocket, this.playerSocket.getInetAddress(), this.playerSocket.getPort());
 		EventDispatcher.throwEvent(this.event);
 		if(!Diamond.getOnlinePlayers().contains(this.username) && !event.getLoginCancelled()) Diamond.getOnlinePlayers().add(this.username);
 		
@@ -92,24 +93,24 @@ public class LoginResponse extends HandshakePacket {
 		if(!event.getLoginCancelled()) {
 			// Create key
 			byte[] publicKey = null;
-			byte[] privateKey = null;
+			byte[] verifyToken = null;
 			try {
-				KeyPair pair = MinecraftEncryption.b();
-				publicKey = MinecraftEncryption.a(pair.getPublic().getEncoded()).getEncoded();
-				privateKey = MinecraftEncryption.a(pair.getPrivate().getEncoded()).getEncoded();
+				KeyPair pair = SecurityUtils.generateKeyPair();
+				publicKey = SecurityUtils.generateX509Key(pair.getPublic()).getEncoded();
+				verifyToken = SecurityUtils.generateVerifyToken();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
 			// Write data
 			ByteArrayOutputStream data = new ByteArrayOutputStream();
-			data.write(0x01);
-			data.write(VarInt.writeUnsignedVarInt(0));
-			data.write("".getBytes());
+			data.write((byte) 0x01);
+			data.write(VarInt.writeUnsignedVarInt(1));
+			data.write(" ".getBytes());
 			data.write(VarInt.writeUnsignedVarInt(publicKey.length));
 			data.write(publicKey);
-			data.write(VarInt.writeUnsignedVarInt(privateKey.length));
-			data.write(privateKey);
+			data.write(VarInt.writeUnsignedVarInt(verifyToken.length));
+			data.write(verifyToken);
 			data.flush();
 			
 			// Send packet
@@ -118,11 +119,20 @@ public class LoginResponse extends HandshakePacket {
 			output.flush();
 			
 			// Wait for response, and verify tokens
-			while(input.available() < 0);
-			byte[] publicToken = PacketUtils.readBytes(input, VarInt.readUnsignedVarInt(input, true));
-			byte[] privateToken = PacketUtils.readBytes(input, VarInt.readUnsignedVarInt(input, true));
-			
-			System.out.println("Valid token?: " + (publicToken == publicKey && privateToken == privateKey));
+			while(input.available() == 0);
+			VarInt.readUnsignedVarInt(input, true); // Read len
+			int packetID = VarInt.readUnsignedVarInt(input.readByte());
+			if(packetID == (byte) 0x02) {
+				byte[] rPublic = PacketUtils.readBytes(input, VarInt.readUnsignedVarInt(input, true));
+				byte[] rVerify = PacketUtils.readBytes(input, VarInt.readUnsignedVarInt(input, true));
+				// Create new player
+			} else {
+				// Disconnect the client
+				ClientDisconnectPacket packet = new ClientDisconnectPacket(playerSocket, "Your client seems to have sent the invalid data in the login process!");
+				packet.setShouldLog(true);
+				packet.setUsername(username);
+				packet.sendResponse();
+			}
 		}
 		
 	}

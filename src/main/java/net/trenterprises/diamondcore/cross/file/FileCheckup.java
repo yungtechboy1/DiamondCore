@@ -15,8 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
-import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
+import net.trenterprises.diamondcore.cross.Diamond;
 
 /**
  * This class is used for making sure all files needed for the
@@ -27,12 +26,10 @@ import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
  */
 public class FileCheckup {
 	
-	DiamondLogger Logger = new Log4j2Logger("DiamondCore");
-	
 	int FilesCreated = 0;
 	
 	public FileCheckup() throws IOException {
-		Logger.info("Starting file checkup!");
+		Diamond.logger.info("Starting file checkup!");
 		
 		/* Start Checkup */
 		// Check BannedIPList
@@ -42,7 +39,7 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Logger.warn("Banned IP list not found! Created a new one");
+			Diamond.logger.warn("Banned IP list not found! Created a new one");
 			FilesCreated++;
 		}
 		
@@ -53,7 +50,7 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Logger.warn("Banned Player list not found! Created a new one");
+			Diamond.logger.warn("Banned Player list not found! Created a new one");
 			FilesCreated++;
 		}
 		
@@ -61,10 +58,10 @@ public class FileCheckup {
 		if(!FileList.license.exists()) {
 			try {
 				Files.copy(this.getClass().getResourceAsStream("files/LICENSE"), FileList.license.toPath());
-				Logger.warn("License not found! Created a new one");
+				Diamond.logger.warn("License not found! Created a new one");
 			}
 			catch(NullPointerException E) {
-				Logger.warn("There was a error copying the LICENSE file!\nThis could be because the file itselft wasnt in the jar.\nMake sure to check if its in there (If you are a dev)");
+				Diamond.logger.warn("There was a error copying the LICENSE file!");
 			}
 			FilesCreated++;
 		}
@@ -76,28 +73,28 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Logger.warn("Operators list not found! Created a new one");
+			Diamond.logger.warn("Operators list not found! Created a new one");
 			FilesCreated++;
 		}
 		
 		// Check PlayerFolder
 		if(!FileList.playerFolder.exists()) {
 			FileList.playerFolder.mkdir();
-			Logger.warn("Player Folder not found! Created a new one");
+			Diamond.logger.warn("Player Folder not found! Created a new one");
 			FilesCreated++;
 		}
 		
 		// Check PluginFolder
 		if(!FileList.pluginFolder.exists()) {
 			FileList.pluginFolder.mkdir();
-			Logger.warn("Plugin folder not found! Created a new one");
+			Diamond.logger.warn("Plugin folder not found! Created a new one");
 			FilesCreated++;
 		}
 		
 		// Check Lib Folder
 		if(!FileList.libFolder.exists()) {
 			FileList.libFolder.mkdir();
-			Logger.warn("Lib folder not found! Created a new one");
+			Diamond.logger.warn("Lib folder not found! Created a new one");
 			FilesCreated++;
 		}
 		
@@ -105,10 +102,10 @@ public class FileCheckup {
 		if(!FileList.readMe.exists()) {
 			try {
 				Files.copy(this.getClass().getResourceAsStream("files/README.md"), FileList.readMe.toPath());
-				Logger.warn("README.md not found! Created a new one");
+				Diamond.logger.warn("README.md not found! Created a new one");
 			}
 			catch(NullPointerException E) {
-				Logger.warn("There was a error copying the README.md file!\nThis could be because the file itself wasnt in the jar.\nMake sure to check if its in there (If you are a dev)");
+				Diamond.logger.warn("There was a error copying the README.md file!\nThis could be because the file itself wasnt in the jar.\nMake sure to check if its in there (If you are a dev)");
 			}
 			FilesCreated++;
 		}
@@ -116,14 +113,14 @@ public class FileCheckup {
 		// Check ServerLog
 		if(!FileList.serverLog.exists()) {
 			FileList.serverLog.createNewFile();
-			Logger.warn("Server Log not found! Created a new one");
+			Diamond.logger.warn("Server Log not found! Created a new one");
 			FilesCreated++;
 		}
 		
 		// Check ServerProperties
 		if(!FileList.serverProperties.exists()) {
 			FileList.serverProperties.createNewFile();
-			Logger.warn("Server Properties not found! Created a new one");
+			Diamond.logger.warn("Server Properties not found! Created a new one");
 			FilesCreated++;
 		}
 		
@@ -134,23 +131,23 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Logger.warn("Whitelist not found! Created a new one");
+			Diamond.logger.warn("Whitelist not found! Created a new one");
 			FilesCreated++;
 		}
 		
 		// Check WorldFolder
 		if(!FileList.worldFolder.exists()) {
 			FileList.worldFolder.mkdir();
-			Logger.warn("World folder not found! Created a new one");
+			Diamond.logger.warn("World folder not found! Created a new one");
 			FilesCreated++;
 		}
 		/* End of Checkup */
 		
 		if(FilesCreated <= 0) {
-			Logger.info("Finished file checkup with no errors!");
+			Diamond.logger.info("Finished file checkup with no errors!");
 		}
 		else {
-			Logger.info("Finished file checkup and created " + FilesCreated + " files");
+			Diamond.logger.info("Finished file checkup and created " + FilesCreated + " files");
 		}
 	}
 	

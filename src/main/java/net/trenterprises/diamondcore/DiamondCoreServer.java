@@ -13,6 +13,7 @@ package net.trenterprises.diamondcore;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 
 import net.trenterprises.diamondcore.cross.ConsoleInputReader;
@@ -28,6 +29,7 @@ import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 import net.trenterprises.diamondcore.cross.world.time.WorldTime;
 import net.trenterprises.diamondcore.desktop.network.DesktopPacketHandler;
+import net.trenterprises.diamondcore.desktop.network.LocalServerBroadcaster;
 import net.trenterprises.diamondcore.mojang.MojangAuth;
 import net.trenterprises.diamondcore.pocket.network.PocketPacketHandler;
 
@@ -52,6 +54,7 @@ public class DiamondCoreServer {
 	protected static DatagramSocket pocketSocket;
 	protected static DesktopPacketHandler desktopPacketHandler;
 	protected static ServerSocket desktopSocket;
+	protected static LocalServerBroadcaster desktopBroadcaster;
 	
 	public DiamondCoreServer(boolean shouldDebug) throws IOException, InterruptedException, InvalidCommandException {
 		// Start server
@@ -75,13 +78,9 @@ public class DiamondCoreServer {
 		// Check if port is no less than 1024
 		if(ServerSettings.getWebPort() <= 1024) logger.warn("The port " + ServerSettings.getWebPort() + " is reserved for root programs of the computer! Closing web-socket...");
 		
-		// Open Socket
+		// Open Sockets
 		pocketSocket = new DatagramSocket(ServerSettings.getPEPort());
 		desktopSocket = new ServerSocket(ServerSettings.getPCPort());
-		
-		// Load plugins
-		JavaLoader.loadPlugins();
-		XMLLoader.loadPlugins();
 		
 		// Initialize everything
 		ConsoleInputReader consoleInput = new ConsoleInputReader();
@@ -89,6 +88,10 @@ public class DiamondCoreServer {
 		// Finish startup
 		new PacketHandlerThread(this, consoleInput).start();
 		new MainTicker().start();
+		
+		// Load plugins after everything is initialized
+		JavaLoader.loadPlugins();
+		XMLLoader.loadPlugins();
 		
 		running = true;
 		logger.info("Started Server!");
@@ -125,6 +128,17 @@ public class DiamondCoreServer {
 	 */
 	public static ServerSocket getDesktopSocket() {
 		return desktopSocket;
+	}
+	
+	/**
+	 * Used to retrieve the LAN broadcaster for the server so it can be manage
+	 * 
+	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @return Minecraft LAN broadcaster
+	 */
+	public static LocalServerBroadcaster getLocalServerBroadcaster() {
+		return desktopBroadcaster;
 	}
 	
 }
@@ -178,6 +192,9 @@ class PacketHandlerThread extends Thread implements Runnable {
 			DiamondCoreServer.pocketPacketHandler.start();
 			DiamondCoreServer.desktopPacketHandler = new DesktopPacketHandler(DiamondCoreServer.desktopSocket, server);
 			DiamondCoreServer.desktopPacketHandler.start();
+			DiamondCoreServer.desktopBroadcaster = new LocalServerBroadcaster(InetAddress.getByName("127.0.0.1"), 4445);
+			DiamondCoreServer.desktopBroadcaster.start();
+			
 			while(DiamondCoreServer.isRunning()) {
 				consoleInput.tick();
 			}

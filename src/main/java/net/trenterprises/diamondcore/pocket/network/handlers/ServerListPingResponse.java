@@ -74,7 +74,7 @@ public class ServerListPingResponse implements BasePocketPacket {
 	public void sendResponse() throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		BinaryWriter writer = new BinaryWriter(output);
-		String identifier = "MCPE;" + event.getMOTD() + ";" + Diamond.pocketProtocol + ";" + Diamond.pocketVersionTag + ";01";
+		String identifier = "MCPE;" + event.getMOTD() + ";" + Diamond.pocketProtocol + ";" + Diamond.pocketVersionTag + ";" + Diamond.getOnlinePlayers().size() + ";" + ServerSettings.getMaxPlayers();
 		writer.writeByte(PocketPacketIDList.ID_UNCONNECTED_PING_OPEN_CONNECTIONS);
 		writer.writeLong(pingID);
 		writer.writeLong(serverID);

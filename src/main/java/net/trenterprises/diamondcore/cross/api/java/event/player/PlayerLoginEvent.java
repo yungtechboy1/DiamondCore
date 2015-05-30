@@ -16,6 +16,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.api.java.event.Event;
 import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPacket;
@@ -66,7 +67,7 @@ public final class PlayerLoginEvent extends Event {
 	 */
 	public void cancelLogin(String reason) {
 		if(playerType == PlayerType.POCKET) {
-			this.getLogger().warn("Note, this proccess can not be done as this code has not been finished yet");
+			Diamond.logger.warn("Note, this proccess can not be done as this code has not been finished yet");
 		} else if(playerType == PlayerType.DESKTOP) {
 			try {
 				ClientDisconnectPacket packet = new ClientDisconnectPacket(desktop, reason);

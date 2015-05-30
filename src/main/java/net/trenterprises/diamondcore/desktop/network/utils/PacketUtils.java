@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import net.trenterprises.diamondcore.cross.utils.VarInt;
 
@@ -65,7 +66,7 @@ public final class PacketUtils {
 	 * @throws IOException
 	 */
 	public static void writeUnsignedShort(short number, DataOutputStream output) throws IOException {
-		output.writeChar(number);
+		output.writeChar((char) number);
 	}
 	
 	/**

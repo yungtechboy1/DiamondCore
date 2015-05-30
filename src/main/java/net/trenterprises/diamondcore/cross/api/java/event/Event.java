@@ -11,8 +11,6 @@
 
 package net.trenterprises.diamondcore.cross.api.java.event;
 
-import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
-import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
 /**
  * This is the main event class, two other classes extend off of this one.
@@ -25,12 +23,6 @@ import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
  * @version 1.0
  */
 public abstract class Event {
-	
-	DiamondLogger logger = new Log4j2Logger(DiamondLogger.softwareTag);
-	
-	public DiamondLogger getLogger() {
-		return logger;
-	}
 	
 	public abstract String getName();
 	

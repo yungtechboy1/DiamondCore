@@ -32,7 +32,8 @@ import net.trenterprises.diamondcore.cross.utils.ArrayUtils;
  */
 public final class CommandHandler {
 	
-	static DiamondLogger logger = new Log4j2Logger("CONSOLE");
+	protected static DiamondLogger logger = new Log4j2Logger("CONSOLE");
+	
 	public final NativeCommand[] commandList = new NativeCommand[] {
 			// Vanilla commands
 			new BanCommand(this), new PardonCommand(this),

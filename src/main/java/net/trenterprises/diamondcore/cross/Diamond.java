@@ -18,9 +18,13 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Iterator;
 
+import net.trenterprises.diamondcore.cross.api.java.JavaPlugin;
 import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.Whitelist;
 import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.World;
+import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.Server;
 import net.trenterprises.diamondcore.cross.file.FileList;
+import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
+import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONObject;
@@ -37,6 +41,8 @@ import org.json.simple.parser.ParseException;
  */
 public abstract class Diamond {
 	
+	private Diamond() {}
+
 	// Minecraft Desktop
 	public static final String desktopVersionTag = "DiamondCore Unstable 1.8";
 	public static final String desktopVersion = "1.8";
@@ -50,7 +56,8 @@ public abstract class Diamond {
 	// Global
 	protected static ArrayList<String> players = new ArrayList<String>();
 	
-	private Diamond() {}
+	// DiamondCore
+	public static DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	
 	/**
 	 * Used to get the online players

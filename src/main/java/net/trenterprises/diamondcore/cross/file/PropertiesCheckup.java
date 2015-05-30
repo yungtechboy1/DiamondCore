@@ -18,8 +18,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Properties;
 
-import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
-import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
+import net.trenterprises.diamondcore.cross.Diamond;
 
 /**
  * This class is used for making sure all the server-properties are in-tact,
@@ -30,12 +29,11 @@ import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
  */
 public class PropertiesCheckup {
 	
-	DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	Properties Properties = new Properties();
 	int PropertiesAdded = 0;
 	
 	public PropertiesCheckup() throws IOException {
-		logger.info("Starting Server Properties checkup!");
+		Diamond.logger.info("Starting Server Properties checkup!");
 		
 		/* Start Properties File Checkup */
 		Properties.load(new FileInputStream(FileList.serverProperties));
@@ -222,12 +220,8 @@ public class PropertiesCheckup {
 		Properties.store(new FileOutputStream(FileList.serverProperties), null);
 		
 		/* End of checkup */
-		if(PropertiesAdded <= 0) {
-			logger.info("Finished Server Properties checkup with no errors!");
-		}
-		else {
-			logger.info("Finished Server Properties checkup and added " + PropertiesAdded + " missing properties");
-		}
+		if(PropertiesAdded <= 0) Diamond.logger.info("Finished Server Properties checkup with no errors!");
+		else Diamond.logger.info("Finished Server Properties checkup and added " + PropertiesAdded + " missing properties");
 	}
 	
 	
