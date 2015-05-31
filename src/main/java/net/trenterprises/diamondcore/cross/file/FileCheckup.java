@@ -57,7 +57,7 @@ public class FileCheckup {
 		// Check License
 		if(!FileList.license.exists()) {
 			try {
-				Files.copy(this.getClass().getResourceAsStream("files/LICENSE"), FileList.license.toPath());
+				Files.copy(this.getClass().getResource("files/LICENSE").openStream(), FileList.license.toPath());
 				Diamond.logger.warn("License not found! Created a new one");
 			}
 			catch(NullPointerException E) {
@@ -101,7 +101,7 @@ public class FileCheckup {
 		// Check ReadMe file
 		if(!FileList.readMe.exists()) {
 			try {
-				Files.copy(this.getClass().getResourceAsStream("files/README.md"), FileList.readMe.toPath());
+				Files.copy(this.getClass().getResource("files/README.md").openStream(), FileList.readMe.toPath());
 				Diamond.logger.warn("README.md not found! Created a new one");
 			}
 			catch(NullPointerException E) {

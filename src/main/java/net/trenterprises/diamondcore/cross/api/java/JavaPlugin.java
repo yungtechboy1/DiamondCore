@@ -16,7 +16,6 @@ import java.net.URL;
 import java.util.Map;
 
 import net.trenterprises.diamondcore.cross.api.java.event.Listener;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.Server;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 
 import org.yaml.snakeyaml.Yaml;

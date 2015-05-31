@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.server.PluginManager;
+import net.trenterprises.diamondcore.cross.api.java.PluginManager;
 import net.trenterprises.diamondcore.cross.api.xml.XMLSession;
 
 public final class EventDispatcher {

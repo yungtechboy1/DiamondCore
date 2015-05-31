@@ -11,7 +11,7 @@
 
 package net.trenterprises.diamondcore.cross.command;
 
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.Command;
+import net.trenterprises.diamondcore.cross.api.java.command.Command;
 import net.trenterprises.diamondcore.cross.command.diamond.PluginlistCommand;
 import net.trenterprises.diamondcore.cross.command.diamond.ReloadCommand;
 import net.trenterprises.diamondcore.cross.command.vanilla.BanCommand;

@@ -11,6 +11,8 @@
 
 package net.trenterprises.diamondcore;
 
+import org.apache.commons.io.IOUtils;
+
 
 /**
  * This class is used to start up the DiamondCore program
@@ -23,13 +25,19 @@ public class run {
 	static boolean shouldDebug = false;
 	
 	public static void main(String[] args) {
+		new run(args);
+	}
+	
+	public run(String[] args) {
 		try {
 			try {
 				shouldDebug = Boolean.parseBoolean(args[0]);
 			}
-			catch(Exception E) {
+			catch(Exception e) {
 				shouldDebug = false;
 			}
+			String logo = IOUtils.toString(this.getClass().getResource("/files/logo.txt").openStream());
+			System.out.println(logo);
 			new DiamondCoreServer(shouldDebug);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

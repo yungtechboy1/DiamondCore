@@ -16,22 +16,23 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
-import net.trenterprises.diamondcore.cross.ConsoleInputReader;
 import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.Ticker;
 import net.trenterprises.diamondcore.cross.api.java.JavaLoader;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.exception.InvalidCommandException;
+import net.trenterprises.diamondcore.cross.api.java.command.exception.InvalidCommandException;
 import net.trenterprises.diamondcore.cross.api.xml.XMLLoader;
+import net.trenterprises.diamondcore.cross.block.Block;
+import net.trenterprises.diamondcore.cross.command.ConsoleInputReader;
 import net.trenterprises.diamondcore.cross.file.FileCheckup;
 import net.trenterprises.diamondcore.cross.file.FileList;
 import net.trenterprises.diamondcore.cross.file.PropertiesCheckup;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
 import net.trenterprises.diamondcore.cross.world.time.WorldTime;
-import net.trenterprises.diamondcore.desktop.network.DesktopPacketHandler;
-import net.trenterprises.diamondcore.desktop.network.LocalServerBroadcaster;
-import net.trenterprises.diamondcore.mojang.MojangAuth;
-import net.trenterprises.diamondcore.pocket.network.PocketPacketHandler;
+import net.trenterprises.diamondcore.desktop.DesktopPacketHandler;
+import net.trenterprises.diamondcore.desktop.LocalServerBroadcaster;
+import net.trenterprises.diamondcore.mojang.MojangAuthServer;
+import net.trenterprises.diamondcore.pocket.PocketPacketHandler;
 
 /* NOTE: In order to load the server in debug mode in eclipse,
  * go to run configurations and add "true" in arguments! */
@@ -64,7 +65,7 @@ public class DiamondCoreServer {
 		
 		// Make sure Mojang Auth Server is online
 		logger.info("Making sure Mojang Auth server is online...");
-		if(MojangAuth.isOnline()) logger.info("Server is online! [" + MojangAuth.getImplementationVersion() + "]");
+		if(MojangAuthServer.isOnline()) logger.info("Server is online! [" + MojangAuthServer.getImplementationVersion() + "]");
 		else logger.warn("The Mojang Auth server is currently offline, players can not join the server until it is back up!");
 		
 		// Check Files and Properties
@@ -84,6 +85,7 @@ public class DiamondCoreServer {
 		
 		// Initialize everything
 		ConsoleInputReader consoleInput = new ConsoleInputReader();
+		Block.registerBlocks();
 		
 		// Finish startup
 		new PacketHandlerThread(this, consoleInput).start();

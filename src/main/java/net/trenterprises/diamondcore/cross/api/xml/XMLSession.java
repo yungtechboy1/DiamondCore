@@ -15,8 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.trenterprises.diamondcore.cross.api.java.command.exception.InvalidCommandException;
 import net.trenterprises.diamondcore.cross.api.java.event.Event;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.exception.InvalidCommandException;
 import net.trenterprises.diamondcore.cross.api.xml.functions.XMLFunctionList;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 import net.trenterprises.diamondcore.cross.file.FileUtils;

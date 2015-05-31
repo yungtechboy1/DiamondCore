@@ -54,6 +54,7 @@ public abstract class FileList {
 	public static File loggerConfig = new File("./lib/log4j2.xml");
 	public static File readMe = new File(Base + "README.md"); // NOTE: To get the ReadMe file to copy, you must use the following: this.getClass().getResource("/src/main/resources/files/README.md");
 	public static File license = new File(Base + "LICENSE");  // NOTE: To get the LICENSE file to copy, you must use the following: this.getClass().getResource("/src/main/resources/files/LICENSE");
+	public static File logo = new File(Base + "logo.txt");    // NOTE: To get the logo file to copy, you must use the following: this.getClass().getResource("/src/main/resource/files/logo.txt");
 	
 	public static void refreshDirs() {
 		if(debug) {
@@ -74,6 +75,7 @@ public abstract class FileList {
 		pluginFolder = new File(Base + "plugins");
 		readMe = new File(Base + "README.md");
 		license = new File(Base + "LICENSE");
+		logo = new File(Base + "logo.txt");
 		libFolder = new File(Base + "lib");
 		loggerConfig = new File(libFolder + "/log4j2.xml");
 	}

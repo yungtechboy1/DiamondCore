@@ -10,6 +10,7 @@
 */
 
 /**
- * This package is the main package for the Minecraft Desktop part of this program
+ * This package contains all of the code that has to
+ * do with the Minecraft Desktop side of this program
  */
 package net.trenterprises.diamondcore.desktop;

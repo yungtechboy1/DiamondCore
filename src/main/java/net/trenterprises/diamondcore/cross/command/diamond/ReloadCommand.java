@@ -1,10 +1,21 @@
+/*
+ _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ 
+|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|
+| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
+| |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
+| |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
+| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
+|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|                                                                                                        
+ 
+*/
+
 package net.trenterprises.diamondcore.cross.command.diamond;
 
 import java.io.IOException;
 
 import net.trenterprises.diamondcore.cross.ServerSettings;
 import net.trenterprises.diamondcore.cross.api.java.JavaLoader;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.Command;
+import net.trenterprises.diamondcore.cross.api.java.command.Command;
 import net.trenterprises.diamondcore.cross.api.xml.XMLLoader;
 import net.trenterprises.diamondcore.cross.command.CommandHandler;
 import net.trenterprises.diamondcore.cross.command.CommandSender;

@@ -1,3 +1,5 @@
+/* DiamodnCore logo not present due to the fact that this is a borrowed class */
+
 package net.trenterprises.diamondcore.cross.utils;
 
 /**
@@ -35,7 +37,6 @@ import java.io.IOException;
  * in order to make them "compatible" with variable-length encoding.</p>
  */
 
-// NOTE: This class has been modified for the use of DiamondCore
 public final class VarInt {
 
     private VarInt() {}

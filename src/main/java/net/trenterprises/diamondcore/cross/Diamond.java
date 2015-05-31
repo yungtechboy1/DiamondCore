@@ -18,13 +18,10 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Iterator;
 
-import net.trenterprises.diamondcore.cross.api.java.JavaPlugin;
-import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.Whitelist;
-import net.trenterprises.diamondcore.cross.api.java.diamondcore.sub.World;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.Server;
 import net.trenterprises.diamondcore.cross.file.FileList;
 import net.trenterprises.diamondcore.cross.logging.DiamondLogger;
 import net.trenterprises.diamondcore.cross.logging.Log4j2Logger;
+import net.trenterprises.diamondcore.cross.world.World;
 
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONObject;

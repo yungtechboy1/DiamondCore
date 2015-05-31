@@ -19,7 +19,7 @@ import java.net.Socket;
 import net.trenterprises.diamondcore.cross.Diamond;
 import net.trenterprises.diamondcore.cross.PlayerType;
 import net.trenterprises.diamondcore.cross.api.java.event.Event;
-import net.trenterprises.diamondcore.desktop.network.packet.ClientDisconnectPacket;
+import net.trenterprises.diamondcore.desktop.packet.ClientDisconnectPacket;
 
 /**
  * This event is thrown whenever a player on MCPE tries to join the server
@@ -71,7 +71,7 @@ public final class PlayerLoginEvent extends Event {
 		} else if(playerType == PlayerType.DESKTOP) {
 			try {
 				ClientDisconnectPacket packet = new ClientDisconnectPacket(desktop, reason);
-				packet.sendResponse();
+				packet.disconnect();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

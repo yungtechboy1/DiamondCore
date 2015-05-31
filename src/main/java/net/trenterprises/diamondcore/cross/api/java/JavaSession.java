@@ -24,10 +24,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.trenterprises.diamondcore.cross.Diamond;
+import net.trenterprises.diamondcore.cross.api.java.command.Command;
 import net.trenterprises.diamondcore.cross.api.java.exception.InvalidConstructorException;
 import net.trenterprises.diamondcore.cross.api.java.exception.InvalidPluginDescriptorException;
 import net.trenterprises.diamondcore.cross.api.java.exception.PluginDuplicateException;
-import net.trenterprises.diamondcore.cross.api.java.javaplugin.sub.command.Command;
 import net.trenterprises.diamondcore.cross.command.CommandSender;
 
 import org.yaml.snakeyaml.Yaml;
