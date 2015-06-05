@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.diamondcore.utils.ServerSettings;
+import org.diamondcore.desktop.handlers.HandshakeResponse;
+import org.diamondcore.diamond.Diamond;
+import org.diamondcore.utils.VarInt;
 
 /**
  * Used to listen for connections and respond to them
@@ -27,10 +29,10 @@ import org.diamondcore.utils.ServerSettings;
  */
 public class DesktopPacketHandler extends Thread {
 	
-	protected final ServerSocket listener;
+	protected final ServerSocket ss;
 	
-	public DesktopPacketHandler() throws IOException {
-		this.listener = new ServerSocket(ServerSettings.getPCPort());
+	public DesktopPacketHandler(ServerSocket ss) throws IOException {
+		this.ss = ss;
 		
 	}
 	
@@ -38,11 +40,21 @@ public class DesktopPacketHandler extends Thread {
 		while(true) {
 			try {
 				// Initialize
-				Socket s = listener.accept();
-				DataInputStream input = new DataInputStream(s.getInputStream());
-				DataOutputStream output = new DataOutputStream(s.getOutputStream());
+				Socket socket = ss.accept();
+				DataInputStream input = new DataInputStream(socket.getInputStream());
 				
+				// Read packet data
+				VarInt.readUnsignedVarInt(input, true); // Read the unused VarInt sent by Minecraft
+				int packetID = VarInt.readUnsignedVarInt(input.readByte());
 				
+				switch(packetID) {
+					case DesktopPacketIDList.HANDSHAKE_PACKET:
+						HandshakeResponse packet = new HandshakeResponse(socket); // Also handles login as well
+						break;
+					default:
+						Diamond.logger.info("Received unknown ID: " + packetID);
+						break;
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

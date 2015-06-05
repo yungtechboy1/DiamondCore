@@ -16,14 +16,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.UUID;
 
 import org.diamondcore.desktop.packet.HandshakePacket;
 import org.diamondcore.diamond.Diamond;
 import org.diamondcore.utils.ServerSettings;
 import org.diamondcore.utils.VarInt;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class ServerListPingResponse extends HandshakePacket {

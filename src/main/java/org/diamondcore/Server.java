@@ -14,10 +14,13 @@ package org.diamondcore;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 
 import org.diamondcore.api.JavaPluginLoader;
 import org.diamondcore.api.exception.PluginException;
 import org.diamondcore.block.Block;
+import org.diamondcore.command.InputReader;
+import org.diamondcore.desktop.DesktopPacketHandler;
 import org.diamondcore.desktop.utils.LocalServerBroadcaster;
 import org.diamondcore.diamond.Diamond;
 import org.diamondcore.diamond.exception.DiamondException;
@@ -77,7 +80,10 @@ public class Server {
 		
 		// Finish startup
 		new MainTicker().start();
-		new PacketHandlerThread().start();
+		new PocketPacketHandler(new DatagramSocket(ServerSettings.getPEPort())).start();
+		new DesktopPacketHandler(new ServerSocket(ServerSettings.getPCPort())).start();
+		//new LocalServerBroadcaster(InetAddress.getByName("127.0.0.1"), 4445).start();
+		new InputReader().start();
 		
 		// Load plugins after everything is initialized
 		JavaPluginLoader.loadPlugins();
@@ -141,25 +147,6 @@ class MainTicker extends Thread implements Runnable {
 				lastTick = currentTick;
 			}
 			if(!Diamond.getServer().isRunning()) JavaPluginLoader.unloadPlugins();
-		}
-	}
-}
-
-// Packet Thread
-class PacketHandlerThread extends Thread implements Runnable {
-	
-	PocketPacketHandler pocketHandler;
-	LocalServerBroadcaster desktopBroadcaster;
-	
-	public void run() {
-		try {
-			DatagramSocket pocketSocket = new DatagramSocket(ServerSettings.getPEPort());
-			pocketHandler = new PocketPacketHandler(pocketSocket);
-			pocketHandler.start();
-			desktopBroadcaster = new LocalServerBroadcaster(InetAddress.getByName("127.0.0.1"), 4445);
-			desktopBroadcaster.start();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }

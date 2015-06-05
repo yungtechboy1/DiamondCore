@@ -61,15 +61,32 @@ public final class HandshakeResponse {
 		this.sendResponse();
 	}
 	
-	
+	/**
+	 * Used to get the received packet length
+	 * 
+	 * @return Received packet length
+	 * @author Trent Summerlin
+	 */
 	public int getReceivedPacketLength() {
 		return this.receivedPacketLength;
 	}
 	
+	/**
+	 * Used to get the packet ID
+	 * 
+	 * @return Packet ID
+	 * @author Trent Summerlin
+	 */
 	public int getPacketID() {
 		return DesktopPacketIDList.HANDSHAKE_PACKET;
 	}
 	
+	/**
+	 * Used to get the protocol received in the packet
+	 * 
+	 * @return Protocol received in packet
+	 * @author Trent Summerlin
+	 */
 	public int getProtocol() {
 		return this.protocol;
 	}
@@ -77,9 +94,8 @@ public final class HandshakeResponse {
 	/**
 	 * Used to retrieve the destination address sent by the client
 	 * 
-	 * @author Trent Summerlin
-	 * @version 1.0
 	 * @return Client's destination address
+	 * @author Trent Summerlin
 	 */
 	public String getDestinationAddress() {
 		return this.destinationAddress;
@@ -88,9 +104,8 @@ public final class HandshakeResponse {
 	/**
 	 * Used to retrieve the destination port sent by the client
 	 * 
-	 * @author Trent Summerlin
-	 * @version 1.0
 	 * @return Client's destination port
+	 * @author Trent Summerlin
 	 */
 	public int getDestinationPort() {
 		return this.destinationPort;
@@ -99,24 +114,24 @@ public final class HandshakeResponse {
 	/**
 	 * Used to get the handshake type sent by the client
 	 * 
-	 * @author Trent Summerlin
-	 * @version 1.0
 	 * @return Packet handshake type
+	 * @author Trent Summerlin
 	 */
 	public HandshakeType getHandshakeType() {
-		if(this.nextState == 1) return HandshakeType.SERVER_PING;
-		else if(this.nextState == 2) return HandshakeType.PLAYER_LOGIN;
-		else return null; // TODO: Add exception
+		if(this.nextState == 1)
+			return HandshakeType.SERVER_PING;
+		else if(this.nextState == 2)
+			return HandshakeType.PLAYER_LOGIN;
+		else
+			return null; // TODO: Add exception
 	}
 	
 	/**
 	 * Used to get the packet response created by
-	 * <br>
 	 * the Handshake handler
 	 * 
-	 * @author Trent Summerlin
-	 * @version 1.0
 	 * @return Created handshake
+	 * @author Trent Summerlin
 	 */
 	public HandshakePacket getHandshakePacket() {
 		return this.packet;
@@ -130,7 +145,8 @@ public final class HandshakeResponse {
 	}
 
 	public void sendResponse() throws IOException {
-		if(this.nextState == 1) this.packet = new ServerListPingResponse(this.socket);
+		if(this.nextState == 1)
+			this.packet = new ServerListPingResponse(this.socket);
 		//else if(this.nextState == 2) this.packet = new LoginResponse(this.socket);
 	} 
 

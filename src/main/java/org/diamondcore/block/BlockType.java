@@ -1,0 +1,79 @@
+/*
+ _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ 
+|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|
+| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
+| |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
+| |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
+| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
+|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|                                                                                                        
+ 
+*/
+
+package org.diamondcore.block;
+
+/**
+ * Used for help in inventories, chunks, etc.
+ * 
+ * @author Trent Summerlin
+ * @version 0.1.0-SNAPSHOT
+ */
+public enum BlockType {
+	
+	GRASS_BLOCK("minecraft:grass", 2, 0, GrassBlock.class), COBBLESTONE("minecraft:cobblestone", 4, 0, CobbleStone.class);
+	
+	final String sid;
+	final int nid;
+	final int type;
+	final Class<? extends Block> block;
+	private BlockType(String sid, int nid, int type, Class<? extends Block> block) {
+		this.sid = sid;
+		this.nid = nid;
+		this.type = type;
+		this.block = block;
+	}
+	
+	/**
+	 * Used to get the String ID of
+	 * the block
+	 * 
+	 * @return String block ID
+	 * @author Trent Summerlin
+	 */
+	public final String getSID() {
+		return this.sid;
+	}
+	
+	/**
+	 * Used to get the Numeric ID of
+	 * the block
+	 * 
+	 * @return Numeric block ID
+	 * @author Trent Summerlin
+	 */
+	public final int getNID() {
+		return this.nid;
+	}
+	
+	/**
+	 * Used to get the numeric type ID
+	 * of the block
+	 * 
+	 * @return Numeric Block type
+	 * @author Trent Summerlin
+	 */
+	public final int getType() {
+		return this.type;
+	}
+	
+	/**
+	 * Used to get the class of the block
+	 * 
+	 * @return Class block-binding
+	 * @author Trent Summerlin
+	 */
+	public final Class<? extends Block> getBlock() {
+		return this.block;
+	}
+	
+	
+}

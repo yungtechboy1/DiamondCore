@@ -55,8 +55,8 @@ public final class JavaPluginSession {
 
 	// Advanced plugin info
 	protected final ClassLoader loader;
-	protected final Class<?> main;
-	protected final Object mainInstance;
+	protected Class<?> main; // Not final due to error
+	protected Object mainInstance; // Not final due to error
 	
 	// Extra
 	protected final static String ENABLE = "onEnable";
@@ -84,19 +84,23 @@ public final class JavaPluginSession {
 		if(mainClassList.contains(this.pluginMain))
 			throw new PluginDuplicateException(this.pluginMain);
 		
+		// Instatiate it, and store it's instance
 		try {
 			this.main = Class.forName(this.pluginMain, true, loader);
+			if(!this.main.getSuperclass().equals(JavaPlugin.class))
+				throw new PluginException("The main class does not extend JavaPlugin!");
 			this.mainInstance = this.main.newInstance();
 		} catch(Exception e) {
 			e.printStackTrace();
-			throw new PluginException();
+			return;
 		}
 		
+		// Run main method
 		try {
 			main.getMethod(ENABLE).invoke(mainInstance);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new PluginException();
+			return;
 		}
 		
 		// Add plugin session to the session list

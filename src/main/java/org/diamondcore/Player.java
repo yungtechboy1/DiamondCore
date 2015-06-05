@@ -15,13 +15,15 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.diamondcore.command.CommandSender;
+
 /**
  * Used to represent a player and manage it easily
  * 
  * @author Trent Summerlin
  * @version 0.1.0-SNAPSHOT
  */
-public final class Player {
+public final class Player extends CommandSender {
 	
 	// Player list
 	protected static ArrayList<Player> playerList = new ArrayList<Player>();
@@ -33,12 +35,10 @@ public final class Player {
 		return list;
 	}
 	
-	// Basic player info
+	// Player info
 	protected String username;
+	protected Inventory inventory;
 	protected final UUID uuid;
-	
-	// Advance player info
-	
 	
 	public Player(String username, UUID uuid) {
 		// Set player info
@@ -76,8 +76,23 @@ public final class Player {
 		return this.uuid;
 	}
 	
+	/**
+	 * Used to disconnect the player
+	 * 
+	 * @param reason
+	 * @author Trent Summerlin
+	 */
 	public final void disconnect(String reason) {
 		// Disconnect player
+	}
+	
+	/**
+	 * Used to disconnect the player
+	 * 
+	 * @author Trent Summerlin
+	 */
+	public final void disconnect() {
+		
 	}
 	
 	/**
@@ -89,6 +104,19 @@ public final class Player {
 	protected final Socket getSocket() {
 		// Return socket
 		return null;
+	}
+
+	@Override
+	public boolean hasPermission() {
+		if(this.hasOp())
+			return true;
+		else // TODO: Add check later
+			return false;
+	}
+
+	@Override
+	public boolean hasOp() {
+		return false;
 	}
 	
 }

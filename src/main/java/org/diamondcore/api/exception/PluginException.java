@@ -23,10 +23,12 @@ public class PluginException extends Exception {
 	
 	public PluginException() {
 		super("There was a error in running/loading a plugin!");
+		return;
 	}
 
 	public PluginException(String error) {
 		super("There was a error in running/loading a plugin!\nCause: " + error);
+		return;
 	}
 	
 }

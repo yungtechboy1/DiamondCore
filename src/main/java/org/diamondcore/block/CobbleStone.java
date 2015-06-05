@@ -9,35 +9,23 @@
  
 */
 
-package org.diamondcore;
+package org.diamondcore.block;
 
-import org.apache.commons.io.IOUtils;
+public class CobbleStone extends SolidBlock {
 
-
-/**
- * This class is used to start up the DiamondCore program
- * 
- * @author Trent Summerlin
- * @version 1.0
- */
-public class run {
-	
-	static boolean shouldDebug = false;
-	
-	public static void main(String[] args) {
-		try {
-			if(args.length >= 1)
-				shouldDebug = Boolean.parseBoolean(args[0]);
-			else
-				shouldDebug = false;
-			
-			String logo = IOUtils.toString(run.class.getResource("/files/logo.txt").openStream());
-			System.out.println(logo);
-			new Server(shouldDebug);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@Override
+	public String getName() {
+		return "Cobblestone";
 	}
-	
+
+	@Override
+	public double getHardness() {
+		return 0;
+	}
+
+	@Override
+	public double getLightLevel() {
+		return 0;
+	}
+
 }
