@@ -28,7 +28,7 @@ import org.yaml.snakeyaml.Yaml;
  */
 public abstract class JavaPlugin {
 	
-	DiamondLogger logger;
+	private DiamondLogger logger;
 	
 	/**
 	 * Used to get the plugin logger
@@ -89,7 +89,7 @@ public abstract class JavaPlugin {
 	 * @author Trent Summerlin
 	 */
 	@SuppressWarnings("unchecked")
-	public Map<String, String> yaml() {
+	private Map<String, String> yaml() {
 		try {
 			return (Map<String, String>) new Yaml().load(this.getClass().getResource("/plugin.yml").openStream());
 		} catch (IOException e) {

@@ -60,7 +60,7 @@ public class DatUtils {
 		if(isValid) {
 			input.readByte();
 			byte fields = input.readByte();
-			input.read(new byte[input.readShort()]);
+			StringUtils.readString(input.readByte(), input);
 			boolean foundInv = false;
 			for(int i = 0; i < fields; i++) {
 				byte oid = input.readByte();
@@ -74,6 +74,7 @@ public class DatUtils {
 						if(input.readByte() == ITEM_BEGIN) {
 							// Get data
 							short id = input.readShort();
+							byte type = input.readByte();
 							short nameLen = input.readByte();
 							String name = StringUtils.readString(nameLen, input);
 							byte slot = input.readByte();
@@ -82,10 +83,12 @@ public class DatUtils {
 							// Write data
 							output.writeByte(ITEM_BEGIN);
 							output.writeShort(id);
+							output.writeByte(type);
 							output.writeShort(nameLen);
 							output.write(name.getBytes());
 							output.writeByte(slot);
-							output.write(quantity);
+							output.writeByte(quantity);
+							output.flush();
 						} else
 							break; // TODO: Throw exception
 					}

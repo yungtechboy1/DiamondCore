@@ -35,7 +35,7 @@ public class Inventory {
 	protected ArrayList<Item> itemList = new ArrayList<Item>();
 	
 	public Inventory(PlayerSession session, Player player) throws IOException {
-		this.in = new DataInputStream(new FileInputStream(FileList.playerFolder.toString() + "/test-user" + ".dat"));
+		this.in = new DataInputStream(new FileInputStream("./players/test-user" + ".dat"));
 		this.data = IOUtils.toByteArray(in);
 		this.compile();
 	}
@@ -56,15 +56,17 @@ public class Inventory {
 			byte blocks = inv.readByte();
 			for(int i = 0; i < blocks; i++) {
 				inv.readByte();
-				short id = inv.readShort(); // TODO: Use ID to get the block type
-				byte type = inv.readByte(); // TODO: Use type to get block type of block
+				short id = inv.readShort();
+				byte type = inv.readByte();
 				String blockName = null;
 				short nameLen = inv.readShort();
 				if(nameLen > 0)
 					blockName = StringUtils.readString(nameLen, inv);
 				byte slot = inv.readByte();
 				byte quantity = inv.readByte();
-				itemList.add(new Item(this, BlockType.GRASS_BLOCK, quantity, slot, blockName)); // For now it's always grass
+				
+				System.out.println((short) id + " | " + type);
+				itemList.add(new Item(this, BlockType.getByID((int) id, (int) type), quantity, slot, blockName));
 			}
 			compiled = true;
 		}
@@ -76,9 +78,9 @@ public class Inventory {
 		Inventory inv = new Inventory(null, null);
 		for(Item i : inv.getItems()) {
 			System.out.println("----------");
-			System.out.println(i.getDisplayName());
-			System.out.println(i.getQuantity());
-			System.out.println(i.getType().getSID());
+			System.out.println("Name: " + i.getDisplayName());
+			System.out.println("Quantity: " + i.getQuantity());
+			System.out.println("String ID: " + i.getType().getSID());
 		}
 	}
 	

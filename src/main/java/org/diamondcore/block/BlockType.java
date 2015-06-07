@@ -11,6 +11,9 @@
 
 package org.diamondcore.block;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+
 /**
  * Used for help in inventories, chunks, etc.
  * 
@@ -21,15 +24,25 @@ public enum BlockType {
 	
 	GRASS_BLOCK("minecraft:grass", 2, 0, GrassBlock.class), COBBLESTONE("minecraft:cobblestone", 4, 0, CobbleStone.class);
 	
-	final String sid;
-	final int nid;
-	final int type;
-	final Class<? extends Block> block;
+	protected final String sid;
+	protected final int nid;
+	protected final int type;
+	protected final Class<? extends Block> block;
 	private BlockType(String sid, int nid, int type, Class<? extends Block> block) {
 		this.sid = sid;
 		this.nid = nid;
 		this.type = type;
 		this.block = block;
+	}
+	
+	protected static ArrayList<BlockType> blocks = new ArrayList<BlockType>(EnumSet.allOf(BlockType.class));
+	public static BlockType getByID(int id, int type) {
+		System.out.println(blocks.size());
+		for(BlockType block : blocks) {
+			if(block.getNID() == id && block.getType() == type)
+				System.out.println("FOUND MATCH");
+		}
+		return null;
 	}
 	
 	/**
@@ -74,6 +87,5 @@ public enum BlockType {
 	public final Class<? extends Block> getBlock() {
 		return this.block;
 	}
-	
 	
 }

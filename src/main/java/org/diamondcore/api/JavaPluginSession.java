@@ -32,8 +32,8 @@ import org.yaml.snakeyaml.Yaml;
 public final class JavaPluginSession {
 
 	// Session handling
-	protected static ArrayList<JavaPluginSession> pluginSessionList = new ArrayList<JavaPluginSession>();
-	protected static ArrayList<String> mainClassList = new ArrayList<String>();
+	private static ArrayList<JavaPluginSession> pluginSessionList = new ArrayList<JavaPluginSession>();
+	private static ArrayList<String> mainClassList = new ArrayList<String>();
 	
 	/**
 	 * Used to get the java plugin sessions
@@ -48,19 +48,19 @@ public final class JavaPluginSession {
 	}
 
 	// Plugin info
-	protected final String pluginName;
-	protected final String pluginAuthor;
-	protected final String pluginVersion;
-	protected final String pluginMain;
+	private final String pluginName;
+	private final String pluginAuthor;
+	private final String pluginVersion;
+	private final String pluginMain;
 
 	// Advanced plugin info
-	protected final ClassLoader loader;
-	protected Class<?> main; // Not final due to error
-	protected Object mainInstance; // Not final due to error
+	private final ClassLoader loader;
+	private Class<?> main; // Not final due to error
+	private Object mainInstance; // Not final due to error
 	
 	// Extra
-	protected final static String ENABLE = "onEnable";
-	protected final static String DISABLE = "onDisable";
+	private final static String ENABLE = "onEnable";
+	private final static String DISABLE = "onDisable";
 	
 	@SuppressWarnings("unchecked")
 	public JavaPluginSession(File jarFile) throws IOException, PluginException {

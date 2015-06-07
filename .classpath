@@ -32,11 +32,14 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="lib/jars/snakeyaml-1.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jars/json-simple-1.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jars/IO-Lib.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jars/log4j-api-2.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jars/log4j-core-2.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/jars/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0_31/lib/tools.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
+	<classpathentry kind="lib" path="lib/jars/jansi-1.11.jar"/>
+	<classpathentry kind="lib" path="lib/jars/snakeyaml-1.15.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

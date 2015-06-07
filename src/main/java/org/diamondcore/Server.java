@@ -34,6 +34,7 @@ import org.diamondcore.pocket.PocketPacketHandler;
 import org.diamondcore.utils.ServerSettings;
 import org.diamondcore.utils.Ticker;
 import org.diamondcore.world.time.WorldTime;
+import org.fusesource.jansi.AnsiConsole;
 
 /* NOTE: In order to load the server in debug mode in eclipse,
  * go to run configurations and add "true" in arguments! */
@@ -52,6 +53,8 @@ public class Server {
 	DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	
 	public Server(boolean shouldDebug) throws IOException, InterruptedException, PluginException, DiamondException {
+		// Just install ANSI, it'll say itself if something went wrong
+		AnsiConsole.systemInstall();
 		
 		// Start server
 		debug = shouldDebug;
