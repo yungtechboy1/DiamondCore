@@ -19,8 +19,12 @@ import java.net.DatagramSocket;
 
 import org.blockserver.io.BinaryReader;
 import org.blockserver.io.BinaryWriter;
-import org.diamondcore.diamond.Diamond;
-import org.diamondcore.pocket.PocketPacketIDList;
+import org.diamondcore.Diamond;
+import org.diamondcore.api.PlayerType;
+import org.diamondcore.api.event.EventFactory;
+import org.diamondcore.api.event.server.ServerListPingEvent;
+import org.diamondcore.exception.DiamondException;
+import org.diamondcore.pocket.PacketIDList;
 import org.diamondcore.utils.ServerSettings;
 
 /**
@@ -41,15 +45,16 @@ public class ServerListPingResponse implements BasePocketPacket {
 	protected byte[] magic;
 	
 	// Event info
-	//ServerListPingEvent event;
+	ServerListPingEvent event;
 	
-	public ServerListPingResponse(DatagramSocket socket, DatagramPacket packet, long serverID) throws IOException {
+	public ServerListPingResponse(DatagramSocket socket, DatagramPacket packet, long serverID) throws IOException, DiamondException {
 		this.socket = socket;
 		this.packet = packet;
 		this.serverID = serverID;
 		
 		//event = new ServerListPingEvent(PlayerType.POCKET, packet.getAddress(), packet.getPort(), ServerSettings.getPEMOTD());
-		//EventDispatcher.throwEvent(this.event);
+		event = new ServerListPingEvent(PlayerType.POCKET, ServerSettings.getPEMOTD());
+		EventFactory.throwEvent(this.event);
 		this.sendResponse();
 	}
 
@@ -62,7 +67,7 @@ public class ServerListPingResponse implements BasePocketPacket {
 	public void decode() throws IOException {
 		BinaryReader reader = new BinaryReader(new ByteArrayInputStream(packet.getData()));
 		pingID = reader.readLong();
-		magic = reader.read(PocketPacketIDList.MAGIC.length);
+		magic = reader.read(PacketIDList.MAGIC.length);
 		reader.close();
 	}
 	
@@ -70,11 +75,11 @@ public class ServerListPingResponse implements BasePocketPacket {
 	public void sendResponse() throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		BinaryWriter writer = new BinaryWriter(output);
-		String identifier = "MCPE;" + ServerSettings.getPEMOTD() + ";" + Diamond.pocketProtocol + ";" + Diamond.pocketVersionTag + ";" + 0 + ";" + ServerSettings.getMaxPlayers();
-		writer.writeByte(PocketPacketIDList.ID_UNCONNECTED_PING_OPEN_CONNECTIONS);
+		String identifier = "MCPE;" + event.getMOTD() + ";" + Diamond.pocketProtocol + ";" + Diamond.pocketVersionTag + ";" + 0 + ";" + ServerSettings.getMaxPlayers();
+		writer.writeByte(PacketIDList.ID_UNCONNECTED_PING_OPEN_CONNECTIONS);
 		writer.writeLong(pingID);
 		writer.writeLong(serverID);
-		writer.write(PocketPacketIDList.MAGIC);
+		writer.write(PacketIDList.MAGIC);
 		writer.writeShort((short) identifier.getBytes().length);
 		writer.write(identifier.getBytes());
 		socket.send(new DatagramPacket(output.toByteArray(), output.toByteArray().length, packet.getAddress(), packet.getPort()));

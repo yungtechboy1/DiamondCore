@@ -18,7 +18,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Properties;
 
-import org.diamondcore.diamond.Diamond;
+import org.diamondcore.Diamond;
 
 /**
  * This class is used for making sure all the server-properties
@@ -204,16 +204,6 @@ public class PropertiesCheckup {
 		
 		if(Boolean.parseBoolean(Properties.get("enable-rcon").toString()) == true) {
 			Properties.setProperty("rcon.password", new BigInteger(130, new SecureRandom()).toString(32));
-			PropertiesAdded++;
-		}
-		
-		if(Properties.get("web-enabled") == null) {
-			Properties.setProperty("web-enabled", "true");
-			PropertiesAdded++;
-		}
-		
-		if(Properties.get("server-port-web") == null) {
-			Properties.setProperty("server-port-web", "8080");
 			PropertiesAdded++;
 		}
 		

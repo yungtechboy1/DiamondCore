@@ -11,11 +11,17 @@
 
 package org.diamondcore.api.event;
 
+import org.diamondcore.api.PlayerType;
+
 /**
- * Implemented by classes that desire to listen
- * for server events
+ * The base for DiamondCore events
  * 
  * @author Trent Summerlin
  * @version 0.1.0-SNAPSHOT
  */
-public interface Listener {}
+public abstract class Event {
+	
+	public abstract String getName();
+	public abstract PlayerType getPlayerType();
+	
+}

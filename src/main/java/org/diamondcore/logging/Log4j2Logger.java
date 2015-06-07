@@ -11,8 +11,6 @@
 
 package org.diamondcore.logging;
 
-import java.util.Calendar;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.diamondcore.ChatColor;
@@ -24,12 +22,9 @@ import org.diamondcore.ChatColor;
  * @version 0.1.0-SNAPSHOT
  */
 public class Log4j2Logger implements DiamondLogger {
-	
-	Calendar now = Calendar.getInstance();
-	int hour; int minute; int second;
-	
-	protected final Logger logger;
-	protected final String name;
+
+	private final Logger logger;
+	private final String name;
 
 	public Log4j2Logger(String name) {
 		logger = LogManager.getLogger(name);

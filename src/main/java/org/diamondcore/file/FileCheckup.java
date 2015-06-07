@@ -14,7 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import org.diamondcore.diamond.Diamond;
+import org.diamondcore.Diamond;
 
 /**
  * This class is used for making sure all files needed for the

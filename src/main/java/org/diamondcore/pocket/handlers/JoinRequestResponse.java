@@ -19,7 +19,7 @@ import java.net.DatagramSocket;
 
 import org.blockserver.io.BinaryReader;
 import org.blockserver.io.BinaryWriter;
-import org.diamondcore.pocket.PocketPacketIDList;
+import org.diamondcore.pocket.PacketIDList;
 
 /**
  * This packet is in response to the first login packet sent by a client
@@ -70,12 +70,12 @@ public class JoinRequestResponse implements BasePocketPacket {
 		BinaryReader reader = new BinaryReader(new ByteArrayInputStream(packet.getData()));
 		if(this.stage == 1) {
 			reader.readByte(); // Get packet ID
-			magic = reader.read(PocketPacketIDList.MAGIC.length);
+			magic = reader.read(PacketIDList.MAGIC.length);
 			protocol = reader.readByte();
 			MTU = reader.readByte();
 			reader.close();
 		} else if(this.stage == 2) {
-			magic = reader.read(PocketPacketIDList.MAGIC.length);
+			magic = reader.read(PacketIDList.MAGIC.length);
 			securityCookie = reader.readByte();
 			serverUDPPort = reader.readShort();
 			MTU = reader.readShort();
@@ -95,8 +95,8 @@ public class JoinRequestResponse implements BasePocketPacket {
 			// Write data
 			ByteArrayOutputStream output = new ByteArrayOutputStream();
 			BinaryWriter writer = new BinaryWriter(output);
-			writer.writeByte(PocketPacketIDList.ID_OPEN_CONNECTION_REPLY_1);
-			writer.write(PocketPacketIDList.MAGIC);
+			writer.writeByte(PacketIDList.ID_OPEN_CONNECTION_REPLY_1);
+			writer.write(PacketIDList.MAGIC);
 			writer.writeLong(serverID);
 			writer.writeByte((byte) 0);
 			writer.writeShort((short) MTU);
@@ -107,8 +107,8 @@ public class JoinRequestResponse implements BasePocketPacket {
 			// Write data
 			ByteArrayOutputStream output = new ByteArrayOutputStream();
 			BinaryWriter writer = new BinaryWriter(output);
-			writer.writeByte(PocketPacketIDList.ID_OPEN_CONNECTION_REPLY_2);
-			writer.write(PocketPacketIDList.MAGIC);
+			writer.writeByte(PacketIDList.ID_OPEN_CONNECTION_REPLY_2);
+			writer.write(PacketIDList.MAGIC);
 			writer.writeLong(serverID);
 			writer.writeShort(clientPort);
 			writer.writeShort(MTU);

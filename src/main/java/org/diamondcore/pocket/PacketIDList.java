@@ -17,7 +17,7 @@ package org.diamondcore.pocket;
  * @author Trent Summerlin
  * @version 1.0
  */
-public abstract class PocketPacketIDList {
+public abstract class PacketIDList {
 	
 	/**
 	 * This is the current protocol ID for Minecraft: Pocket

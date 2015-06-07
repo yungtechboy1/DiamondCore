@@ -16,11 +16,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import org.diamondcore.desktop.DesktopPacketIDList;
+import org.diamondcore.desktop.PacketIDList;
 import org.diamondcore.desktop.handshake.HandshakeType;
 import org.diamondcore.desktop.handshake.ServerListPingResponse;
 import org.diamondcore.desktop.packet.HandshakePacket;
 import org.diamondcore.desktop.utils.PacketUtils;
+import org.diamondcore.exception.DiamondException;
 import org.diamondcore.utils.VarInt;
 
 /**
@@ -47,7 +48,7 @@ public final class HandshakeResponse {
 	protected int nextState;
 	protected HandshakePacket packet;
 	
-	public HandshakeResponse(Socket socket) throws IOException {
+	public HandshakeResponse(Socket socket) throws IOException, DiamondException {
 		// Initialize
 		this.socket = socket;
 		this.input = new DataInputStream(this.socket.getInputStream());
@@ -78,7 +79,7 @@ public final class HandshakeResponse {
 	 * @author Trent Summerlin
 	 */
 	public int getPacketID() {
-		return DesktopPacketIDList.HANDSHAKE_PACKET;
+		return PacketIDList.HANDSHAKE_PACKET;
 	}
 	
 	/**
@@ -144,7 +145,7 @@ public final class HandshakeResponse {
 		this.nextState = VarInt.readUnsignedVarInt(input.readByte());
 	}
 
-	public void sendResponse() throws IOException {
+	public void sendResponse() throws IOException, DiamondException {
 		if(this.nextState == 1)
 			this.packet = new ServerListPingResponse(this.socket);
 		//else if(this.nextState == 2) this.packet = new LoginResponse(this.socket);

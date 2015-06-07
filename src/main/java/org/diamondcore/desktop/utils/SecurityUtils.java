@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.X509EncodedKeySpec;
 
-import org.diamondcore.diamond.Diamond;
+import org.diamondcore.Diamond;
 
 /**
  * Utility class for performing encrypted authentication

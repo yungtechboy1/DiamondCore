@@ -23,8 +23,9 @@ import java.util.HashMap;
 import java.util.Random;
 
 import org.blockserver.io.BinaryReader;
+import org.diamondcore.Diamond;
 import org.diamondcore.PlayerSession;
-import org.diamondcore.diamond.Diamond;
+import org.diamondcore.exception.DiamondException;
 import org.diamondcore.pocket.handlers.JoinRequestResponse;
 import org.diamondcore.pocket.handlers.ServerListPingResponse;
 import org.diamondcore.utils.ServerSettings;
@@ -36,13 +37,13 @@ import org.diamondcore.utils.ServerSettings;
  * @author jython234
  * @version 0.1.0-SNAPSHOT
  */
-public class PocketPacketHandler extends Thread {
+public class UDPPacketHandler extends Thread {
 	
 	private DatagramSocket socket;
 	private long ServerID = new Random().nextLong();
 	private HashMap<String, PlayerSession> sessions = new HashMap<String, PlayerSession>();
 	
-	public PocketPacketHandler(DatagramSocket socket/*, DiamondCoreServer server*/) throws IOException {
+	public UDPPacketHandler(DatagramSocket socket/*, DiamondCoreServer server*/) throws IOException {
 		// Set socket Settings
 		this.socket = socket;
 		socket.setBroadcast(true);
@@ -70,13 +71,13 @@ public class PocketPacketHandler extends Thread {
 					// Check if player is a MCPE player
 				} else {
 					switch(packetID) {
-						case PocketPacketIDList.ID_CONNECTED_PING_OPEN_CONNECTIONS:
+						case PacketIDList.ID_CONNECTED_PING_OPEN_CONNECTIONS:
 							new ServerListPingResponse(socket, pocketPacket, ServerID);
 							break;
-						case PocketPacketIDList.ID_OPEN_CONNECTION_REQUEST_1:
+						case PacketIDList.ID_OPEN_CONNECTION_REQUEST_1:
 							new JoinRequestResponse(socket, pocketPacket, ServerID, 1);
 							break;
-						case PocketPacketIDList.ID_OPEN_CONNECTION_REQUEST_2:
+						case PacketIDList.ID_OPEN_CONNECTION_REQUEST_2:
 							new JoinRequestResponse(socket, pocketPacket, ServerID, 2);
 							break;
 						case -124:
@@ -99,8 +100,8 @@ public class PocketPacketHandler extends Thread {
 			catch(SocketTimeoutException e) {
 				/*Ignore, this will happen sometimes.*/
 			}
-			catch(IOException E) {
-				E.printStackTrace();
+			catch(IOException | DiamondException e) {
+				e.printStackTrace();
 			}
 		}
 	}

@@ -17,8 +17,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.diamondcore.Diamond;
 import org.diamondcore.desktop.handlers.HandshakeResponse;
-import org.diamondcore.diamond.Diamond;
+import org.diamondcore.exception.DiamondException;
 import org.diamondcore.utils.VarInt;
 
 /**
@@ -27,11 +28,11 @@ import org.diamondcore.utils.VarInt;
  * @author Trent Summerlin
  * @version 0.1.0-SNAPSHOT
  */
-public class DesktopPacketHandler extends Thread {
+public class TCPPacketHandler extends Thread {
 	
 	protected final ServerSocket ss;
 	
-	public DesktopPacketHandler(ServerSocket ss) throws IOException {
+	public TCPPacketHandler(ServerSocket ss) throws IOException {
 		this.ss = ss;
 		
 	}
@@ -48,14 +49,14 @@ public class DesktopPacketHandler extends Thread {
 				int packetID = VarInt.readUnsignedVarInt(input.readByte());
 				
 				switch(packetID) {
-					case DesktopPacketIDList.HANDSHAKE_PACKET:
+					case PacketIDList.HANDSHAKE_PACKET:
 						HandshakeResponse packet = new HandshakeResponse(socket); // Also handles login as well
 						break;
 					default:
 						Diamond.logger.info("Received unknown ID: " + packetID);
 						break;
 				}
-			} catch (IOException e) {
+			} catch (IOException | DiamondException e) {
 				e.printStackTrace();
 			}
 		}

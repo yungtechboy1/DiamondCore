@@ -9,15 +9,14 @@
 
 */
 
-package org.diamondcore.diamond;
+package org.diamondcore;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
 
 import org.apache.commons.io.FileUtils;
-import org.diamondcore.Server;
-import org.diamondcore.diamond.exception.DiamondException;
+import org.diamondcore.exception.DiamondException;
 import org.diamondcore.logging.DiamondLogger;
 import org.diamondcore.logging.Log4j2Logger;
 

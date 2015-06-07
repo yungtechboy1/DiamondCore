@@ -17,7 +17,8 @@ import java.io.IOException;
 import java.net.Socket;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.diamondcore.diamond.Diamond;
+import org.diamondcore.Diamond;
+import org.diamondcore.desktop.PacketIDList;
 import org.diamondcore.utils.VarInt;
 import org.json.simple.JSONObject;
 
@@ -77,7 +78,7 @@ public class ClientDisconnectPacket {
 		object.put("text", this.reason.toString());
 		
 		ByteArrayOutputStream data = new ByteArrayOutputStream();
-		data.write((byte) 0x00);
+		data.write(PacketIDList.CLIENT_DISCONNECT);
 		data.write(VarInt.writeUnsignedVarInt(object.toString().getBytes().length));
 		data.write(object.toString().getBytes());
 		data.flush();

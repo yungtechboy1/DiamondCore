@@ -17,8 +17,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import org.diamondcore.Diamond;
+import org.diamondcore.api.PlayerType;
+import org.diamondcore.api.event.EventFactory;
+import org.diamondcore.api.event.server.ServerListPingEvent;
+import org.diamondcore.desktop.PacketIDList;
 import org.diamondcore.desktop.packet.HandshakePacket;
-import org.diamondcore.diamond.Diamond;
+import org.diamondcore.exception.DiamondException;
 import org.diamondcore.utils.ServerSettings;
 import org.diamondcore.utils.VarInt;
 import org.json.simple.JSONObject;
@@ -34,17 +39,18 @@ public class ServerListPingResponse extends HandshakePacket {
 	JSONObject object = new JSONObject();
 	
 	// Event side
-	//ServerListPingEvent event;
+	ServerListPingEvent event;
 	
 	@SuppressWarnings("unchecked")
-	public ServerListPingResponse(Socket s) throws IOException {
+	public ServerListPingResponse(Socket s) throws IOException, DiamondException {
 		this.s = s;
 		this.input = new DataInputStream(this.s.getInputStream());
 		this.output = new DataOutputStream(this.s.getOutputStream());
 		
 		// Throw event before putting together json because something might be changed by a plugin
 		//this.event = new ServerListPingEvent(PlayerType.DESKTOP, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD(), ServerSettings.getServerFavicon());
-		//EventDispatcher.throwEvent(this.event);
+		this.event = new ServerListPingEvent(PlayerType.DESKTOP, ServerSettings.getPCMOTD());
+		EventFactory.throwEvent(this.event);
 		
 		// Create MOTD JSON Object
 		JSONObject versionMap = new JSONObject();
@@ -75,7 +81,7 @@ public class ServerListPingResponse extends HandshakePacket {
 		// Put icon if available
 		if(ServerSettings.getServerFavicon() != null) object.put("favicon", ServerSettings.getServerFavicon());
 					
-		// Now put everything all toghether
+		// Now put everything all together
 		object.put("version", versionMap);
 		object.put("players", playerMap);
 		object.put("description", info);
@@ -95,7 +101,7 @@ public class ServerListPingResponse extends HandshakePacket {
 		
 		// Write Data
 		ByteArrayOutputStream data = new ByteArrayOutputStream();
-		data.write(0x01);
+		data.write(PacketIDList.SERVER_PING_RESPONSE);
 		data.write(VarInt.writeUnsignedVarInt(json.getBytes().length));
 		data.write(json.getBytes());
 		data.flush();

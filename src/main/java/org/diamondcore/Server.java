@@ -18,19 +18,19 @@ import java.net.ServerSocket;
 
 import org.diamondcore.api.JavaPluginLoader;
 import org.diamondcore.api.exception.PluginException;
+import org.diamondcore.api.plugin.PluginManager;
 import org.diamondcore.block.Block;
 import org.diamondcore.command.InputReader;
-import org.diamondcore.desktop.DesktopPacketHandler;
+import org.diamondcore.desktop.TCPPacketHandler;
 import org.diamondcore.desktop.utils.LocalServerBroadcaster;
-import org.diamondcore.diamond.Diamond;
-import org.diamondcore.diamond.exception.DiamondException;
+import org.diamondcore.exception.DiamondException;
 import org.diamondcore.file.FileCheckup;
 import org.diamondcore.file.FileList;
 import org.diamondcore.file.PropertiesCheckup;
 import org.diamondcore.logging.DiamondLogger;
 import org.diamondcore.logging.Log4j2Logger;
 import org.diamondcore.mojang.MojangAuthServer;
-import org.diamondcore.pocket.PocketPacketHandler;
+import org.diamondcore.pocket.UDPPacketHandler;
 import org.diamondcore.utils.ServerSettings;
 import org.diamondcore.utils.Ticker;
 import org.diamondcore.world.time.WorldTime;
@@ -45,12 +45,15 @@ import org.fusesource.jansi.AnsiConsole;
  */
 public class Server {
 	
+	// Plugins
+	private final PluginManager manager = new PluginManager();
+	
 	// Running Variable
-	boolean running = false;
-	boolean debug = false;
+	private boolean running = false;
+	private boolean debug = false;
 	
 	// Logger
-	DiamondLogger logger = new Log4j2Logger("DiamondCore");
+	private final DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	
 	public Server(boolean shouldDebug) throws IOException, InterruptedException, PluginException, DiamondException {
 		// Just install ANSI, it'll say itself if something went wrong
@@ -75,17 +78,14 @@ public class Server {
 		// Load Server Settings
 		ServerSettings.load();
 		
-		// Check if port is no less than 1024
-		if(ServerSettings.getWebPort() <= 1024) logger.warn("The port " + ServerSettings.getWebPort() + " is reserved for root programs of the computer! Closing web-socket...");
-		
 		// Initialize everything
 		Block.registerBlocks();
 		
 		// Finish startup
 		new MainTicker().start();
-		new PocketPacketHandler(new DatagramSocket(ServerSettings.getPEPort())).start();
-		new DesktopPacketHandler(new ServerSocket(ServerSettings.getPCPort())).start();
-		//new LocalServerBroadcaster(InetAddress.getByName("127.0.0.1"), 4445).start();
+		new UDPPacketHandler(new DatagramSocket(ServerSettings.getPEPort())).start();
+		new TCPPacketHandler(new ServerSocket(ServerSettings.getPCPort())).start();
+		new LocalServerBroadcaster(InetAddress.getByName("127.0.0.1"), 4445).start();
 		new InputReader().start();
 		
 		// Load plugins after everything is initialized
@@ -96,11 +96,20 @@ public class Server {
 	}
 	
 	/**
+	 * Used to get the plugin manager
+	 * 
+	 * @return Plugin manager
+	 * @author Trent Summerlin
+	 */
+	public PluginManager getPluginManager() {
+		return manager;
+	}
+	
+	/**
 	 * Used to see if the DiamondCore server software is running
 	 * 
 	 * @return Server (running) state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public boolean isRunning() {
 		return this.running;
@@ -111,10 +120,19 @@ public class Server {
 	 * 
 	 * @return Server logger
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public DiamondLogger getLogger() {
 		return this.logger;
+	}
+	
+	/**
+	 * Used to see if DiamondCore is in debug mode
+	 * 
+	 * @return Debug mode state
+	 * @author Trent Summerlin
+	 */
+	public boolean isDebug() {
+		return this.debug;
 	}
 	
 }

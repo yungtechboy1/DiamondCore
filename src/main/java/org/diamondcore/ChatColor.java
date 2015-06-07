@@ -10,7 +10,7 @@ _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ 
 
 package org.diamondcore;
 
-import static org.fusesource.jansi.Ansi.*;
+import static org.fusesource.jansi.Ansi.ansi;
 
 public enum ChatColor {
 	
@@ -199,7 +199,9 @@ public enum ChatColor {
 	 * @author Trent Summerlin
 	 */
 	public static String toConsole(String input) {
-		return ansi().render(input.replace(ChatColor.BLACK.toString(), ANSI_BLACK)
+		
+		if(!Diamond.getServer().isDebug())
+			return ansi().render(input.replace(ChatColor.BLACK.toString(), ANSI_BLACK)
 				.replace(ChatColor.DARK_BLUE.toString(), ANSI_DARK_BLUE)
 				.replace(ChatColor.DARK_GREEN.toString(), ANSI_DARK_GREEN)
 				.replace(ChatColor.DARK_AQUA.toString(), ANSI_DARK_AQUA)
@@ -221,5 +223,7 @@ public enum ChatColor {
 				.replace(ChatColor.UNDERLINE.toString(), ANSI_UNDERLINE)
 				.replace(ChatColor.STRIKETHROUGH.toString(), ANSI_STRIKETHROUGH)
 				.replace(ChatColor.RESET.toString(), ANSI_RESET) + ANSI_RESET).toString();
+		else
+			return ChatColor.stripColors(input);
 	}
 }

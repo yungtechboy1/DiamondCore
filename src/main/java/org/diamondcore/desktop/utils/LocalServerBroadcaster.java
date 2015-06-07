@@ -16,8 +16,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import org.diamondcore.utils.ServerSettings;
-
 /**
  * This class is used to broadcast the server over the local network
  * for Desktop players that happen to be on the same network. This helps
@@ -27,9 +25,6 @@ import org.diamondcore.utils.ServerSettings;
  * @version 0.1.0-SNAPSHOT
  */
 public final class LocalServerBroadcaster extends Thread {
-	
-	// Presets
-	protected final String rawData = "[MOTD]__motd__[/MOTD][AD]__ad__[/AD]";
 	
 	// Data
 	protected final DatagramSocket socket;
@@ -43,10 +38,11 @@ public final class LocalServerBroadcaster extends Thread {
 	protected String motd;
 	
 	public LocalServerBroadcaster(InetAddress address, int port) throws IOException {
-		this.socket = new DatagramSocket();
+		this.socket = new DatagramSocket(null);
+		this.socket.setReuseAddress(true);
 		this.address = address;
 		this.port = port;
-		this.motd = ("Local DiamondCore Server - " + InetAddress.getLocalHost().getHostName());
+		this.motd = ("Local DiamondCore World (" + InetAddress.getLocalHost().getHostName() + ")");
 	}
 	
 	public void setMOTD(String newMotd) {
@@ -60,7 +56,7 @@ public final class LocalServerBroadcaster extends Thread {
 					socket.close();
 					break;
 				}
-				byte[] data = this.rawData.replace("__motd__", this.motd).replace("__ad__", ServerSettings.getPCPort() + "").getBytes();
+				byte[] data = ("[MOTD]" + motd + "[/MOTD][AD]" + port + "[/AD]").getBytes();
 				socket.send(new DatagramPacket(data, data.length, address, port));
 			}catch (IOException e) {
 				e.printStackTrace();

@@ -478,20 +478,4 @@ public abstract class ServerSettings {
 		return LevelType.UNKNOWN;
 	}
 	
-	// Web related
-	public static boolean getWebEnabled() {
-		return Boolean.parseBoolean(Properties.get("web-enabled").toString());
-	}
-	
-	/**
-	 * Get the WebPort for web-browsers
-	 * 
-	 * @return WebPort for browsers
-	 * @author Trent Summerlin
-	 * @version 1.0
-	 */
-	public static int getWebPort() {
-		return Integer.parseInt(Properties.get("server-port-web").toString());
-	}
-	
 }
