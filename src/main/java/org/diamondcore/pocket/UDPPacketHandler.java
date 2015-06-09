@@ -12,6 +12,7 @@
 package org.diamondcore.pocket;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import org.blockserver.io.BinaryReader;
+import org.blockserver.io.BinaryWriter;
 import org.diamondcore.Diamond;
 import org.diamondcore.PlayerSession;
 import org.diamondcore.exception.DiamondException;
@@ -82,12 +84,22 @@ public class UDPPacketHandler extends Thread {
 							break;
 						case -124:
 							System.out.println("----");
-							ByteBuffer bb = ByteBuffer.wrap(pocketPacket.getData());
-							bb.get(); bb.get();
-							short length = (short) (bb.getShort()/8);
-							System.out.println(((pocketPacket.getData().length - length) == 12) + " -- " + (pocketPacket.getData().length - length));
-							System.out.println("----");
+							ByteArrayOutputStream output = new ByteArrayOutputStream();
+							BinaryWriter writer = new BinaryWriter(output);
+							writer.writeByte((byte) -0x84);
+							writer.writeTriad(new Random().nextInt());
+							writer.writeString("HAH");
+							
+							DatagramPacket packet = new DatagramPacket(output.toByteArray(), output.size(), pocketPacket.getAddress(), pocketPacket.getPort());
+							socket.send(packet);
 					       // Diamond.logger.info("NUMBER: " + test1);
+							break;
+						case -64:
+							ByteBuffer bb = ByteBuffer.wrap(pocketPacket.getData());
+							bb.get();
+							int len = bb.getShort()/8;
+							byte[] data = bb.get(new byte[len]).array();
+							System.out.println(data[0]);
 							break;
 						default:
 							Diamond.logger.warn("RECEIVED UNKNOWN PACKET ID: " + pocketPacket.getData()[0]);

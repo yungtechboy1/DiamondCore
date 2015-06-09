@@ -51,7 +51,10 @@ public class TCPPacketHandler extends Thread {
 				switch(packetID) {
 					case PacketIDList.HANDSHAKE_PACKET:
 						HandshakeResponse packet = new HandshakeResponse(socket); // Also handles login as well
+						packet.sendResponse();
 						break;
+					case -646:
+						break; // Ignore mystery ID
 					default:
 						Diamond.logger.info("Received unknown ID: " + packetID);
 						break;

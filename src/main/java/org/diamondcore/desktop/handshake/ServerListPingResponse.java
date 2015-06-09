@@ -17,7 +17,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import org.diamondcore.Diamond;
 import org.diamondcore.api.PlayerType;
 import org.diamondcore.api.event.EventFactory;
 import org.diamondcore.api.event.server.ServerListPingEvent;
@@ -48,38 +47,33 @@ public class ServerListPingResponse extends HandshakePacket {
 		this.output = new DataOutputStream(this.s.getOutputStream());
 		
 		// Throw event before putting together json because something might be changed by a plugin
-		//this.event = new ServerListPingEvent(PlayerType.DESKTOP, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD(), ServerSettings.getServerFavicon());
-		this.event = new ServerListPingEvent(PlayerType.DESKTOP, ServerSettings.getPCMOTD());
+		this.event = new ServerListPingEvent(PlayerType.DESKTOP, s.getInetAddress(), s.getPort(), ServerSettings.getPCMOTD());
 		EventFactory.throwEvent(this.event);
 		
 		// Create MOTD JSON Object
 		JSONObject versionMap = new JSONObject();
-		versionMap.put("name", Diamond.desktopVersionTag);
-		versionMap.put("protocol", Diamond.desktopProtocol-10);
+		versionMap.put("name", event.getProtocolTag());
+		versionMap.put("protocol", event.getProtocol());
 								
 		// Players
-		//ArrayList<String> playerList = Diamond.getOnlinePlayers();
 		JSONObject playerMap = new JSONObject();
-		playerMap.put("max", ServerSettings.getMaxPlayers());
-		playerMap.put("online", 1);
+		playerMap.put("max", event.getMaxPlayers());
+		playerMap.put("online", event.getOnlinePlayers());
 		
-		/*if(playerList.size() <= 10) {
-			JSONArray onlinePlayerMap = new JSONArray();
-			for(int i = 0; i < playerList.size(); i++) {
-				JSONObject currentPlayer = new JSONObject();
-				currentPlayer.put("name", playerList.get(i));
-				currentPlayer.put("id", UUID.randomUUID().toString());
-				onlinePlayerMap.add(currentPlayer);
-			}
-			playerMap.put("sample", onlinePlayerMap);
-		}*/
+		// TODO: Add player sample list
+		/**
+		 * How to add a player to the sample list:
+		 * Step 1: Put the player name
+		 * Step 2: Put the player's UUID (A random UUID will work as well!)
+		 */
 										
 		// Description and favicon
 		JSONObject info = new JSONObject();
-		info.put("text", ServerSettings.getPCMOTD());
+		info.put("text", event.getMOTD());
 			
-		// Put icon if available
-		if(ServerSettings.getServerFavicon() != null) object.put("favicon", ServerSettings.getServerFavicon());
+		// Put favicon if available
+		if(ServerSettings.getServerFavicon() != null)
+			object.put("favicon", event.getFavicon().toString());
 					
 		// Now put everything all together
 		object.put("version", versionMap);

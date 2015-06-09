@@ -22,7 +22,7 @@ import org.diamondcore.api.plugin.PluginManager;
 import org.diamondcore.block.Block;
 import org.diamondcore.command.InputReader;
 import org.diamondcore.desktop.TCPPacketHandler;
-import org.diamondcore.desktop.utils.LocalServerBroadcaster;
+import org.diamondcore.desktop.utils.TCPBroadcaster;
 import org.diamondcore.exception.DiamondException;
 import org.diamondcore.file.FileCheckup;
 import org.diamondcore.file.FileList;
@@ -47,6 +47,7 @@ public class Server {
 	
 	// Plugins
 	private final PluginManager manager = new PluginManager();
+	private final TCPBroadcaster broadcaster;
 	
 	// Running Variable
 	private boolean running = false;
@@ -85,7 +86,8 @@ public class Server {
 		new MainTicker().start();
 		new UDPPacketHandler(new DatagramSocket(ServerSettings.getPEPort())).start();
 		new TCPPacketHandler(new ServerSocket(ServerSettings.getPCPort())).start();
-		new LocalServerBroadcaster(InetAddress.getByName("127.0.0.1"), 4445).start();
+		this.broadcaster = new TCPBroadcaster(InetAddress.getByName("127.0.0.1"), 4445);
+		this.broadcaster.start();
 		new InputReader().start();
 		
 		// Load plugins after everything is initialized
@@ -101,7 +103,7 @@ public class Server {
 	 * @return Plugin manager
 	 * @author Trent Summerlin
 	 */
-	public PluginManager getPluginManager() {
+	public final PluginManager getPluginManager() {
 		return manager;
 	}
 	
@@ -111,7 +113,7 @@ public class Server {
 	 * @return Server (running) state
 	 * @author Trent Summerlin
 	 */
-	public boolean isRunning() {
+	public final boolean isRunning() {
 		return this.running;
 	}
 	
@@ -121,8 +123,19 @@ public class Server {
 	 * @return Server logger
 	 * @author Trent Summerlin
 	 */
-	public DiamondLogger getLogger() {
+	public final DiamondLogger getLogger() {
 		return this.logger;
+	}
+	
+	/**
+	 * Used to retrieve the Local Server Broadcaster
+	 * for Minecraft
+	 * 
+	 * @return The local server broadcaster
+	 * @author Trent Summerlin
+	 */
+	public final TCPBroadcaster getBroadcaster() {
+		return this.broadcaster;
 	}
 	
 	/**
@@ -131,7 +144,7 @@ public class Server {
 	 * @return Debug mode state
 	 * @author Trent Summerlin
 	 */
-	public boolean isDebug() {
+	public final boolean isDebug() {
 		return this.debug;
 	}
 	

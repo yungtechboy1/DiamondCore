@@ -29,7 +29,7 @@ public final class PacketIDList {
 	/**
 	 * S -> C: Server list pong sent by the server for the MOTD
 	 */
-	public static final byte SERVER_PING_RESPONSE = (byte) 0x01;
+	public static final byte SERVER_PING_RESPONSE = HANDSHAKE_PACKET;
 	
 	/**
 	 * S -> C: Sent by the server to disconnect the client

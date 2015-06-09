@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.diamondcore.desktop.Favicon;
 import org.diamondcore.file.FileList;
 import org.diamondcore.world.GeneratorType;
 import org.diamondcore.world.LevelType;
@@ -30,7 +31,7 @@ import org.diamondcore.world.LevelType;
 public abstract class ServerSettings {
 	
 	protected static Properties Properties = new Properties();
-	protected static String serverIcon = null;
+	protected static Favicon serverIcon = null;
 	
 	/**
 	 * Loads the properties folder into the system
@@ -39,11 +40,8 @@ public abstract class ServerSettings {
 	 * @throws IOException
 	 */
 	public static void load() throws FileNotFoundException, IOException {
-		// Load properties
 		Properties.load(new FileInputStream(FileList.serverProperties));
-		
-		// Load BASE64 image
-		if(FileList.serverFavicon.exists()) serverIcon = ("data:image/png;base64," + ImageUtils.toString(FileList.serverFavicon));
+		if(FileList.serverFavicon.exists()) serverIcon = Favicon.getInstance(FileList.serverFavicon);
 	}
 	
 	// Player related
@@ -52,7 +50,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Whitelist enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getEnableWhitelist() {
 		return Boolean.parseBoolean(Properties.get("whitelist").toString());
@@ -63,7 +60,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return AnnouncePlayerAchievements enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getEnableAnnouncePlayerAchievements() {
 		return Boolean.parseBoolean(Properties.get("announce-player-achievements").toString());
@@ -74,7 +70,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return PVP enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getEnablePVP() {
 		return Boolean.parseBoolean(Properties.get("pvp").toString());
@@ -85,7 +80,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Max players for the server
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static int getMaxPlayers() {
 		return Integer.parseInt(Properties.get("max-players").toString());
@@ -96,7 +90,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Idle time before a player is kicked
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static int getPlayerIdleTimeout() {
 		return Integer.parseInt(Properties.get("player-idle-timeout").toString());
@@ -107,7 +100,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Operator permission level
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static int getOperatorPermissionLevel() {
 		return Integer.parseInt(Properties.get("op-permission-level").toString());
@@ -118,7 +110,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server allow fly hacks
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getAllowFlight() {
 		return Boolean.parseBoolean(Properties.get("allow-flight").toString());
@@ -129,7 +120,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server force-gamemode enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getForceGamemode() {
 		return Boolean.parseBoolean(Properties.get("force-gamemode").toString());
@@ -140,7 +130,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server default gamemode
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static int getGamemode() {
 		return Integer.parseInt(Properties.get("gamemode").toString());
@@ -152,7 +141,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server MCPC MOTD
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static String getPCMOTD() {
 		char[] raw = Properties.get("motd-pc").toString().toCharArray();
@@ -168,11 +156,10 @@ public abstract class ServerSettings {
 	 * Get the MCPC server favicon (Will return null if there is no favicon)
 	 * 
 	 * @return Server MCPC favicon
+	 * @throws IOException
 	 * @author Trent Summerlin
-	 * @version 1.0
-	 * @throws IOException 
 	 */
-	public static String getServerFavicon() throws IOException {
+	public static Favicon getServerFavicon() throws IOException {
 		return serverIcon;
 	}
 	
@@ -181,7 +168,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server MCPE MOTD
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static String getPEMOTD() {
 		char[] raw = Properties.get("motd-pe").toString().toCharArray();
@@ -198,7 +184,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Port for MCPC
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static int getPCPort() {
 		return Integer.parseInt(Properties.get("server-port-pc").toString());
@@ -209,7 +194,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Port for MCPE
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static int getPEPort() {
 		return Integer.parseInt(Properties.get("server-port-pe").toString());
@@ -220,7 +204,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return PC Resource pack for players to download
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static String getResourcePack() {
 		return Properties.get("resource-pack").toString();
@@ -231,7 +214,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server IP
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static String getServerIP() {
 		return Properties.get("server-ip").toString();
@@ -242,7 +224,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Online Mode for MCPC
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getOnlineMode() {
 		return Boolean.parseBoolean(Properties.getProperty("online-mode").toString());
@@ -253,7 +234,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server RAM
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static long getRam() {
 		return Runtime.getRuntime().maxMemory();
@@ -265,7 +245,6 @@ public abstract class ServerSettings {
 	 *
 	 * @return Spawn Protection
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static int getSpawnProtection() {
 		return Integer.parseInt(Properties.get("spawn-protection").toString());
@@ -276,7 +255,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Spawn Animals enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getSpawnAnimals() {
 		return Boolean.parseBoolean(Properties.get("spawn-animals").toString());
@@ -287,7 +265,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Spawn Mobs enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getSpawnMobs() {
 		return Boolean.parseBoolean(Properties.get("spawn-mobs").toString());
@@ -298,7 +275,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Spawn NCPs enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getSpawnNPCs() {
 		return Boolean.parseBoolean(Properties.getProperty("spawn-npcs").toString());
@@ -309,7 +285,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Structure Generation enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getGenerateStructures() {
 		return Boolean.parseBoolean(Properties.get("generate-structures").toString());
@@ -320,7 +295,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Hardcore enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getHardcore() {
 		return Boolean.parseBoolean(Properties.get("hardcore").toString());
@@ -331,7 +305,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Nether enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getAllowNether() {
 		return Boolean.parseBoolean(Properties.getProperty("allow-nether").toString());
@@ -342,7 +315,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return End enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getAllowEnd() {
 		return Boolean.parseBoolean(Properties.getProperty("allow-end").toString());
@@ -353,7 +325,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server difficulty
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static int getDifficulty() {
 		return Integer.parseInt(Properties.get("difficulty").toString());
@@ -364,7 +335,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server world generation type
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static GeneratorType getGeneratorSettings() {
 		return getGeneratorType(Properties.get("generator-settings").toString());
@@ -375,7 +345,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server world type
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static LevelType getLevelType() {
 		return getLevelType(Properties.get("level-type").toString());
@@ -386,7 +355,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server world seed
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static String getLevelSeed() {
 		return Properties.getProperty("level-seed").toString();
@@ -397,7 +365,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server world name
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static String getLevelName() {
 		return Properties.getProperty("level-name").toString();
@@ -408,7 +375,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Server auto-save state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getAutoSave() {
 		return Boolean.parseBoolean(Properties.get("auto-save").toString());
@@ -421,7 +387,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return Query Enabled State
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getEnableQuery() {
 		return Boolean.parseBoolean(Properties.get("enable-query").toString());
@@ -432,7 +397,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return RCON Enabled state
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static boolean getEnableRCON() {
 		return Boolean.parseBoolean(Properties.get("enable-rcon").toString());
@@ -443,7 +407,6 @@ public abstract class ServerSettings {
 	 * 
 	 * @return RCON Password
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	public static String getRCONPassword() {
 		return Properties.get("rcon.passwrod").toString();
@@ -456,7 +419,6 @@ public abstract class ServerSettings {
 	 * @param Generator Type (in string form)
 	 * @return GeneratorType
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	protected static GeneratorType getGeneratorType(String GTS) {
 		if(GTS.equals("DEFAULT")) return GeneratorType.DEFAULT;
@@ -470,7 +432,6 @@ public abstract class ServerSettings {
 	 * @param Level Type (in string form)
 	 * @return LevelType
 	 * @author Trent Summerlin
-	 * @version 1.0
 	 */
 	protected static LevelType getLevelType(String LTS) {
 		if(LTS.equals("DEFAULT")) return LevelType.DEFAULT;

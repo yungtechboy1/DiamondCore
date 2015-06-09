@@ -52,8 +52,7 @@ public class ServerListPingResponse implements BasePocketPacket {
 		this.packet = packet;
 		this.serverID = serverID;
 		
-		//event = new ServerListPingEvent(PlayerType.POCKET, packet.getAddress(), packet.getPort(), ServerSettings.getPEMOTD());
-		event = new ServerListPingEvent(PlayerType.POCKET, ServerSettings.getPEMOTD());
+		event = new ServerListPingEvent(PlayerType.POCKET, packet.getAddress(), packet.getPort(), ServerSettings.getPEMOTD());
 		EventFactory.throwEvent(this.event);
 		this.sendResponse();
 	}
@@ -75,7 +74,7 @@ public class ServerListPingResponse implements BasePocketPacket {
 	public void sendResponse() throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		BinaryWriter writer = new BinaryWriter(output);
-		String identifier = "MCPE;" + event.getMOTD() + ";" + Diamond.pocketProtocol + ";" + Diamond.pocketVersionTag + ";" + 0 + ";" + ServerSettings.getMaxPlayers();
+		String identifier = "MCPE;" + event.getMOTD() + ";" + event.getProtocol() + ";" + event.getProtocolTag() + ";" + event.getOnlinePlayers() + ";" + event.getMaxPlayers();
 		writer.writeByte(PacketIDList.ID_UNCONNECTED_PING_OPEN_CONNECTIONS);
 		writer.writeLong(pingID);
 		writer.writeLong(serverID);

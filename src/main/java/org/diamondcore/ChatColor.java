@@ -15,117 +15,117 @@ import static org.fusesource.jansi.Ansi.ansi;
 public enum ChatColor {
 	
 	// Minecraft
-	RAW("ง") {
+	RAW("ยง") {
 		public String toString() {
 			return RAW.value();
 		}
 	},
-	BLACK("ง0") {
+	BLACK("ยง0") {
 		public String toString() {
 			return BLACK.value();
 		}
 	},
-	DARK_BLUE("ง1") {
+	DARK_BLUE("ยง1") {
 		public String toString() {
 			return DARK_BLUE.value();
 		}
 	},
-	DARK_GREEN("ง2") {
+	DARK_GREEN("ยง2") {
 		public String toString() {
 			return DARK_GREEN.value();
 		}
 	},
-	DARK_AQUA("ง3") {
+	DARK_AQUA("ยง3") {
 		public String toString() {
 			return DARK_AQUA.value();
 		}
 	},
-	DARK_RED("ง4") {
+	DARK_RED("ยง4") {
 		public String toString() {
 			return DARK_RED.value();
 		}
 	},
-	DARK_PURPLE("ง5") {
+	DARK_PURPLE("ยง5") {
 		public String toString() {
 			return DARK_PURPLE.value();
 		}
 	},
-	GOLD("ง6") {
+	GOLD("ยง6") {
 		public String toString() {
 			return GOLD.value();
 		}
 	},
-	GREY("ง7") {
+	GREY("ยง7") {
 		public String toString() {
 			return GREY.value();
 		}
 	},
-	DARK_GREY("ง8") {
+	DARK_GREY("ยง8") {
 		public String toString() {
 			return DARK_GREY.value();
 		}
 	},
-	BLUE("ง9") {
+	BLUE("ยง9") {
 		public String toString() {
 			return BLUE.value();
 		}
 	},
-	GREEN("งa") {
+	GREEN("ยงa") {
 		public String toString() {
 			return GREEN.value();
 		}
 	},
-	AQUA("งb") {
+	AQUA("ยงb") {
 		public String toString() {
 			return AQUA.value();
 		}
 	},
-	RED("งc") {
+	RED("ยงc") {
 		public String toString() {
 			return RED.value();
 		}
 	},
-	LIGHT_PURPLE("งd") {
+	LIGHT_PURPLE("ยงd") {
 		public String toString() {
 			return LIGHT_PURPLE.value();
 		}
 	},
-	YELLOW("งe") {
+	YELLOW("ยงe") {
 		public String toString() {
 			return YELLOW.value();
 		}
 	},
-	WHITE("งf") {
+	WHITE("ยงf") {
 		public String toString() {
 			return WHITE.value();
 		}
 	},
-	OBFUSCATED("งk") {
+	OBFUSCATED("ยงk") {
 		public String toString() {
 			return OBFUSCATED.value();
 		}
 	},
-	BOLD("งl") {
+	BOLD("ยงl") {
 		public String toString() {
 			return BOLD.value();
 		}
 	},
-	STRIKETHROUGH("งm") {
+	STRIKETHROUGH("ยงm") {
 		public String toString() {
 			return STRIKETHROUGH.value();
 		}
 	},
-	UNDERLINE("งn") {
+	UNDERLINE("ยงn") {
 		public String toString() {
 			return UNDERLINE.value();
 		}
 	},
-	ITALIC("งo") {
+	ITALIC("ยงo") {
 		public String toString() {
 			return ITALIC.value();
 		}
 	},
-	RESET("งr") {
+	RESET("ยงr") {
 		public String toString() {
 			return RESET.value();
 		}

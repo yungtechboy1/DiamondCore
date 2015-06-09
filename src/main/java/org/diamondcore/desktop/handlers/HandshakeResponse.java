@@ -26,8 +26,11 @@ import org.diamondcore.utils.VarInt;
 
 /**
  * This is the first packet sent by the server in response
+ * <br>
  * to the client, if it is a long packet, a new Login packet
+ * <br>
  * will be thrown, and can be retrieved by using <INSERTNAMEHERE>
+ * <br>
  * If it is null, that means it is a ping by minecraft.
  * 
  * @author Trent Summerlin
@@ -62,32 +65,14 @@ public final class HandshakeResponse {
 		this.sendResponse();
 	}
 	
-	/**
-	 * Used to get the received packet length
-	 * 
-	 * @return Received packet length
-	 * @author Trent Summerlin
-	 */
 	public int getReceivedPacketLength() {
 		return this.receivedPacketLength;
 	}
 	
-	/**
-	 * Used to get the packet ID
-	 * 
-	 * @return Packet ID
-	 * @author Trent Summerlin
-	 */
 	public int getPacketID() {
 		return PacketIDList.HANDSHAKE_PACKET;
 	}
 	
-	/**
-	 * Used to get the protocol received in the packet
-	 * 
-	 * @return Protocol received in packet
-	 * @author Trent Summerlin
-	 */
 	public int getProtocol() {
 		return this.protocol;
 	}
@@ -95,8 +80,9 @@ public final class HandshakeResponse {
 	/**
 	 * Used to retrieve the destination address sent by the client
 	 * 
-	 * @return Client's destination address
 	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @return Client's destination address
 	 */
 	public String getDestinationAddress() {
 		return this.destinationAddress;
@@ -105,8 +91,9 @@ public final class HandshakeResponse {
 	/**
 	 * Used to retrieve the destination port sent by the client
 	 * 
-	 * @return Client's destination port
 	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @return Client's destination port
 	 */
 	public int getDestinationPort() {
 		return this.destinationPort;
@@ -115,24 +102,24 @@ public final class HandshakeResponse {
 	/**
 	 * Used to get the handshake type sent by the client
 	 * 
-	 * @return Packet handshake type
 	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @return Packet handshake type
 	 */
 	public HandshakeType getHandshakeType() {
-		if(this.nextState == 1)
-			return HandshakeType.SERVER_PING;
-		else if(this.nextState == 2)
-			return HandshakeType.PLAYER_LOGIN;
-		else
-			return null; // TODO: Add exception
+		if(this.nextState == 1) return HandshakeType.SERVER_PING;
+		else if(this.nextState == 2) return HandshakeType.PLAYER_LOGIN;
+		else return null;
 	}
 	
 	/**
 	 * Used to get the packet response created by
+	 * <br>
 	 * the Handshake handler
 	 * 
-	 * @return Created handshake
 	 * @author Trent Summerlin
+	 * @version 1.0
+	 * @return Created handshake
 	 */
 	public HandshakePacket getHandshakePacket() {
 		return this.packet;
@@ -146,8 +133,7 @@ public final class HandshakeResponse {
 	}
 
 	public void sendResponse() throws IOException, DiamondException {
-		if(this.nextState == 1)
-			this.packet = new ServerListPingResponse(this.socket);
+		if(this.nextState == 1) this.packet = new ServerListPingResponse(this.socket);
 		//else if(this.nextState == 2) this.packet = new LoginResponse(this.socket);
 	} 
 
