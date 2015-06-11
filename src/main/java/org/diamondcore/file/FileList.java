@@ -13,6 +13,8 @@ package org.diamondcore.file;
 
 import java.io.File;
 
+import org.diamondcore.lang.Lang;
+
 /**
  * Used to store the files for the software
  * 
@@ -32,24 +34,24 @@ public final class FileList {
 	}
 	
 	// Start
-	public static File startFileWin = new File(Base + "start.bat");
-	public static File startFileOsx = new File(Base + "start.cmd");
+	public static File startFileWin = new File(Base + Lang.get("file.startbat"));
+	public static File startFileOsx = new File(Base + Lang.get("file.startcmd"));
 	
 	// Player related
-	public static File whitelist = new File(Base + "whitelist.json");
-	public static File operators = new File(Base + "ops.json");
-	public static File bannedPlayerList = new File(Base + "banned-players.json");
-	public static File bannedIPList = new File(Base + "banned-ip.json");
-	public static File playerFolder = new File(Base + "players");
+	public static File whitelist = new File(Base + Lang.get("file.whitelistjson"));
+	public static File operators = new File(Base + Lang.get("file.opsjson"));
+	public static File bannedPlayerList = new File(Base + Lang.get("file.bannedplayersjson"));
+	public static File bannedIPList = new File(Base + Lang.get("bannedipjson"));
+	public static File playerFolder = new File(Base + Lang.get("folder.players"));
 	
 	// Server Related
-	public static File serverProperties = new File(Base + "server.properties");
-	public static File serverFavicon = new File(Base + "server-icon.png");
-	public static File serverLog = new File(Base + "server.log");
-	public static File worldFolder = new File(Base + "worlds");
-	public static File pluginFolder = new File(Base + "plugins");
+	public static File serverProperties = new File(Base + Lang.get("file.serverproperties"));
+	public static File serverFavicon = new File(Base + Lang.get("file.servericon"));
+	public static File serverLog = new File(Base + Lang.get("file.serverlog"));
+	public static File worldFolder = new File(Base + Lang.get("folder.worlds"));
+	public static File pluginFolder = new File(Base + Lang.get("folder.plugins"));
 	
-	// Other
+	// Other (Are not modified by lang!)
 	public static File libFolder = new File(Base + "lib");
 	public static File loggerConfig = new File("./lib/log4j2.xml");
 	public static File readMe = new File(Base + "README.md");
@@ -61,18 +63,20 @@ public final class FileList {
 			Base = "./debug/";
 			new File(Base).mkdir();
 		}
-		startFileWin = new File(Base + "start.bat");
-		startFileOsx = new File(Base + "start.cmd");
-		whitelist = new File(Base + "whitelist.json");
-		operators = new File(Base + "ops.json");
-		bannedPlayerList = new File(Base + "banned-players.json");
-		bannedIPList = new File(Base + "banned-ip.json");
-		playerFolder = new File(Base + "players");
-		serverProperties = new File(Base + "server.properties");
-		serverFavicon = new File(Base + "server-icon.png");
-		serverLog = new File(Base + "server.log");
-		worldFolder = new File(Base + "worlds");
-		pluginFolder = new File(Base + "plugins");
+		startFileWin = new File(Base + Lang.get("file.startbat"));
+		startFileOsx = new File(Base + Lang.get("file.startcmd"));
+		whitelist = new File(Base + Lang.get("file.whitelistjson"));
+		operators = new File(Base + Lang.get("file.opsjson"));
+		bannedPlayerList = new File(Base + Lang.get("file.bannedplayersjson"));
+		bannedIPList = new File(Base + Lang.get("file.bannedipjson"));
+		playerFolder = new File(Base + Lang.get("folder.players"));
+		serverProperties = new File(Base + Lang.get("file.serverproperties"));
+		serverFavicon = new File(Base + Lang.get("file.servericon"));
+		serverLog = new File(Base + Lang.get("file.serverlog"));
+		worldFolder = new File(Base + Lang.get("folder.worlds"));
+		pluginFolder = new File(Base + Lang.get("folder.plugins"));
+		
+		// These are not modified by the lang
 		readMe = new File(Base + "README.md");
 		license = new File(Base + "LICENSE");
 		logo = new File(Base + "logo.txt");

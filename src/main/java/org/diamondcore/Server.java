@@ -28,9 +28,11 @@ import org.diamondcore.file.FileCheckup;
 import org.diamondcore.file.FileList;
 import org.diamondcore.file.PropertiesCheckup;
 import org.diamondcore.lang.Lang;
-import org.diamondcore.lang.exeption.InvalidLangException;
+import org.diamondcore.lang.exeption.LangException;
 import org.diamondcore.logging.DiamondLogger;
+import org.diamondcore.logging.DiamondTranslator;
 import org.diamondcore.logging.Log4j2Logger;
+import org.diamondcore.logging.Log4j2Translator;
 import org.diamondcore.mojang.MojangAuthServer;
 import org.diamondcore.pocket.UDPPacketHandler;
 import org.diamondcore.utils.ServerSettings;
@@ -57,23 +59,24 @@ public class Server {
 	
 	// Logger
 	private final DiamondLogger logger = new Log4j2Logger("DiamondCore");
+	private final DiamondTranslator lang = new Log4j2Translator("DiamondCore");
 	
-	public Server(boolean shouldDebug) throws IOException, InterruptedException, PluginException, DiamondException, InvalidLangException {
+	public Server(boolean shouldDebug) throws IOException, InterruptedException, PluginException, DiamondException, LangException {
 		// Predefine console data
 		AnsiConsole.systemInstall();
-		Lang.setLang("en_ES"); // TODO: Add ability to change language
+		Lang.setLang("de_GM"); // TODO: Add ability to change language
 		
 		// Start server
 		debug = shouldDebug;
 		Diamond.setServer(this);
-		logger.translate("server.start");
-		if(debug) logger.translate("server.debugOn");
-		else logger.translate("server.debugOff");
+		lang.info("server.start");
+		if(debug) lang.info("server.debugOn");
+		else lang.info("server.debugOff");
 		
 		// Make sure Mojang Auth Server is online
-		logger.translate("mojang.checkAuth");
-		if(MojangAuthServer.isOnline()) logger.translate("mojang.authOnline", MojangAuthServer.getImplementationVersion());
-		else logger.translate("mojang.authOffline");
+		lang.info("mojang.checkAuth");
+		if(MojangAuthServer.isOnline()) lang.info("mojang.authOnline", MojangAuthServer.getImplementationVersion());
+		else lang.warn("mojang.authOffline");
 		
 		// Check Files and Properties
 		FileList.setDebug(shouldDebug);
@@ -98,7 +101,7 @@ public class Server {
 		JavaPluginLoader.loadPlugins();
 		
 		running = true;
-		logger.translate("server.started");
+		lang.info("server.started");
 	}
 	
 	/**
@@ -132,6 +135,16 @@ public class Server {
 	}
 	
 	/**
+	 * Used to retrieve the internal server translator
+	 * 
+	 * @return Server translator
+	 * @author Trent Summerlin
+	 */
+	public final DiamondTranslator getTranslator() {
+		return this.lang;
+	}
+	
+	/**
 	 * Used to retrieve the Local Server Broadcaster
 	 * for Minecraft
 	 * 
@@ -159,7 +172,7 @@ class MainTicker extends Thread implements Runnable {
 	
 	// Initialize everything before startup
 	private Ticker ticker = new Ticker(20);
-	private DiamondLogger logger = new Log4j2Logger("CONSOLE");
+	private DiamondTranslator lang = new Log4j2Translator("CONSOLE");
 	
 	public void run() {
 		ticker.start();
@@ -174,7 +187,7 @@ class MainTicker extends Thread implements Runnable {
 				if(currentTick > lastTick+2) {
 					int skippedTicks = (currentTick - lastTick - 1); /* Subtract 1 more because the current tick will ALWAYS be 1 or more than the last one */
 					if(!runningSlow || ticksRanSlow >= tickReset)
-						logger.translate("server.runningSlow", skippedTicks);
+						lang.warn("server.runningSlow", skippedTicks);
 					if(ticksRanSlow >= tickReset)
 						ticksRanSlow = 0;
 					runningSlow = true;

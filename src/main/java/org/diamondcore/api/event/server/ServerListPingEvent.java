@@ -219,7 +219,9 @@ public final class ServerListPingEvent extends Event {
 	 * 		- The new tag to show
 	 * @author Trent Summerlin
 	 */
-	public final void setProtocolTag(String version) {
+	@SuppressWarnings("unused")
+	@Deprecated
+	private final void setProtocolTag(String version) {
 		this.tag = version;
 	}
 	
@@ -233,7 +235,9 @@ public final class ServerListPingEvent extends Event {
 	 * 		- The new protocol to send to the client
 	 * @author Trent Summerlin
 	 */
-	public final void setProtocol(int protocol) {
+	@SuppressWarnings("unused")
+	@Deprecated
+	private final void setProtocol(int protocol) {
 		this.protocol = protocol;
 	}
 	

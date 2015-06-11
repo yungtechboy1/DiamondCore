@@ -18,8 +18,11 @@ import java.util.Base64;
 import org.apache.commons.io.FileUtils;
 import org.diamondcore.exception.DiamondException;
 import org.diamondcore.lang.Lang;
+import org.diamondcore.lang.exeption.LangException;
 import org.diamondcore.logging.DiamondLogger;
+import org.diamondcore.logging.DiamondTranslator;
 import org.diamondcore.logging.Log4j2Logger;
+import org.diamondcore.logging.Log4j2Translator;
 
 /**
  * Used to get server info like online players and
@@ -42,8 +45,9 @@ public abstract class Diamond {
 	
 	// DiamondCore
 	private static Server server = null;
-	public static final String versionTag = Lang.get("diamond.info.versionTag");
+	public static final String versionTag = Lang.get("diamond.versionTag");
 	public static final DiamondLogger logger = new Log4j2Logger("DiamondCore");
+	public static final DiamondTranslator lang = new Log4j2Translator("DiamondCore");
 	
 	/**
 	 * Used to set the Server object for the Diamond class
@@ -52,8 +56,9 @@ public abstract class Diamond {
 	 * 
 	 * @author Trent Summerlin
 	 * @throws DiamondException 
+	 * @throws LangException 
 	 */
-	public static void setServer(Server newServer) throws DiamondException {
+	public static void setServer(Server newServer) throws DiamondException, LangException {
 		if(server != null)
 			throw new DiamondException(Lang.get("diamond.exception.serverSet"));
 		else

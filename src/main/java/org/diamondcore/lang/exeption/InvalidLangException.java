@@ -1,6 +1,6 @@
 package org.diamondcore.lang.exeption;
 
-public final class InvalidLangException extends Exception {
+public final class InvalidLangException extends LangException {
 	
 	private static final long serialVersionUID = -1695445762024048058L;
 	

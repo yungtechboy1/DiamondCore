@@ -27,7 +27,7 @@ public class PluginException extends Exception {
 	}
 
 	public PluginException(String error) {
-		super("There was a error in running/loading a plugin!\nCause: " + error);
+		super("There was a error in running/loading a plugin!\n\tCause: " + error);
 		return;
 	}
 	

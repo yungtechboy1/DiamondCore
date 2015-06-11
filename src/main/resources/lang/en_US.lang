@@ -14,6 +14,19 @@ file.fileMissing = The %s file was not found! Created a new one
 file.folderMissing = The %s folder was not found! Created a new one
 file.checkupFinishError = Finished file checkup and created %d files
 file.checkupFinishNoError = Finished file checkup with no errors
+file.bannedipjson = banned-ip.json
+file.bannedplayersjson = banned-players.json
+file.opsjson = ops.json
+file.serverlog = server.log
+file.serverproperties = server.properties
+file.whitelistjson = whitelist.json
+file.startbat = start.bat
+file.startcmd = start.cmd
+file.servericon = server-icon.png
+
+folder.players = players
+folder.plugins = plugins
+folder.worlds = worlds
 
 properties.checkupStart = Starting properties checkup!
 properties.checkupFinishError = Finished properties checkup and added %d properties

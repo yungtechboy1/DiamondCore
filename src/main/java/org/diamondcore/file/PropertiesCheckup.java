@@ -34,7 +34,7 @@ public class PropertiesCheckup {
 	private int propertiesAdded = 0;
 	
 	public PropertiesCheckup() throws IOException {
-		Diamond.logger.translate("properties.checkupStart");
+		Diamond.lang.info("properties.checkupStart");
 		
 		/* Start Properties File Checkup */
 		properties.load(new FileInputStream(FileList.serverProperties));
@@ -212,9 +212,9 @@ public class PropertiesCheckup {
 		
 		/* End of checkup */
 		if(propertiesAdded == 0)
-			Diamond.logger.translate("properties.checkupFinishNoError");
+			Diamond.lang.info("properties.checkupFinishNoError");
 		else
-			Diamond.logger.translate("properties.checkupFinishError", propertiesAdded);
+			Diamond.lang.info("properties.checkupFinishError", propertiesAdded);
 	}
 	
 	

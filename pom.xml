@@ -19,6 +19,7 @@
             <name>SnakeYAML repository</name>
             <url>http://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        
     </repositories>
 
     <dependencies>
@@ -44,7 +45,7 @@
         <dependency>
             <groupId>org.blockserver</groupId>
             <artifactId>BlockServer-IO-Lib</artifactId>
-            <version>0.0-BETA-SNAPSHOT</version>
+            <version>1.0.0-BETA-SNAPSHOT</version>
         </dependency>
 
         <dependency>

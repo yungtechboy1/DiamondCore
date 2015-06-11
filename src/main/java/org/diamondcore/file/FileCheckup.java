@@ -28,7 +28,7 @@ public class FileCheckup {
 	int filesCreated = 0;
 	
 	public FileCheckup() throws IOException {
-		Diamond.logger.translate("file.checkupStart");
+		Diamond.lang.info("file.checkupStart");
 		
 		/* Start Checkup */
 		// Check BannedIPList
@@ -38,7 +38,7 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Diamond.logger.translatewarn("file.fileMissing", FileList.bannedIPList.getName());
+			Diamond.lang.warn("file.fileMissing", FileList.bannedIPList.getName());
 			filesCreated++;
 		}
 		
@@ -49,7 +49,7 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Diamond.logger.translatewarn("file.fileMissing", FileList.bannedPlayerList.getName());
+			Diamond.lang.warn("file.fileMissing", FileList.bannedPlayerList.getName());
 			filesCreated++;
 		}
 		
@@ -57,10 +57,10 @@ public class FileCheckup {
 		if(!FileList.license.exists()) {
 			try {
 				Files.copy(this.getClass().getResource("files/LICENSE").openStream(), FileList.license.toPath());
-				Diamond.logger.translatewarn("file.fileMissing", "LICENSE");
+				Diamond.lang.warn("file.fileMissing", "LICENSE");
 			}
 			catch(NullPointerException E) {
-				Diamond.logger.translatewarn("file.copyError", "LICENSE");
+				Diamond.lang.warn("file.copyError", "LICENSE");
 			}
 			filesCreated++;
 		}
@@ -72,28 +72,28 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Diamond.logger.translatewarn("file.fileMissing", FileList.operators.getName());
+			Diamond.lang.warn("file.fileMissing", FileList.operators.getName());
 			filesCreated++;
 		}
 		
 		// Check PlayerFolder
 		if(!FileList.playerFolder.exists()) {
 			FileList.playerFolder.mkdir();
-			Diamond.logger.translatewarn("file.folderMissing", FileList.playerFolder.getName());
+			Diamond.lang.warn("file.folderMissing", FileList.playerFolder.getName());
 			filesCreated++;
 		}
 		
 		// Check PluginFolder
 		if(!FileList.pluginFolder.exists()) {
 			FileList.pluginFolder.mkdir();
-			Diamond.logger.translatewarn("file.folderMissing", FileList.pluginFolder.getName());
+			Diamond.lang.warn("file.folderMissing", FileList.pluginFolder.getName());
 			filesCreated++;
 		}
 		
 		// Check Lib Folder
 		if(!FileList.libFolder.exists()) {
 			FileList.libFolder.mkdir();
-			Diamond.logger.translatewarn("file.folderMissing", FileList.libFolder.getName());
+			Diamond.lang.warn("file.folderMissing", FileList.libFolder.getName());
 			filesCreated++;
 		}
 		
@@ -101,10 +101,10 @@ public class FileCheckup {
 		if(!FileList.readMe.exists()) {
 			try {
 				Files.copy(this.getClass().getResource("files/README.md").openStream(), FileList.readMe.toPath());
-				Diamond.logger.translatewarn("file.fileMissing", "README.md");
+				Diamond.lang.warn("file.fileMissing", "README.md");
 			}
 			catch(NullPointerException E) {
-				Diamond.logger.translatewarn("file.copyError", "README.md");
+				Diamond.lang.warn("file.copyError", "README.md");
 			}
 			filesCreated++;
 		}
@@ -112,14 +112,14 @@ public class FileCheckup {
 		// Check ServerLog
 		if(!FileList.serverLog.exists()) {
 			FileList.serverLog.createNewFile();
-			Diamond.logger.translatewarn("file.fileMissing", "server.log");
+			Diamond.lang.warn("file.fileMissing", "server.log");
 			filesCreated++;
 		}
 		
 		// Check ServerProperties
 		if(!FileList.serverProperties.exists()) {
 			FileList.serverProperties.createNewFile();
-			Diamond.logger.translatewarn("file.fileMissing", "server.properties");
+			Diamond.lang.warn("file.fileMissing", "server.properties");
 			filesCreated++;
 		}
 		
@@ -130,22 +130,22 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Diamond.logger.translatewarn("file.folderMissing", "whitelist");
+			Diamond.lang.warn("file.folderMissing", "whitelist");
 			filesCreated++;
 		}
 		
 		// Check WorldFolder
 		if(!FileList.worldFolder.exists()) {
 			FileList.worldFolder.mkdir();
-			Diamond.logger.translatewarn("file.folderMissing", "world");
+			Diamond.lang.warn("file.folderMissing", "world");
 			filesCreated++;
 		}
 		/* End of Checkup */
 		
 		if(filesCreated == 0)
-			Diamond.logger.translate("file.checkupFinishNoError");
+			Diamond.lang.info("file.checkupFinishNoError");
 		else
-			Diamond.logger.translate("file.checkupFinishError", filesCreated);
+			Diamond.lang.info("file.checkupFinishError", filesCreated);
 	}
 	
 }

@@ -1,0 +1,47 @@
+server.start = Ab Server!
+server.started = Server gestartet!
+server.debugOn = Debug: aktiviert
+server.debugOff = Debug: deaktivierten
+server.runningSlow = Nicht mithalten kann! Hat die Systemzeit zu ändern oder ist der Server überlastet? Skipping %s Zecken
+
+mojang.checkAuth = Sicherzustellen Mojang Auth-Server ist online ...
+mojang.authOnline = Server ist online! [%s]
+mojang.authOffline = Die Mojang Authentifizierungsserver ist derzeit offline, können die Spieler nicht den Server anschließen, bis der Server wieder nach oben!
+
+file.checkupStart = Startdatei Checkup!
+file.copyError = Es gab einen Fehler Kopieren der Datei %s!
+file.fileMissing = Das %s Datei wurde nicht gefunden! Erstellt ein neues
+file.folderMissing = Das %s Ordner wurde nicht gefunden! Erstellt ein neues
+file.checkupFinishError = Fertige Datei Checkup und erstellt %d Dateien
+file.checkupFinishNoError = Fertige Datei Checkup ohne Fehler
+file.bannedipjson = verboten-ip.json
+file.bannedplayersjson = verboten-spieler.json
+file.opsjson = bes.json
+file.serverlog = server.log
+file.serverproperties = server.properties
+file.whitelistjson = whitelist.json
+file.startbat = anfang.bat
+file.startcmd = anfang.cmd
+file.servericon = server-icon.png
+
+folder.players = spieler
+folder.plugins = plugins
+folder.worlds = welts
+
+properties.checkupStart = Starteigenschaften Checkup!
+properties.checkupFinishError = Fertige Eigenschaften Checkup und hinzugefügt %d eigenschaften
+properties.checkupFinishNoError = Fertige Eigenschaften Checkup ohne Fehler
+
+motd.pocket = Ein Minecraft: Pocket Edition server
+motd.desktop = Ein Minecraft Server
+
+world.flat = WOHNUNG
+world.default = VOREINSTELLUNG
+world.aplified = VERSTARKT
+world.customized = KUNDENSPEZIFISCHE
+world.largebiomes = GROßEBIOME
+
+diamond.info.versionTag = DiamondCore instabil
+diamond.exception.serverSet = Das Server-Objekt wurde bereits eingestellt!
+
+settings.defaultWorld = welt

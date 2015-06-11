@@ -35,5 +35,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry exported="true" kind="lib" path="lib/jars/jansi-1.11.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jars/snakeyaml-1.15.jar"/>
+	<classpathentry kind="lib" path="lib/jars/BlockServer-1.0.0-BETA-SNAPSHOT (1).jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

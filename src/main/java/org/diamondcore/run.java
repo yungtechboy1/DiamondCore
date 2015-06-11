@@ -12,7 +12,6 @@
 package org.diamondcore;
 
 import org.apache.commons.io.IOUtils;
-import org.diamondcore.utils.SplashChooser;
 
 
 /**
@@ -33,8 +32,7 @@ public class run {
 				shouldDebug = false;
 			
 			String logo = IOUtils.toString(run.class.getResource("/logo.txt").openStream());
-			String splash = " -" + SplashChooser.chooseSplash();
-			System.out.println(logo + "\n" + splash + "\n");
+			System.out.println(logo);
 			new Server(shouldDebug);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

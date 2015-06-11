@@ -1,0 +1,47 @@
+server.start = A partir del servidor!
+server.started = Servidor de empezar!
+server.debugOn = Depurar: activado
+server.debugOff = Depurar: desactivado
+server.runningSlow = No se puede seguir el ritmo! ¿El cambio de hora del sistema, o se sobrecarga el servidor? Saltarse %s garrapatas
+
+mojang.checkAuth = Asegurarse de que el servidor de autenticación Mojang está en línea...
+mojang.authOnline = El servidor está en línea! [%s]
+mojang.authOffline = El servidor de autenticación Mojang está actualmente fuera de línea, los jugadores no pueden unirse al servidor hasta que es una copia de seguridad!
+
+file.checkupStart = A partir archivo chequeo!
+file.copyError = Hubo un error de copiar el archivo %s!
+file.fileMissing = El %s archivo no fue encontrado! Creado por uno nuevo
+file.folderMissing = El %s carpeta no fue encontrado! Creado por uno nuevo
+file.checkupFinishError = Terminado archivo chequeo y creado %d archivos
+file.checkupFinishNoError = Chequeo archivo Terminado sin errores!
+file.bannedipjson = prohibido-ips.json
+file.bannedplayersjson = prohibido-jugadores.json
+file.opsjson = ops.json
+file.serverlog = servidor.log
+file.serverproperties = servidor.properties
+file.whitelistjson = lista-blanca.json
+file.startbat = comienzo.bat
+file.startcmd = comienzo.cmd
+file.servericon = servidor-icono.png
+
+folder.players = jugadores
+folder.plugins = plugins
+folder.worlds = mundos
+
+properties.checkupStart = A partir Propiedades del servidor chequeo!
+properties.checkupFinishError = Terminado Propiedades del servidor chequeo y añadió %s propiedades faltantes
+properties.checkupFinishNoError = Terminado chequeo Propiedades del servidor sin errores!
+
+motd.pocket = Un Minecraft: Pocket Edition servidor
+motd.desktop = Un servidor de Minecraft
+
+world.flat = PISO
+world.default = DEFECTO
+world.aplified = AMPLIFICADO
+world.customized = PERSONALIZADO
+world.largebiomes = LOSGRANDESBIOMAS
+
+diamond.info.versionTag = DiamondCore inestable
+diamond.exception.serverSet = El objeto de servidor ya se ha configurado!
+
+settings.defaultWorld = mundo
