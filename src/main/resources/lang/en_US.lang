@@ -1,0 +1,34 @@
+server.start = Starting server!
+server.started = Server started!
+server.debugOn = Debug: activated
+server.debugOff = Debug: de-activated
+server.runningSlow = Can't keep up! Did the system time change, or is the server overloaded? Skipping %s ticks
+
+mojang.checkAuth = Making sure Mojang Auth server is online...
+mojang.authOnline = Server is online! [%s]
+mojang.authOffline = The Mojang authentication server is currently offline, players can not join the server until the server is back up!
+
+file.checkupStart = Starting file checkup!
+file.copyError = There was an error copying the file %s!
+file.fileMissing = The %s file was not found! Created a new one
+file.folderMissing = The %s folder was not found! Created a new one
+file.checkupFinishError = Finished file checkup and created %d files
+file.checkupFinishNoError = Finished file checkup with no errors
+
+properties.checkupStart = Starting properties checkup!
+properties.checkupFinishError = Finished properties checkup and added %d properties
+properties.checkupFinishNoError = Finished properties checkup with no errors
+
+motd.pocket = A Minecraft: Pocket Edition server
+motd.desktop = A Minecraft Server
+
+world.flat = FLAT
+world.default = DEFAULT
+world.aplified = AMPLIFIED
+world.customized = CUSTOMIZED
+world.largebiomes = LARGEBIOMES
+
+diamond.info.versionTag = DiamondCore unstable
+diamond.exception.serverSet = The server object has already been set!
+
+settings.defaultWorld = world

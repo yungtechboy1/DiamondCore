@@ -19,6 +19,7 @@ import java.security.SecureRandom;
 import java.util.Properties;
 
 import org.diamondcore.Diamond;
+import org.diamondcore.lang.Lang;
 
 /**
  * This class is used for making sure all the server-properties
@@ -29,189 +30,191 @@ import org.diamondcore.Diamond;
  */
 public class PropertiesCheckup {
 	
-	Properties Properties = new Properties();
-	int PropertiesAdded = 0;
+	private Properties properties = new Properties();
+	private int propertiesAdded = 0;
 	
 	public PropertiesCheckup() throws IOException {
-		Diamond.logger.info("Starting Server Properties checkup!");
+		Diamond.logger.translate("properties.checkupStart");
 		
 		/* Start Properties File Checkup */
-		Properties.load(new FileInputStream(FileList.serverProperties));
+		properties.load(new FileInputStream(FileList.serverProperties));
 		
 		// Check whitelist
-		if(Properties.get("whitelist") == null) {
-			Properties.setProperty("whitelist", "false");
-			PropertiesAdded++;
+		if(properties.get("whitelist") == null) {
+			properties.setProperty("whitelist", "false");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("announce-player-achievements") == null) {
-			Properties.setProperty("announce-player-achievements", "true");
-			PropertiesAdded++;
+		if(properties.get("announce-player-achievements") == null) {
+			properties.setProperty("announce-player-achievements", "true");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("pvp") == null) {
-			Properties.setProperty("pvp", "true");
-			PropertiesAdded++;
+		if(properties.get("pvp") == null) {
+			properties.setProperty("pvp", "true");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("max-players") == null) {
-			Properties.setProperty("max-players", "20");
-			PropertiesAdded++;
+		if(properties.get("max-players") == null) {
+			properties.setProperty("max-players", "20");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("player-idle-timeout") == null) {
-			Properties.setProperty("player-idle-timeout", "0");
-			PropertiesAdded++;
+		if(properties.get("player-idle-timeout") == null) {
+			properties.setProperty("player-idle-timeout", "0");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("op-permission-level") == null) {
-			Properties.setProperty("op-permission-level", "4");
-			PropertiesAdded++;
+		if(properties.get("op-permission-level") == null) {
+			properties.setProperty("op-permission-level", "4");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("allow-flight") == null) {
-			Properties.setProperty("allow-flight", "false");
-			PropertiesAdded++;
-		}
-		
-		
-		if(Properties.get("motd-pe") == null) {
-			Properties.setProperty("motd-pe", "A Minecraft: Pocket Edition server");
-			PropertiesAdded++;
-		}
-		
-		if(Properties.get("motd-pc") == null) {
-			Properties.setProperty("motd-pc", "A Minecraft server");
-			PropertiesAdded++;
+		if(properties.get("allow-flight") == null) {
+			properties.setProperty("allow-flight", "false");
+			propertiesAdded++;
 		}
 		
 		
-		if(Properties.get("force-gamemode") == null) {
-			Properties.setProperty("force-gamemode", "false");
-			PropertiesAdded++;
+		if(properties.get("motd-pe") == null) {
+			properties.setProperty("motd-pe", Lang.get("motd.pocket"));
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("gamemode") == null) {
-			Properties.setProperty("gamemode", "0");
-			PropertiesAdded++;
+		if(properties.get("motd-pc") == null) {
+			properties.setProperty("motd-pc", Lang.get("motd.desktop"));
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("server-port-pc") == null) {
-			Properties.setProperty("server-port-pc", "25565");
-			PropertiesAdded++;
+		
+		if(properties.get("force-gamemode") == null) {
+			properties.setProperty("force-gamemode", "false");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("server-port-pe") == null) {
-			Properties.setProperty("server-port-pe", "19132");
-			PropertiesAdded++;
+		if(properties.get("gamemode") == null) {
+			properties.setProperty("gamemode", "0");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("resource-pack") == null) {
-			Properties.setProperty("resource-pack", "");
-			PropertiesAdded++;
+		if(properties.get("server-port-pc") == null) {
+			properties.setProperty("server-port-pc", "25565");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("server-ip") == null) {
-			Properties.setProperty("server-ip", "");
-			PropertiesAdded++;
+		if(properties.get("server-port-pe") == null) {
+			properties.setProperty("server-port-pe", "19132");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("online-mode") == null) {
-			Properties.setProperty("online-mode", "true");
-			PropertiesAdded++;
+		if(properties.get("resource-pack") == null) {
+			properties.setProperty("resource-pack", "");
+			propertiesAdded++;
+		}
+		
+		if(properties.get("server-ip") == null) {
+			properties.setProperty("server-ip", "");
+			propertiesAdded++;
+		}
+		
+		if(properties.get("online-mode") == null) {
+			properties.setProperty("online-mode", "true");
+			propertiesAdded++;
 		}
 		
 		// World related
-		if(Properties.get("spawn-protection") == null) {
-			Properties.setProperty("spawn-protection", "16");
-			PropertiesAdded++;
+		if(properties.get("spawn-protection") == null) {
+			properties.setProperty("spawn-protection", "16");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("spawn-animals") == null) {
-			Properties.setProperty("spawn-animals", "true");
-			PropertiesAdded++;
+		if(properties.get("spawn-animals") == null) {
+			properties.setProperty("spawn-animals", "true");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("spawn-mobs") == null) {
-			Properties.setProperty("spawn-mobs", "true");
-			PropertiesAdded++;
+		if(properties.get("spawn-mobs") == null) {
+			properties.setProperty("spawn-mobs", "true");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("spawn-npcs") == null) {
-			Properties.setProperty("spawn-npcs", "true");
-			PropertiesAdded++;
+		if(properties.get("spawn-npcs") == null) {
+			properties.setProperty("spawn-npcs", "true");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("generate-structures") == null) {
-			Properties.setProperty("generate-structures", "true");
-			PropertiesAdded++;
+		if(properties.get("generate-structures") == null) {
+			properties.setProperty("generate-structures", "true");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("hardcore") == null) {
-			Properties.setProperty("hardcore", "false");
-			PropertiesAdded++;
+		if(properties.get("hardcore") == null) {
+			properties.setProperty("hardcore", "false");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("allow-nether") == null) {
-			Properties.setProperty("allow-nether", "true");
-			PropertiesAdded++;
+		if(properties.get("allow-nether") == null) {
+			properties.setProperty("allow-nether", "true");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("allow-end") == null) {
-			Properties.setProperty("allow-end", "true");
-			PropertiesAdded++;
+		if(properties.get("allow-end") == null) {
+			properties.setProperty("allow-end", "true");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("difficulty") == null) {
-			Properties.setProperty("difficulty", "0");
-			PropertiesAdded++;
+		if(properties.get("difficulty") == null) {
+			properties.setProperty("difficulty", "0");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("generator-settings") == null) {
-			Properties.setProperty("generator-settings", "");
-			PropertiesAdded++;
+		if(properties.get("generator-settings") == null) {
+			properties.setProperty("generator-settings", "");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("level-type") == null) {
-			Properties.setProperty("level-type", "DEFAULT");
-			PropertiesAdded++;
+		if(properties.get("level-type") == null) {
+			properties.setProperty("level-type", Lang.get("world.default"));
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("level-seed") == null) {
-			Properties.setProperty("level-seed", "");
-			PropertiesAdded++;
+		if(properties.get("level-seed") == null) {
+			properties.setProperty("level-seed", "");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("level-name") == null) {
-			Properties.setProperty("level-name", "world");
-			PropertiesAdded++;
+		if(properties.get("level-name") == null) {
+			properties.setProperty("level-name", Lang.get("settings.defaultWorld"));
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("auto-save") == null) {
-			Properties.setProperty("auto-save", "true");
-			PropertiesAdded++;
+		if(properties.get("auto-save") == null) {
+			properties.setProperty("auto-save", "true");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("enable-query") == null) {
-			Properties.setProperty("enable-query", "false");
-			PropertiesAdded++;
+		if(properties.get("enable-query") == null) {
+			properties.setProperty("enable-query", "false");
+			propertiesAdded++;
 		}
 		
-		if(Properties.get("enable-rcon") == null) {
-			Properties.setProperty("enable-rcon", "false");
-			PropertiesAdded++;
+		if(properties.get("enable-rcon") == null) {
+			properties.setProperty("enable-rcon", "false");
+			propertiesAdded++;
 		}
 		
-		if(Boolean.parseBoolean(Properties.get("enable-rcon").toString()) == true) {
-			Properties.setProperty("rcon.password", new BigInteger(130, new SecureRandom()).toString(32));
-			PropertiesAdded++;
+		if(Boolean.parseBoolean(properties.get("enable-rcon").toString()) == true) {
+			properties.setProperty("rcon.password", new BigInteger(130, new SecureRandom()).toString(32));
+			propertiesAdded++;
 		}
 		
-		Properties.store(new FileOutputStream(FileList.serverProperties), null);
+		properties.store(new FileOutputStream(FileList.serverProperties), null);
 		
 		/* End of checkup */
-		if(PropertiesAdded <= 0) Diamond.logger.info("Finished Server Properties checkup with no errors!");
-		else Diamond.logger.info("Finished Server Properties checkup and added " + PropertiesAdded + " missing properties");
+		if(propertiesAdded == 0)
+			Diamond.logger.translate("properties.checkupFinishNoError");
+		else
+			Diamond.logger.translate("properties.checkupFinishError", propertiesAdded);
 	}
 	
 	

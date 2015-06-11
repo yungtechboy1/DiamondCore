@@ -16,7 +16,6 @@ import java.util.Map;
 
 import org.diamondcore.Diamond;
 import org.diamondcore.Server;
-import org.diamondcore.api.plugin.PluginManager;
 import org.diamondcore.logging.DiamondLogger;
 import org.diamondcore.logging.Log4j2Logger;
 import org.yaml.snakeyaml.Yaml;

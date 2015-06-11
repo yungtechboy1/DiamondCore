@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class InputReader extends Thread {
 	
+	@SuppressWarnings({ "unused", "resource" })
 	public void run() {
 		Scanner input = new Scanner(System.in);
 		while(true) {

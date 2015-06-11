@@ -19,7 +19,6 @@ import java.net.DatagramSocket;
 
 import org.blockserver.io.BinaryReader;
 import org.blockserver.io.BinaryWriter;
-import org.diamondcore.Diamond;
 import org.diamondcore.api.PlayerType;
 import org.diamondcore.api.event.EventFactory;
 import org.diamondcore.api.event.server.ServerListPingEvent;

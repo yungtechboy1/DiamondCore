@@ -29,4 +29,13 @@ public abstract interface DiamondLogger{
 	void warn(String msg);
 	void err(String msg);
 	void debug(String msg);
+	
+	void translate(String lang);
+	void translate(String lang, Object... args);
+	void translatewarn(String lang);
+	void translatewarn(String lang, Object... args);
+	void translateerror(String lang);
+	void translateerror(String lang, Object... args);
+	void translatedebug(String lang);
+	void translatedebug(String lang, Object... args);
 }

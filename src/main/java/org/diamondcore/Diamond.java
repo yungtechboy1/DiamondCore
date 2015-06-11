@@ -17,6 +17,7 @@ import java.util.Base64;
 
 import org.apache.commons.io.FileUtils;
 import org.diamondcore.exception.DiamondException;
+import org.diamondcore.lang.Lang;
 import org.diamondcore.logging.DiamondLogger;
 import org.diamondcore.logging.Log4j2Logger;
 
@@ -30,20 +31,19 @@ import org.diamondcore.logging.Log4j2Logger;
 public abstract class Diamond {
 	
 	private Diamond() {}
-
+	
 	// Minecraft Desktop
-	public static final String desktopVersionTag = "DiamondCore Unstable 1.8";
 	public static final String desktopVersion = "1.8";
 	public static final int desktopProtocol = 47;
 	
 	// Minecraft: Pocket Edition
-	public static final String pocketVersionTag = "DiamondCore Unstable";
 	public static final String pocketVersion = "0.11.0";
 	public static final int pocketProtocol = 5;
 	
 	// DiamondCore
-	static Server server = null;
-	public static DiamondLogger logger = new Log4j2Logger("DiamondCore");
+	private static Server server = null;
+	public static final String versionTag = Lang.get("diamond.info.versionTag");
+	public static final DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	
 	/**
 	 * Used to set the Server object for the Diamond class
@@ -55,7 +55,7 @@ public abstract class Diamond {
 	 */
 	public static void setServer(Server newServer) throws DiamondException {
 		if(server != null)
-			throw new DiamondException("The server object has already been set!");
+			throw new DiamondException(Lang.get("diamond.exception.serverSet"));
 		else
 			server = newServer;
 	}

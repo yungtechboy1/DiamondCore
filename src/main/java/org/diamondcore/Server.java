@@ -27,6 +27,8 @@ import org.diamondcore.exception.DiamondException;
 import org.diamondcore.file.FileCheckup;
 import org.diamondcore.file.FileList;
 import org.diamondcore.file.PropertiesCheckup;
+import org.diamondcore.lang.Lang;
+import org.diamondcore.lang.exeption.InvalidLangException;
 import org.diamondcore.logging.DiamondLogger;
 import org.diamondcore.logging.Log4j2Logger;
 import org.diamondcore.mojang.MojangAuthServer;
@@ -49,27 +51,29 @@ public class Server {
 	private final PluginManager manager = new PluginManager();
 	private final TCPBroadcaster broadcaster;
 	
-	// Running Variable
+	// Running variable
 	private boolean running = false;
 	private boolean debug = false;
 	
 	// Logger
 	private final DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	
-	public Server(boolean shouldDebug) throws IOException, InterruptedException, PluginException, DiamondException {
-		// Just install ANSI, it'll say itself if something went wrong
+	public Server(boolean shouldDebug) throws IOException, InterruptedException, PluginException, DiamondException, InvalidLangException {
+		// Predefine console data
 		AnsiConsole.systemInstall();
+		Lang.setLang("en_ES"); // TODO: Add ability to change language
 		
 		// Start server
 		debug = shouldDebug;
 		Diamond.setServer(this);
-		logger.info("Starting Server!");
-		logger.info("Debug: " + (debug ? "activated" : "de-activated"));
+		logger.translate("server.start");
+		if(debug) logger.translate("server.debugOn");
+		else logger.translate("server.debugOff");
 		
 		// Make sure Mojang Auth Server is online
-		logger.info("Making sure Mojang Auth server is online...");
-		if(MojangAuthServer.isOnline()) logger.info("Server is online! [" + MojangAuthServer.getImplementationVersion() + "]");
-		else logger.warn("The Mojang Auth server is currently offline, players can not join the server until it is back up!");
+		logger.translate("mojang.checkAuth");
+		if(MojangAuthServer.isOnline()) logger.translate("mojang.authOnline", MojangAuthServer.getImplementationVersion());
+		else logger.translate("mojang.authOffline");
 		
 		// Check Files and Properties
 		FileList.setDebug(shouldDebug);
@@ -94,7 +98,7 @@ public class Server {
 		JavaPluginLoader.loadPlugins();
 		
 		running = true;
-		logger.info("Started Server!");
+		logger.translate("server.started");
 	}
 	
 	/**
@@ -169,11 +173,14 @@ class MainTicker extends Thread implements Runnable {
 				WorldTime.tick();
 				if(currentTick > lastTick+2) {
 					int skippedTicks = (currentTick - lastTick - 1); /* Subtract 1 more because the current tick will ALWAYS be 1 or more than the last one */
-					if(!runningSlow || ticksRanSlow >= tickReset) logger.info("Can't keep up! Did the system time change, or is the server overloaded? Skipping " + skippedTicks + " ticks");
-					if(ticksRanSlow >= tickReset) ticksRanSlow = 0;
+					if(!runningSlow || ticksRanSlow >= tickReset)
+						logger.translate("server.runningSlow", skippedTicks);
+					if(ticksRanSlow >= tickReset)
+						ticksRanSlow = 0;
 					runningSlow = true;
 				}
-				if(runningSlow) ticksRanSlow++;
+				if(runningSlow)
+					ticksRanSlow++;
 				else {
 					ticksRanSlow = -1;
 					runningSlow = false;

@@ -25,10 +25,10 @@ import org.diamondcore.Diamond;
  */
 public class FileCheckup {
 	
-	int FilesCreated = 0;
+	int filesCreated = 0;
 	
 	public FileCheckup() throws IOException {
-		Diamond.logger.info("Starting file checkup!");
+		Diamond.logger.translate("file.checkupStart");
 		
 		/* Start Checkup */
 		// Check BannedIPList
@@ -38,8 +38,8 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Diamond.logger.warn("Banned IP list not found! Created a new one");
-			FilesCreated++;
+			Diamond.logger.translatewarn("file.fileMissing", FileList.bannedIPList.getName());
+			filesCreated++;
 		}
 		
 		// Check BannedPlayerLust
@@ -49,20 +49,20 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Diamond.logger.warn("Banned Player list not found! Created a new one");
-			FilesCreated++;
+			Diamond.logger.translatewarn("file.fileMissing", FileList.bannedPlayerList.getName());
+			filesCreated++;
 		}
 		
 		// Check License
 		if(!FileList.license.exists()) {
 			try {
 				Files.copy(this.getClass().getResource("files/LICENSE").openStream(), FileList.license.toPath());
-				Diamond.logger.warn("License not found! Created a new one");
+				Diamond.logger.translatewarn("file.fileMissing", "LICENSE");
 			}
 			catch(NullPointerException E) {
-				Diamond.logger.warn("There was a error copying the LICENSE file!");
+				Diamond.logger.translatewarn("file.copyError", "LICENSE");
 			}
-			FilesCreated++;
+			filesCreated++;
 		}
 		
 		// Check operator List
@@ -72,55 +72,55 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Diamond.logger.warn("Operators list not found! Created a new one");
-			FilesCreated++;
+			Diamond.logger.translatewarn("file.fileMissing", FileList.operators.getName());
+			filesCreated++;
 		}
 		
 		// Check PlayerFolder
 		if(!FileList.playerFolder.exists()) {
 			FileList.playerFolder.mkdir();
-			Diamond.logger.warn("Player Folder not found! Created a new one");
-			FilesCreated++;
+			Diamond.logger.translatewarn("file.folderMissing", FileList.playerFolder.getName());
+			filesCreated++;
 		}
 		
 		// Check PluginFolder
 		if(!FileList.pluginFolder.exists()) {
 			FileList.pluginFolder.mkdir();
-			Diamond.logger.warn("Plugin folder not found! Created a new one");
-			FilesCreated++;
+			Diamond.logger.translatewarn("file.folderMissing", FileList.pluginFolder.getName());
+			filesCreated++;
 		}
 		
 		// Check Lib Folder
 		if(!FileList.libFolder.exists()) {
 			FileList.libFolder.mkdir();
-			Diamond.logger.warn("Lib folder not found! Created a new one");
-			FilesCreated++;
+			Diamond.logger.translatewarn("file.folderMissing", FileList.libFolder.getName());
+			filesCreated++;
 		}
 		
 		// Check ReadMe file
 		if(!FileList.readMe.exists()) {
 			try {
 				Files.copy(this.getClass().getResource("files/README.md").openStream(), FileList.readMe.toPath());
-				Diamond.logger.warn("README.md not found! Created a new one");
+				Diamond.logger.translatewarn("file.fileMissing", "README.md");
 			}
 			catch(NullPointerException E) {
-				Diamond.logger.warn("There was a error copying the README.md file!\nThis could be because the file itself wasnt in the jar.\nMake sure to check if its in there (If you are a dev)");
+				Diamond.logger.translatewarn("file.copyError", "README.md");
 			}
-			FilesCreated++;
+			filesCreated++;
 		}
 		
 		// Check ServerLog
 		if(!FileList.serverLog.exists()) {
 			FileList.serverLog.createNewFile();
-			Diamond.logger.warn("Server Log not found! Created a new one");
-			FilesCreated++;
+			Diamond.logger.translatewarn("file.fileMissing", "server.log");
+			filesCreated++;
 		}
 		
 		// Check ServerProperties
 		if(!FileList.serverProperties.exists()) {
 			FileList.serverProperties.createNewFile();
-			Diamond.logger.warn("Server Properties not found! Created a new one");
-			FilesCreated++;
+			Diamond.logger.translatewarn("file.fileMissing", "server.properties");
+			filesCreated++;
 		}
 		
 		// Check WhiteList
@@ -130,24 +130,22 @@ public class FileCheckup {
 			Writer.write("{}");
 			Writer.flush();
 			Writer.close();
-			Diamond.logger.warn("Whitelist not found! Created a new one");
-			FilesCreated++;
+			Diamond.logger.translatewarn("file.folderMissing", "whitelist");
+			filesCreated++;
 		}
 		
 		// Check WorldFolder
 		if(!FileList.worldFolder.exists()) {
 			FileList.worldFolder.mkdir();
-			Diamond.logger.warn("World folder not found! Created a new one");
-			FilesCreated++;
+			Diamond.logger.translatewarn("file.folderMissing", "world");
+			filesCreated++;
 		}
 		/* End of Checkup */
 		
-		if(FilesCreated <= 0) {
-			Diamond.logger.info("Finished file checkup with no errors!");
-		}
-		else {
-			Diamond.logger.info("Finished file checkup and created " + FilesCreated + " files");
-		}
+		if(filesCreated == 0)
+			Diamond.logger.translate("file.checkupFinishNoError");
+		else
+			Diamond.logger.translate("file.checkupFinishError", filesCreated);
 	}
 	
 }

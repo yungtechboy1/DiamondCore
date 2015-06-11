@@ -5,5 +5,7 @@ worlds
 plugins
 whitelist.json
 ops.json
-banned-players.json
 banned-ip.json
+banned-players.json
+bin
+target

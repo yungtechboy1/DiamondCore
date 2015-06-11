@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 import org.apache.commons.io.IOUtils;
 import org.diamondcore.block.BlockType;
-import org.diamondcore.file.FileList;
 import org.diamondcore.item.Item;
 import org.diamondcore.utils.DatUtils;
 import org.diamondcore.utils.StringUtils;
@@ -47,7 +46,7 @@ public class Inventory {
 		return list;
 	}
 	
-	@SuppressWarnings("unused")
+	
 	protected final void compile() throws IOException {
 		boolean isValid = DatUtils.validate(data);
 		if(isValid && !compiled) {

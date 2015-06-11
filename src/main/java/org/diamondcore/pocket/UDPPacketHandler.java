@@ -18,7 +18,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
-import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
@@ -95,11 +94,6 @@ public class UDPPacketHandler extends Thread {
 					       // Diamond.logger.info("NUMBER: " + test1);
 							break;
 						case -64:
-							ByteBuffer bb = ByteBuffer.wrap(pocketPacket.getData());
-							bb.get();
-							int len = bb.getShort()/8;
-							byte[] data = bb.get(new byte[len]).array();
-							System.out.println(data[0]);
 							break;
 						default:
 							Diamond.logger.warn("RECEIVED UNKNOWN PACKET ID: " + pocketPacket.getData()[0]);

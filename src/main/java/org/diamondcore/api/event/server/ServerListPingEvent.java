@@ -45,6 +45,7 @@ public final class ServerListPingEvent extends Event {
 		this.address = address;
 		this.port = port;
 		this.motd = motd;
+		this.tag = Diamond.versionTag;
 		this.setExtra();
 	}
 	
@@ -66,13 +67,10 @@ public final class ServerListPingEvent extends Event {
 	 * @author Trent Summerlin
 	 */
 	private final void setExtra() {
-		if(type == PlayerType.POCKET) {
-			this.tag = Diamond.pocketVersionTag;
+		if(type == PlayerType.POCKET)
 			this.protocol = Diamond.pocketProtocol;
-		} else if(type == PlayerType.DESKTOP) {
-			this.tag = Diamond.desktopVersionTag;
+		else if(type == PlayerType.DESKTOP) 
 			this.protocol = Diamond.desktopProtocol;
-		}
 		this.max = ServerSettings.getMaxPlayers();
 		this.online = 0; // TODO: Set amount to actual online players when possible
 	}

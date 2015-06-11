@@ -12,7 +12,6 @@
 package org.diamondcore.desktop;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -48,13 +47,13 @@ public class TCPPacketHandler extends Thread {
 				VarInt.readUnsignedVarInt(input, true); // Read the unused VarInt sent by Minecraft
 				int packetID = VarInt.readUnsignedVarInt(input.readByte());
 				
+				System.out.println(packetID);
+				
 				switch(packetID) {
 					case PacketIDList.HANDSHAKE_PACKET:
-						HandshakeResponse packet = new HandshakeResponse(socket); // Also handles login as well
+						HandshakeResponse packet = new HandshakeResponse(socket);
 						packet.sendResponse();
 						break;
-					case -646:
-						break; // Ignore mystery ID
 					default:
 						Diamond.logger.info("Received unknown ID: " + packetID);
 						break;
