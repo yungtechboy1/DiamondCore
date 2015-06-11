@@ -1,11 +1,12 @@
 server.log
 server.properties
-players
-worlds
-plugins
 whitelist.json
 ops.json
 banned-ip.json
 banned-players.json
-bin
+players
+worlds
+plugins
 target
+bin
+*.class
