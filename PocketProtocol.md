@@ -27,6 +27,7 @@ There are also CustomPackets, InternalPackets, which we will get to later.
 ID_UNCONNECTED_PING_OPEN_CONNECTIONS
 -----------------
 Field Name | Type   | Value
+---------------------------
 Packet ID  | Byte   | 0x1C
 Ping ID    | Long   | Ping ID sent by client in ID_CONNECTED_PING_OPEN_CONNECTIONS
 MAGIC      | MAGIC  | 0x00ffff00fefefefefdfdfdfd12345678
