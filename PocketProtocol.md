@@ -1,6 +1,3 @@
-Pocket Minecraft Protocol
-==================
-
 Data Formats
 ==================
 
