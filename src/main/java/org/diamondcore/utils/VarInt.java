@@ -215,24 +215,6 @@ public final class VarInt {
     	return readUnsignedVarInt(new byte[] {b});
     }
     
-    public static int readUnsignedVarInt(DataInput in, boolean secure) throws IOException {
-    	ByteArrayOutputStream data = new ByteArrayOutputStream();
-		data.write(in.readByte());
-		int var = VarInt.readUnsignedVarInt(data.toByteArray());
-		if(var >= 0)
-			return var;
-		else if(var < 0 && secure) {
-			// Keep reading until the length is 0 or bigger
-			while(var < 0 && data.size() < 35) {
-				data.write(in.readByte());
-				var = VarInt.readUnsignedVarInt(data.toByteArray());
-			} if(data.size() > 35) {
-				throw new IOException("The length of the VarInt is too long!");
-			}
-		}
-		return var;
-    }
-    
     public static int readUnsignedVarInt(byte[] bytes) {
         int value = 0;
         int i = 0;
