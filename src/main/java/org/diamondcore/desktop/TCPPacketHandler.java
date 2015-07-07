@@ -44,10 +44,8 @@ public class TCPPacketHandler extends Thread {
 				DataInputStream input = new DataInputStream(socket.getInputStream());
 				
 				// Read packet data
-				VarInt.readUnsignedVarInt(input, true); // Read the unused VarInt sent by Minecraft
+				int len = VarInt.readUnsignedVarInt(input); // Read the VarInt sent by Minecraft
 				int packetID = VarInt.readUnsignedVarInt(input.readByte());
-				
-				System.out.println(packetID);
 				
 				switch(packetID) {
 					case PacketIDList.HANDSHAKE_PACKET:
@@ -55,7 +53,7 @@ public class TCPPacketHandler extends Thread {
 						packet.sendResponse();
 						break;
 					default:
-						Diamond.logger.info("Received unknown ID: " + packetID);
+						Diamond.logger.info("Received unknown ID: " + packetID + "\nLength: " + len);
 						break;
 				}
 			} catch (IOException | DiamondException e) {

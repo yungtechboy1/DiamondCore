@@ -1,8 +1,9 @@
 package org.diamondcore.command;
 
-public abstract class CommandSender {
+public interface CommandSender {
 	
-	public abstract boolean hasPermission();
-	public abstract boolean hasOp();
+	public void sendMessage(String msg);
+	public boolean hasPermission();
+	public boolean hasOp();
 	
 }

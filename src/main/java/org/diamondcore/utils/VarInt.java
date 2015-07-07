@@ -20,7 +20,6 @@ package org.diamondcore.utils;
  */
 
 
-import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;

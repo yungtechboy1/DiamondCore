@@ -11,15 +11,13 @@
 
 package org.diamondcore.desktop.packet;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.diamondcore.Diamond;
+import org.diamondcore.desktop.DesktopPacket;
 import org.diamondcore.desktop.PacketIDList;
-import org.diamondcore.utils.VarInt;
 import org.json.simple.JSONObject;
 
 /**
@@ -31,9 +29,7 @@ import org.json.simple.JSONObject;
 public class ClientDisconnectPacket {
 	
 	// Socket info
-	protected final Socket playerSocket;
-	protected final DataInputStream input;
-	protected final DataOutputStream output;
+	private final DataOutputStream output;
 	
 	// Packet info
 	protected String reason;
@@ -43,8 +39,6 @@ public class ClientDisconnectPacket {
 	protected String username;
 	
 	public ClientDisconnectPacket(Socket s, String reason) throws IOException {
-		this.playerSocket = s;
-		this.input = new DataInputStream(s.getInputStream());
 		this.output = new DataOutputStream(s.getOutputStream());
 		this.reason = reason;
 	}
@@ -76,19 +70,14 @@ public class ClientDisconnectPacket {
 	public void disconnect() throws IOException {
 		JSONObject object = new JSONObject();
 		object.put("text", this.reason.toString());
+		DesktopPacket packet = new DesktopPacket(PacketIDList.CLIENT_DISCONNECT);
+		packet.writeString(object.toString());
 		
-		ByteArrayOutputStream data = new ByteArrayOutputStream();
-		data.write(PacketIDList.CLIENT_DISCONNECT);
-		data.write(VarInt.writeUnsignedVarInt(object.toString().getBytes().length));
-		data.write(object.toString().getBytes());
-		data.flush();
-		
-		output.write(VarInt.writeUnsignedVarInt(data.size()));
-		output.write(data.toByteArray());
+		output.write(packet.toByteArray());
 		output.flush();
 		
-		if(shouldLog && username != null) Diamond.logger.info("Disconnected player " + username + " for \"" + reason + "\"");
-		data.close();
+		if(shouldLog && username != null)
+			Diamond.logger.info("Disconnected player " + username + " for \"" + reason + "\"");
 	}
 	
 }

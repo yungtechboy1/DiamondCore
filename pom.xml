@@ -31,6 +31,12 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
@@ -41,11 +47,11 @@
             <artifactId>log4j-core</artifactId>
             <version>2.0-rc1</version>
         </dependency>
-
+        
         <dependency>
             <groupId>org.blockserver</groupId>
             <artifactId>BlockServer-IO-Lib</artifactId>
-            <version>1.0.0-BETA-SNAPSHOT</version>
+            <version>0.0-BETA-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -119,6 +125,22 @@
                     </archive>
                 </configuration>
             </plugin>
+            
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<finalName>uber-${artifactId}-${version}</finalName>
+				</configuration>
+			</plugin>
             
         </plugins>
     </build>

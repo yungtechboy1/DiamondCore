@@ -45,7 +45,6 @@ public final class ServerListPingEvent extends Event {
 		this.address = address;
 		this.port = port;
 		this.motd = motd;
-		this.tag = Diamond.versionTag;
 		this.setExtra();
 	}
 	
@@ -73,6 +72,7 @@ public final class ServerListPingEvent extends Event {
 			this.protocol = Diamond.desktopProtocol;
 		this.max = ServerSettings.getMaxPlayers();
 		this.online = 0; // TODO: Set amount to actual online players when possible
+		this.tag = Diamond.versionTag + " " + (type == PlayerType.DESKTOP ? Diamond.desktopVersion : Diamond.pocketVersion);
 	}
 	
 	@Override

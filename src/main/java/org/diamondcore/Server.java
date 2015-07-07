@@ -15,14 +15,20 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import org.diamondcore.api.JavaPluginLoader;
+import org.diamondcore.api.PluginLoader;
 import org.diamondcore.api.exception.PluginException;
 import org.diamondcore.api.plugin.PluginManager;
 import org.diamondcore.block.Block;
-import org.diamondcore.command.InputReader;
+import org.diamondcore.command.Command;
+import org.diamondcore.command.Console;
 import org.diamondcore.desktop.TCPPacketHandler;
+import org.diamondcore.desktop.utils.SecurityUtils;
 import org.diamondcore.desktop.utils.TCPBroadcaster;
+import org.diamondcore.entity.player.Player;
 import org.diamondcore.exception.DiamondException;
 import org.diamondcore.file.FileCheckup;
 import org.diamondcore.file.FileList;
@@ -61,10 +67,16 @@ public class Server {
 	private final DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	private final DiamondTranslator lang = new Log4j2Translator("DiamondCore");
 	
+	// Security
+	private final KeyPair key = SecurityUtils.generateKeyPair();
+	
+	// Other
+	private final Collection<Player> players = new ArrayList<Player>();
+	
 	public Server(boolean shouldDebug) throws IOException, InterruptedException, PluginException, DiamondException, LangException {
 		// Predefine console data
 		AnsiConsole.systemInstall();
-		Lang.setLang("de_GM"); // TODO: Add ability to change language
+		Lang.setLang("en_US"); // TODO: Add ability to change language
 		
 		// Start server
 		debug = shouldDebug;
@@ -88,6 +100,7 @@ public class Server {
 		
 		// Initialize everything
 		Block.registerBlocks();
+		Command.registerNatives();
 		
 		// Finish startup
 		new MainTicker().start();
@@ -95,10 +108,12 @@ public class Server {
 		new TCPPacketHandler(new ServerSocket(ServerSettings.getPCPort())).start();
 		this.broadcaster = new TCPBroadcaster(InetAddress.getByName("127.0.0.1"), 4445);
 		this.broadcaster.start();
-		new InputReader().start();
+		new Console().start();
 		
 		// Load plugins after everything is initialized
-		JavaPluginLoader.loadPlugins();
+		PluginLoader.loadPlugins();
+		MainTicker ticker = new MainTicker();
+		ticker.start();
 		
 		running = true;
 		lang.info("server.started");
@@ -156,6 +171,43 @@ public class Server {
 	}
 	
 	/**
+	 * Used to add a player to the online list
+	 * 
+	 * @param p
+	 * 		- The player to be added to the online list
+	 * @author Trent Summerlin
+	 */
+	public void addPlayer(Player p) {
+		players.add(p);
+	}
+	
+	/**
+	 * Used to remove a player from the online list
+	 * 
+	 * @param p
+	 * 		- The player to be removed
+	 * @author Trent Summerlin
+	 */
+	public void removePlayer(Player p) {
+		players.remove(p);
+	}
+	
+	/**
+	 * Used to retrieve the players connected to the
+	 * server at the time
+	 * 
+	 * @return The online players
+	 * @author Trent Summerlin
+	 */
+	public Collection<Player> getOnlinePlayers() {
+		return players;
+	}
+	
+	public KeyPair getKeyPair() {
+		return key;
+	}
+	
+	/**
 	 * Used to see if DiamondCore is in debug mode
 	 * 
 	 * @return Debug mode state
@@ -180,7 +232,7 @@ class MainTicker extends Thread implements Runnable {
 		int ticksRanSlow = -1;
 		int tickReset = 1200;
 		boolean runningSlow = false;
-		while(Diamond.getServer().isRunning()) {
+		while(true) {
 			int currentTick = ticker.getTick();
 			if(currentTick != lastTick) {
 				WorldTime.tick();
@@ -200,7 +252,8 @@ class MainTicker extends Thread implements Runnable {
 				}
 				lastTick = currentTick;
 			}
-			if(!Diamond.getServer().isRunning()) JavaPluginLoader.unloadPlugins();
+			if(!Diamond.getServer().isRunning())
+				PluginLoader.unloadPlugins();
 		}
 	}
 }

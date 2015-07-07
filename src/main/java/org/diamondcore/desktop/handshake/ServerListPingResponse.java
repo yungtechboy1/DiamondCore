@@ -11,7 +11,6 @@
 
 package org.diamondcore.desktop.handshake;
 
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -20,11 +19,11 @@ import java.net.Socket;
 import org.diamondcore.api.PlayerType;
 import org.diamondcore.api.event.EventFactory;
 import org.diamondcore.api.event.server.ServerListPingEvent;
+import org.diamondcore.desktop.DesktopPacket;
 import org.diamondcore.desktop.PacketIDList;
 import org.diamondcore.desktop.packet.HandshakePacket;
 import org.diamondcore.exception.DiamondException;
 import org.diamondcore.utils.ServerSettings;
-import org.diamondcore.utils.VarInt;
 import org.json.simple.JSONObject;
 
 public class ServerListPingResponse extends HandshakePacket {
@@ -64,7 +63,7 @@ public class ServerListPingResponse extends HandshakePacket {
 		/**
 		 * How to add a player to the sample list:
 		 * Step 1: Put the player name
-		 * Step 2: Put the player's UUID (A random UUID will work as well!)
+		 * Step 2: Put the player's UUID (A random UUID will work as well, this will be useful for MCPE players)
 		 */
 										
 		// Description and favicon
@@ -91,18 +90,10 @@ public class ServerListPingResponse extends HandshakePacket {
 
 	@Override
 	public void sendResponse() throws IOException {
-		String json = object.toJSONString();
+		DesktopPacket packet = new DesktopPacket(PacketIDList.SERVER_PING_RESPONSE);
+		packet.writeString(object.toJSONString());
 		
-		// Write Data
-		ByteArrayOutputStream data = new ByteArrayOutputStream();
-		data.write(PacketIDList.SERVER_PING_RESPONSE);
-		data.write(VarInt.writeUnsignedVarInt(json.getBytes().length));
-		data.write(json.getBytes());
-		data.flush();
-		
-		// Send packet
-		output.write(VarInt.writeUnsignedVarInt(data.size()));
-		output.write(data.toByteArray());
+		output.write(packet.toByteArray());
 		output.flush();
 	}
 	

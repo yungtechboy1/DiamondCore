@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 import org.blockserver.io.BinaryReader;
-import org.blockserver.net.protocol.pe.raknet.CustomPacket;
 import org.diamondcore.Diamond;
 import org.diamondcore.PlayerSession;
 import org.diamondcore.exception.DiamondException;
@@ -82,10 +81,8 @@ public class UDPPacketHandler extends Thread {
 							break;
 						case -124:
 							break;
-						case -64:
-							break;
 						default:
-							Diamond.logger.warn("RECEIVED UNKNOWN PACKET ID: " + pocketPacket.getData()[11]);
+							Diamond.logger.warn("RECEIVED UNKNOWN PACKET ID: " + Integer.toHexString(pocketPacket.getData()[0]));
 							break;
 					}
 				}

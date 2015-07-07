@@ -11,6 +11,7 @@
 
 package org.diamondcore.command;
 
+
 /**
  * Extended by other classes in plugins in order
  * to let the compiler know that it would like to
@@ -19,7 +20,7 @@ package org.diamondcore.command;
  * @author Trent Summerlin
  * @version 0.1.0-SNAPSHOT
  */
-public abstract interface CommandExecutor {
+public interface CommandExecutor {
 	
 	/**
 	 * Function used to let the compiler know that it
@@ -34,6 +35,6 @@ public abstract interface CommandExecutor {
 	 * @return Command success
 	 * @author Trent Summerlin
 	 */
-	public abstract boolean onCommand(CommandSender sender, String label, String[] args);
+	public boolean onCommand(CommandSender sender, String label, String[] args);
 	
 }

@@ -13,9 +13,8 @@ package org.diamondcore;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Base64;
 
-import org.apache.commons.io.FileUtils;
+import org.diamondcore.desktop.Favicon;
 import org.diamondcore.exception.DiamondException;
 import org.diamondcore.lang.Lang;
 import org.diamondcore.lang.exeption.LangException;
@@ -45,7 +44,7 @@ public abstract class Diamond {
 	
 	// DiamondCore
 	private static Server server = null;
-	public static final String versionTag = Lang.get("diamond.versionTag");
+	public static final String versionTag = "DiamondCore";
 	public static final DiamondLogger logger = new Log4j2Logger("DiamondCore");
 	public static final DiamondTranslator lang = new Log4j2Translator("DiamondCore");
 	
@@ -81,9 +80,9 @@ public abstract class Diamond {
 	 * @return Server base64 Icon
 	 * @author Trent Summerlin
 	 */
-	public static final String loadServerIcon(File icon) {
+	public static final Favicon loadServerIcon(File icon) {
 		try {
-			return ("data:image/png;base64," + Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(icon)));
+			return Favicon.getInstance(icon);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

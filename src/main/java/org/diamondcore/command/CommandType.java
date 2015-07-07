@@ -5,7 +5,8 @@
 | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
 | |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
 | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|                                                                                                        
+|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|  
+                                                                                                      
  */
 
 /*
@@ -305,8 +306,6 @@
 
 package org.diamondcore.command;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
 
 /**
  * This class contains all of the commands packaged
@@ -316,6 +315,7 @@ import java.util.EnumSet;
  * @author Trent
  * @version 0.1.0-SNAPSHOT
  */
+@Deprecated
 public enum CommandType {
 	
 	SAY("say"), TIME("time"), SAVE_ALL("save-all"), SAVE_ON("save-on"), SAVE_OFF("save-off"),
@@ -325,35 +325,6 @@ public enum CommandType {
 	GAMEMODE("gamemode"), DEFAULT_GAMEMODE("defaultgamemode"), SPAWNPOINT("spawnpoint"), LIST("list"),
 	HELP("help"), ALT_HELP("?"), UNKNOWN("");
 
-	private String name;
-	private CommandType(String name) {
-		this.name = name;
-	}
+	private CommandType(String name) {}
 	
-	/**
-	 * Used to get the name of the command
-	 * 
-	 * @return The commad name
-	 * @author Trent Summerlin
-	 */
-	public String getName() {
-		return this.name;
-	}
-	
-	/**
-	 * Used to get a command by it's name
-	 * 
-	 * @param name
-	 * 		- The command name
-	 * @return The command type
-	 * @author Trent Summerlin
-	 */
-	public static CommandType getByName(String name) {
-		ArrayList<CommandType> commands =new ArrayList<CommandType>(EnumSet.allOf(CommandType.class));
-		for(CommandType type : commands) {
-			if(type.getName().equalsIgnoreCase(name))
-				return type;
-		}
-		return null;
-	}
 }

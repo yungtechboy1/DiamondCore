@@ -12,17 +12,16 @@
 package org.diamondcore.desktop.handlers;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import org.diamondcore.desktop.DesktopPacket;
 import org.diamondcore.desktop.PacketIDList;
 import org.diamondcore.desktop.handshake.HandshakeType;
+import org.diamondcore.desktop.handshake.LoginResponse;
 import org.diamondcore.desktop.handshake.ServerListPingResponse;
 import org.diamondcore.desktop.packet.HandshakePacket;
-import org.diamondcore.desktop.utils.PacketUtils;
 import org.diamondcore.exception.DiamondException;
-import org.diamondcore.utils.VarInt;
 
 /**
  * This is the first packet sent by the server in response
@@ -39,23 +38,21 @@ import org.diamondcore.utils.VarInt;
 public final class HandshakeResponse {
 	
 	// Socket info
-	protected final Socket socket;
-	protected final DataInputStream input;
-	protected final DataOutputStream output;
+	private final Socket socket;
+	private final DesktopPacket input;
 	
 	// Packet info
-	protected int receivedPacketLength;
-	protected int protocol;
-	protected String destinationAddress;
-	protected int destinationPort;
-	protected int nextState;
-	protected HandshakePacket packet;
+	private int receivedPacketLength;
+	private int protocol;
+	private String destinationAddress;
+	private int destinationPort;
+	private int nextState;
+	private HandshakePacket packet;
 	
 	public HandshakeResponse(Socket socket) throws IOException, DiamondException {
 		// Initialize
 		this.socket = socket;
-		this.input = new DataInputStream(this.socket.getInputStream());
-		this.output = new DataOutputStream(this.socket.getOutputStream());
+		this.input = new DesktopPacket(new DataInputStream(this.socket.getInputStream()));
 		this.receivedPacketLength = socket.getInputStream().available()+2; // Add two because two bytes have already been read by the DesktopPacketHandler
 		
 		// Decode
@@ -107,9 +104,11 @@ public final class HandshakeResponse {
 	 * @return Packet handshake type
 	 */
 	public HandshakeType getHandshakeType() {
-		if(this.nextState == 1) return HandshakeType.SERVER_PING;
-		else if(this.nextState == 2) return HandshakeType.PLAYER_LOGIN;
-		else return null;
+		if(this.nextState == 1)
+			return HandshakeType.SERVER_PING;
+		else if(this.nextState == 2)
+			return HandshakeType.PLAYER_LOGIN;
+		return null;
 	}
 	
 	/**
@@ -126,15 +125,17 @@ public final class HandshakeResponse {
 	}
 	
 	public void decode() throws IOException {
-		this.protocol = VarInt.readUnsignedVarInt(input.readByte());
-		this.destinationAddress = PacketUtils.readString(input);
-		this.destinationPort = input.readUnsignedShort();
-		this.nextState = VarInt.readUnsignedVarInt(input.readByte());
+		this.protocol = input.readVarInt();
+		this.destinationAddress = input.readString();
+		this.destinationPort = input.readUShort();
+		this.nextState = input.readVarInt();
 	}
 
 	public void sendResponse() throws IOException, DiamondException {
-		if(this.nextState == 1) this.packet = new ServerListPingResponse(this.socket);
-		//else if(this.nextState == 2) this.packet = new LoginResponse(this.socket);
+		if(this.nextState == 1)
+			this.packet = new ServerListPingResponse(this.socket);
+		else if(this.nextState == 2)
+			this.packet = new LoginResponse(this.socket);
 	} 
 
 }

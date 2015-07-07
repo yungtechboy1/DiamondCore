@@ -16,6 +16,9 @@ import java.util.Map;
 
 import org.diamondcore.Diamond;
 import org.diamondcore.Server;
+import org.diamondcore.command.Command;
+import org.diamondcore.command.CommandExecutor;
+import org.diamondcore.command.CommandSender;
 import org.diamondcore.logging.DiamondLogger;
 import org.diamondcore.logging.Log4j2Logger;
 import org.yaml.snakeyaml.Yaml;
@@ -26,7 +29,7 @@ import org.yaml.snakeyaml.Yaml;
  * @author Trent Summerlin
  * @version 0.1.0-SNAPSHOT
  */
-public abstract class JavaPlugin {
+public abstract class JavaPlugin implements CommandExecutor {
 	
 	private DiamondLogger logger;
 	
@@ -98,4 +101,42 @@ public abstract class JavaPlugin {
 		}
 	}
 	
+	/**
+	 * Used to get a command by it's label
+	 * 
+	 * @return Command
+	 * @author Trent Summerlin
+	 */
+	public Command getCommand(String label) {
+		return Command.getByName(label);
+	}
+	
+	/**
+	 * This method is ran when the plugin is enabled
+	 * by the DiamondCore plugin manager
+	 * 
+	 * @author Trent Summerlin
+	 */
+	public void onEnable() {}
+	
+	
+	/**
+	 * This method is ran when the plugin is disabled
+	 * by the DiamondCore plugin manager
+	 * 
+	 * @author Trent Summerlin
+	 */
+	public void onDisable() {}
+	
+	/**
+	 * This method is ran when a command created by the
+	 * plugin is ran, and it's executor has not been set
+	 * to another class
+	 * 
+	 * @author Trent Summerlin
+	 */
+	public boolean onCommand(CommandSender sender, String label, String args[]) {
+		// If the command isn't even handled, there is no need to tell the user the usage
+		return true;
+	}
 }

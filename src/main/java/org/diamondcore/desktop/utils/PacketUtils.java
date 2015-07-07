@@ -40,7 +40,7 @@ public final class PacketUtils {
 	 * @return Decoded String
 	 */
 	public static String readString(DataInputStream input) throws IOException {
-		int length = VarInt.readUnsignedVarInt(input, true);
+		int length = VarInt.readUnsignedVarInt(input);
 		byte[] rawString = new byte[length];
 		for(int i = 0; i < length; i++)
 			rawString[i] = input.readByte();
