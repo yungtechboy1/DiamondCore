@@ -13,3 +13,5 @@ to be changed, but there seemed to be too much to keep up with.
 # Library Info
 Note: This program uses JRakLib, a library network used to make it easier
 to handle MCPE client's (Thanks, jython234!)
+
+## will update to 1.17.0 now
