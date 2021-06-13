@@ -27,5 +27,6 @@ to handle MCPE client's (Thanks, jython234!)
  - Crafting
  - Update to Latest protocol
 
-Discord 
-diacord.gg/
+Discord
+
+https://discord.gg/DjKZfqvEuR
