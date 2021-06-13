@@ -31,10 +31,10 @@ public abstract class PacketIDList {
 	public static final int PROTOCOL_ID = 440;
 	
 	// MAGIC
-	public final static byte[] MAGIC = new byte[] {(byte) 0x00, (byte) 0xff, (byte) 0xff, 0x00, (byte) 0xfe, (byte) 0xfe, (byte) 0xfe, (byte) 0xfe, (byte) 0xfd, (byte) 0xfd, (byte) 0xfd, (byte) 0xfd, (byte) 0x12, (byte) 0x34, (byte) 0x56, (byte) 0x78};
+        public static final byte[] MAGIC = "\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x12\x34\x56\x78";
 	
+
 	/* Login Packets */
-	
 	/**
 	 * C -> S : 0x01 : Sent from the client when pinging for servers on port 19132.
 	 **/
@@ -86,13 +86,13 @@ public abstract class PacketIDList {
 	/**
 	 * S <-> C : 0xA0 : Sent when a packet is lost between the server and/or the client.
 	 **/
-	public final static byte NACK = (byte) 0xA0;
+	public final static byte NACK = (byte) 0xa0;
 	
 	/**
 	 * S <-> C: 0xC0 : Sent after a 0x8X to Acknowledge (ACK) the receiving of packets.
 	 * Note: Packet Number #2 is only sent when the Additional Packet boolean is false.
 	 **/
-	public final static byte ACK = (byte) 0xC0;
+	public final static byte ACK = (byte) 0xc0;
 	
 	/**
 	 * (Two Way) RakNet custom packet min.
