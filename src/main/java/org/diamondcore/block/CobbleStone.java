@@ -15,7 +15,7 @@ public class CobbleStone extends SolidBlock {
 
 	@Override
 	public String getName() {
-		return "Cobblestone";
+		return "minecraft:cobblestone";
 	}
 
 	@Override
