@@ -6,4 +6,8 @@ together without using mods, kind of like BigBrother in PocketMine.
 
 ## Library Info
 Note: This program uses JRakLib, a library network used to make it easier
-to handle MCPE client's (Thanks, jython234!)
+to handle MCPE client's
+
+## Links
+Discord:
+https://discord.gg/SWZKcPBmpD
