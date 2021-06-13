@@ -109,7 +109,8 @@ public class SessionManager{
             }
             while(receiveStream());
             long time = Instant.now().toEpochMilli() - start;
-            if(time < 50){ //20 ticks per second (1000 / 20)
+            //20 ticks per second (1000 / 20)
+            if(time < 50){
                 sleepUntil(Instant.now().toEpochMilli()+(50 - time));
             }
             tick();
