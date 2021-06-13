@@ -26,6 +26,7 @@ public class MojangURL {
 	public static final String profileInfo = "https://sessionserver.mojang.com/session/minecraft/profile/";
 	
 	// Authentication
-	public static final String authServer = "https://sessionserver.mojang.com/";
-	public static final String hasJoined = "https://sessionserver.mojang.com/session/minecraft/hasJoined?";
+	//public static final String authServer = "https://sessionserver.mojang.com/";
+	  public static final String authServer = "https://authserver.mojang.com/";
+          public static final String hasJoined = "https://sessionserver.mojang.com/session/minecraft/hasJoined?";
 }
