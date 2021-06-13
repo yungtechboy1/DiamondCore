@@ -167,7 +167,6 @@ public enum ChatColor {
 	private static final String ANSI_WHITE = (ANSI + "1;37m");
 	private static final String ANSI_RESET = (ANSI + "22m" + ANSI + "23m" + ANSI + "24m" + ANSI + "29m" + ANSI_GREY);
 	
-	// TODO: Get fonts working if possible
 	private static final String ANSI_OBFUSCATED = (ANSI_WHITE);
 	private static final String ANSI_BOLD = (ANSI_WHITE);
 	private static final String ANSI_ITALIC = (ANSI_WHITE);
