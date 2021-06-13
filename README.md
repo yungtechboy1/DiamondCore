@@ -10,6 +10,15 @@ This is not playable
 Note: This program uses JRakLib, a library network used to make it easier
 to handle MCPE client's
 
+## How To Build
+Install DiamondCore 
+
+cd /DiamondCore
+
+mvn clean install
+
+You need maven installed
+
 ## Links
 Discord:
 https://discord.gg/SWZKcPBmpD
