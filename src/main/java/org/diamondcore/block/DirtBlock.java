@@ -15,7 +15,7 @@ public class DirtBlock extends SolidBlock {
 
 	@Override
 	public String getName() {
-		return "Dirt";
+		return "minecraft:dirt";
 	}
 
 	@Override
