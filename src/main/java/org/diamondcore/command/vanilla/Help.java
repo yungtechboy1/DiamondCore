@@ -22,7 +22,6 @@ public class Help implements CommandExecutor {
 			String description = commands.get(key).getDescription();
 			builder.append(key + ": " + description + "\n");
 		}
-		builder.append("----------");
 		
 		sender.sendMessage(builder.toString());
 		
