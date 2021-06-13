@@ -3,6 +3,7 @@
 This is a server software for Minecraft: Pocket Edition and Minecraft
 written in java, it's soul purpouse is to allow both sides to play
 together without using mods, kind of like BigBrother in PocketMine.
+DiamondCore Ready To Be Use As Its Not Stable To be Used In Server Might Crash Or Issues
 
 # Why did you wipe recently?
 
