@@ -15,7 +15,7 @@ public class GrassBlock extends SolidBlock {
 
 	@Override
 	public String getName() {
-		return "Grass";
+		return "minecraft:grass";
 	}
 
 	@Override
