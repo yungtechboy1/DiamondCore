@@ -64,7 +64,7 @@ public abstract class PacketIDList {
 	/**
 	 *  S -> C: 0x84 : Sent by the server when disconnecting a client
 	 */
-	public final static byte DISCONNECT_PACKET = (byte) 0x84;
+	public final static byte DISCONNECT_PACKET = (byte) 0x05;
 	
 	
 	/**
