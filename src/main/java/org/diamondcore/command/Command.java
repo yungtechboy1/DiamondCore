@@ -107,6 +107,7 @@ public class Command {
 			commands.put("help", help);
 			commands.put("time", time);
 			commands.put("plugins", plugins);
+                        commands.put("pl", plugins);
 		}
 	}
 	
