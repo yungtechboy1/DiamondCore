@@ -24,11 +24,7 @@ import java.net.Socket;
 public class PlayerSession {
 	
 	// Player session list
-	
-	
 	public PlayerSession(Socket s) {
 		
 	}
-	
-	
 }
