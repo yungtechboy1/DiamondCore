@@ -39,8 +39,8 @@ public abstract class Diamond {
 	public static final int desktopProtocol = 47;
 	
 	// Minecraft: Pocket Edition
-	public static final String pocketVersion = "0.11.0";
-	public static final int pocketProtocol = 5;
+	public static final String pocketVersion = "1.17.0.2";
+	public static final int pocketProtocol = 440;
 	
 	// DiamondCore
 	private static Server server = null;
