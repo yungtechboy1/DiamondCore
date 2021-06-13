@@ -145,7 +145,7 @@ public final class MojangAuthServer {
 		try {
 			if(!refresh) {
 				if(authData == null) {
-					String data = FileUtils.readFromURL(new URL("https://sessionserver.mojang.com/"));
+					String data = FileUtils.readFromURL(new URL("https://authserver.mojang.com/"));
 					authData = (JSONObject) new JSONParser().parse(data);
 					return authData;
 				} else {
@@ -153,7 +153,7 @@ public final class MojangAuthServer {
 				}
 			}
 			else {
-				String data = FileUtils.readFromURL(new URL("https://sessionserver.mojang.com/"));
+				String data = FileUtils.readFromURL(new URL("https://authserver.mojang.com/"));
 				authData = (JSONObject) new JSONParser().parse(data);
 				return authData;
 			}
