@@ -132,10 +132,11 @@ public class Player extends Human implements CommandSender {
 
 	@Override
 	public boolean hasPermission() {
-		if(this.hasOp())
+		if(this.hasOp()){
 			return true;
-		else // TODO: Add check later
+		} else { // TODO: Add check later
 			return false;
+             } 
 	}
 
 	@Override
@@ -155,12 +156,12 @@ public class Player extends Human implements CommandSender {
 
 	@Override
 	public void setHealth() {
-		
+		//TODO
 	}
 
 	@Override
-	public void setMaxHealth() {
-		
+	public void setMaxHealth(int heal) {
+		return this.getMaxHealth() == heal;
 	}
 	
 }
