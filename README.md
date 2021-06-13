@@ -13,3 +13,19 @@ to be changed, but there seemed to be too much to keep up with.
 # Library Info
 Note: This program uses JRakLib, a library network used to make it easier
 to handle MCPE client's (Thanks, jython234!)
+
+# New updates
+ - 1.17
+
+ - Link
+
+#TODO
+ - Fix Bugs
+ - Fix World generation
+ - Make More Stable
+ - Inventory
+ - Crafting
+ - Update to Latest protocol
+
+Discord 
+diacord.gg/
