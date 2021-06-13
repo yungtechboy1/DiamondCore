@@ -35,8 +35,8 @@ public abstract class Diamond {
 	private Diamond() {}
 	
 	// Minecraft Desktop
-	public static final String desktopVersion = "1.8";
-	public static final int desktopProtocol = 47;
+	public static final String desktopVersion = "1.17";
+	public static final int desktopProtocol = 755;
 	
 	// Minecraft: Pocket Edition
 	public static final String pocketVersion = "1.17.0.2";
