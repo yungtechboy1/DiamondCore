@@ -77,7 +77,6 @@ public class Inventory {
 	public static void main(String[] args) throws IOException {
 		Inventory inv = new Inventory(null, null);
 		for(Item i : inv.getItems()) {
-			System.out.println("----------");
 			System.out.println("Name: " + i.getDisplayName());
 			System.out.println("Quantity: " + i.getQuantity());
 			System.out.println("String ID: " + i.getType().getSID());
