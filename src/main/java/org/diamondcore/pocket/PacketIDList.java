@@ -28,7 +28,7 @@ public abstract class PacketIDList {
 	 * 
 	 * S <-> C : Not a packet ID
 	 */
-	public static final int PROTOCOL_ID = 25;
+	public static final int PROTOCOL_ID = 440;
 	
 	// MAGIC
 	public final static byte[] MAGIC = new byte[] {(byte) 0x00, (byte) 0xff, (byte) 0xff, 0x00, (byte) 0xfe, (byte) 0xfe, (byte) 0xfe, (byte) 0xfe, (byte) 0xfd, (byte) 0xfd, (byte) 0xfd, (byte) 0xfd, (byte) 0x12, (byte) 0x34, (byte) 0x56, (byte) 0x78};
