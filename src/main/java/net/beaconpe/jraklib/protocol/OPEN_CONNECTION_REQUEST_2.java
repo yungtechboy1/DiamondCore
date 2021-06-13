@@ -48,7 +48,7 @@ public class OPEN_CONNECTION_REQUEST_2 extends Packet{
 
     @Override
     protected void _decode() {
-        offset = offset + 15; //Magic
+        offset = offset + 15;
         serverAddress = getAddress();
         mtuSize = getShort();
         clientID = getLong();
