@@ -1,9 +1,9 @@
-package org.jukeboxmc.raknet.protocol;
+package org.diamondcore.raknet.protocol;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.jukeboxmc.raknet.utils.BinaryStream;
+import org.diamondcore.raknet.utils.BinaryStream;
 
 import java.util.Collections;
 import java.util.LinkedList;
