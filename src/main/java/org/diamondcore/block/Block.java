@@ -30,6 +30,7 @@ public abstract class Block {
 	public static void registerBlocks() {
 		blockList.add(new GrassBlock());
 		blockList.add(new DirtBlock());
+                blockList.add(new BedrockBlock());
 	}
 	
 	/**
