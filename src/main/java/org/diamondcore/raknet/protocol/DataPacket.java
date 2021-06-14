@@ -1,4 +1,4 @@
-package org.jukeboxmc.raknet.protocol;
+package org.diamondcore.raknet.protocol;
 
 import lombok.Getter;
 import lombok.Setter;
