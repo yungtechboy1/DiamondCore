@@ -1,4 +1,4 @@
-package org.jukeboxmc.raknet.utils;
+package org.diamondcore.raknet.utils;
 
 /**
  * @author LucGamesYT
