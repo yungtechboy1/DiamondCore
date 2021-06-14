@@ -100,7 +100,7 @@ public class Command {
 			Command say = new Command(new Say(), "say", "/say <message>", "Used to broadcast a message to the console and server");
 			Command help = new Command(new Help(), "help", "/help", "Used to display the registered commands");
 			Command time = new Command(new Time(), "time", "/time <add|set> <value>", "Used to manage world time on the server");
-			Command plugins = new Command(new PluginList(), "/plugins", "Used to display the active plugina");
+			Command plugins = new Command(new PluginList(), "/plugins", "Used to display the active plugins");
 			
 			// Add them to the hashmap
 			commands.put("say", say);
