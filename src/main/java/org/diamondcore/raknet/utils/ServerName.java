@@ -1,9 +1,9 @@
-package org.jukeboxmc.raknet.utils;
+package org.diamondcore.raknet.utils;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jukeboxmc.raknet.Listener;
+import org.diamondcore.raknet.Listener;
 
 import java.util.StringJoiner;
 
