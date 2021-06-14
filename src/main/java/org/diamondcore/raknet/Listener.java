@@ -1,4 +1,4 @@
-package org.jukeboxmc.raknet;
+package org.diamondcore.raknet;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -12,10 +12,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import lombok.Getter;
-import org.jukeboxmc.raknet.protocol.*;
-import org.jukeboxmc.raknet.utils.BinaryStream;
-import org.jukeboxmc.raknet.utils.Identifiers;
-import org.jukeboxmc.raknet.utils.ServerName;
+import org.diamondcore.raknet.protocol.*;
+import org.diamondcore.raknet.utils.BinaryStream;
+import org.diamondcore.raknet.utils.Identifiers;
+import org.diamondcore.raknet.utils.ServerName;
 
 import java.net.InetSocketAddress;
 import java.util.*;
