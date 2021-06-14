@@ -1,14 +1,14 @@
-package org.jukeboxmc.raknet;
+package org.diamondcore.raknet;
 
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.socket.DatagramPacket;
 import lombok.Data;
-import org.jukeboxmc.raknet.protocol.*;
-import org.jukeboxmc.raknet.utils.BinaryStream;
-import org.jukeboxmc.raknet.utils.Identifiers;
-import org.jukeboxmc.raknet.utils.Reliability;
+import org.diamondcore.raknet.protocol.*;
+import org.diamondcore.raknet.utils.BinaryStream;
+import org.diamondcore.raknet.utils.Identifiers;
+import org.diamondcore.raknet.utils.Reliability;
 
 import java.net.InetSocketAddress;
 import java.util.*;
