@@ -18,5 +18,5 @@ package org.diamondcore.world.time;
  * @version 1.0
  */
 public enum DayStage {
-	DAY, NOON, EVENING, NIGHT
+	DAY, NOON, EVENING, NIGHT, MIDNIGHT
 }
