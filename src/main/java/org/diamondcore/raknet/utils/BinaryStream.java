@@ -1,4 +1,4 @@
-package org.jukeboxmc.raknet.utils;
+package org.diamondcore.raknet.utils;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
