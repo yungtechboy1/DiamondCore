@@ -6,8 +6,11 @@ package org.jukeboxmc.raknet.utils;
  */
 public interface Identifiers {
 
-    String Version = "1.16.100";
-    int Protocol = 419;
+    String Version = "1.17.0";
+    int Protocol = 440;
+
+    String PcVersion = "1.17.0";
+    int PcProtocol = 755;
 
     byte ConnectedPing = 0x00;
     byte UnconnectedPing = 0x01;
