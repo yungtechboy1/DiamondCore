@@ -10,7 +10,7 @@
     </Appenders>
     <Loggers>
         <Root level="debug">
-            <AppenderRef ref="DiamondConsole" />
+            <AppenderRef ref="DiamondConsole"/>
             <AppenderRef ref="DiamondLog"/>
         </Root>
     </Loggers>
