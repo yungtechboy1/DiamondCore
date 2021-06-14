@@ -1,10 +1,10 @@
-package org.jukeboxmc.raknet.protocol;
+package org.diamondcore.raknet.protocol;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.jukeboxmc.raknet.utils.BinaryStream;
-import org.jukeboxmc.raknet.utils.Identifiers;
+import org.diamondcore.raknet.utils.BinaryStream;
+import org.diamondcore.raknet.utils.Identifiers;
 
 /**
  * @author LucGamesYT
