@@ -16,7 +16,7 @@ import org.diamondcore.block.BlockType;
  * Used to represent a item or block item
  * 
  * @author Trent Summerlin
- * @version 0.1.0-SNAPSHOT
+ * @version 1.0.0-SNAPSHOT
  */
 public final class Item {
 	
