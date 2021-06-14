@@ -20,7 +20,7 @@ import java.util.EnumSet;
  */
 public enum BlockType {
 	
-	GRASS_BLOCK("minecraft:grass", 2, 0, GrassBlock.class), COBBLESTONE("minecraft:cobblestone", 4, 0, CobbleStone.class), BEDROCK("minecraft:bedrock", 0, 0, BedrockBlock.class);
+	GRASS_BLOCK("minecraft:grass", 2, 0, GrassBlock.class), COBBLESTONE("minecraft:cobblestone", 4, 0, CobbleStone.class), BEDROCK("minecraft:bedrock", 7, 0, BedrockBlock.class);
 	
 	protected final String sid;
 	protected final int nid;
