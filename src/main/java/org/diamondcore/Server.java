@@ -75,7 +75,7 @@ public class Server {
 	public Server(boolean shouldDebug) throws IOException, InterruptedException, PluginException, DiamondException, LangException {
 		// Predefine console data
 		AnsiConsole.systemInstall();
-		Lang.setLang("en_US"); // TODO: Add ability to change language
+		Lang.setLang("en_US");
 		
 		// Start server
 		debug = shouldDebug;
