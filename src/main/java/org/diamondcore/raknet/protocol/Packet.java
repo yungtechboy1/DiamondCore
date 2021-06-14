@@ -1,7 +1,7 @@
-package org.jukeboxmc.raknet.protocol;
+package org.diamondcore.raknet.protocol;
 
 import lombok.NoArgsConstructor;
-import org.jukeboxmc.raknet.utils.BinaryStream;
+import org.diamondcore.raknet.utils.BinaryStream;
 
 /**
  * @author LucGamesYT
