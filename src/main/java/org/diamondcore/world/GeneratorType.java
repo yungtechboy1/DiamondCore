@@ -19,5 +19,5 @@ package org.diamondcore.world;
  * @version 1.0
  */
 public enum GeneratorType {
-	DEFAULT, FLAT, UNKNOWN
+	DEFAULT, FLAT, VOID
 }
