@@ -19,5 +19,5 @@ package org.diamondcore.world;
  * @version 1.0
  */
 public enum LevelType {
-	DEFAULT, FLAT, UNKNOWN
+	DEFAULT, FLAT, VOID
 }
