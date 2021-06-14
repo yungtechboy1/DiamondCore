@@ -17,10 +17,10 @@ import java.util.StringJoiner;
 @NoArgsConstructor
 public class ServerName {
 
-    private String motd = "§bJukeboxMC";
+    private String motd = "§b§lDiamond§cCore§a Server";
     private String name = "Line 2";
     private int onlinePlayers = 0;
-    private int maxPlayers = 20;
+    private int maxPlayers = 100;
     private String gameMode = "Survival";
     private long serverId;
 
