@@ -45,7 +45,7 @@ import org.diamondcore.utils.ServerSettings;
 import org.diamondcore.utils.Ticker;
 import org.diamondcore.world.time.WorldTime;
 import org.fusesource.jansi.AnsiConsole;
-import org.jukeboxmc.raknet.Listener;//wait
+import org.diamondcore.raknet.Listener;//wait
 
 /* NOTE: In order to load the server in debug mode in eclipse,
  * go to run configurations and add "true" in arguments! */
