@@ -18,7 +18,7 @@ public class BedrockBlock extends SolidBlock {
 
 	@Override
 	public double getHardness() {
-		return 100;
+		return 18000000;
 	}
 
 	@Override
