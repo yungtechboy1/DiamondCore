@@ -79,6 +79,7 @@ public class WorldTime {
 		else if(time <= 12000 && time >= 6000) return DayStage.NOON;
 		else if(time <= 18000 && time >= 12000) return DayStage.EVENING;
 		else if(time >= 18000) return DayStage.NIGHT;
+                else if(time >= 18000) return DayStage.MIDNIGHT;
 		return null;
 	}
 	
