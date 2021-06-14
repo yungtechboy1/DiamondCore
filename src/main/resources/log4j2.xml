@@ -2,7 +2,7 @@
 <Configuration status="INFO">
     <Appenders>
         <Console name="DiamondConsole" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss} [%level] [%logger] %msg%n" />
+            <PatternLayout pattern="%d{HH:mm:ss} [%level] [%logger] %msg%n"/>
         </Console>
         <File name="DiamondLog" fileName="server.log" immediateFlush="true" append="false">
             <PatternLayout pattern="%d{HH:mm:ss} [%level] [%logger] %msg%n"/>
