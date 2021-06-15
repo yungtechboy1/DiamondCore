@@ -30,7 +30,13 @@ public class run {
 				shouldDebug = false;
 			
 			//String logo = IOUtils.toString(run.class.getResource("/logo.txt").openStream());
-			System.out.println("DiamondCore Started");
+                        String Logo = "____  _                                 _  ____
+                                      |  _ \(_) __ _ _ __ ___   ___  _ __   __| |/ ___|___  _ __ ___
+                                      | | | | |/ _` | '_ ` _ \ / _ \| '_ \ / _` | |   / _ \| '__/ _ \
+                                      | |_| | | (_| | | | | | | (_) | | | | (_| | |__| (_) | | |  __/
+                                      |____/|_|\__,_|_| |_| |_|\___/|_| |_|\__,_|\____\___/|_|  \___|";
+                        System.out.println(Logo);			
+                        System.out.println("DiamondCore Started");
 			new Server(shouldDebug);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
