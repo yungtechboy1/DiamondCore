@@ -29,8 +29,8 @@ public class run {
 			else
 				shouldDebug = false;
 			
-			String logo = IOUtils.toString(run.class.getResource("/logo.txt").openStream());
-			System.out.println(logo);
+			//String logo = IOUtils.toString(run.class.getResource("/logo.txt").openStream());
+			System.out.println("DiamondCore Started");
 			new Server(shouldDebug);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
