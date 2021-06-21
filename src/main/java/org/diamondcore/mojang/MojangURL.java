@@ -1,12 +1,10 @@
-/*
- _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ 
-|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|
-| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-| |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
-| |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
-| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|                                                                                                        
- 
+/**
+*  ____  _                                 _  ____
+* |  _ \(_) __ _ _ __ ___   ___  _ __   __| |/ ___|___  _ __ ___
+* | | | | |/ _` | '_ ` _ \ / _ \| '_ \ / _` | |   / _ \| '__/ _ \
+* | |_| | | (_| | | | | | | (_) | | | | (_| | |__| (_) | | |  __/
+* |____/|_|\__,_|_| |_| |_|\___/|_| |_|\__,_|\____\___/|_|  \___|     
+*
 */
 
 package org.diamondcore.mojang;
@@ -26,6 +24,7 @@ public class MojangURL {
 	public static final String profileInfo = "https://sessionserver.mojang.com/session/minecraft/profile/";
 	
 	// Authentication
-	public static final String authServer = "https://sessionserver.mojang.com/";
-	public static final String hasJoined = "https://sessionserver.mojang.com/session/minecraft/hasJoined?";
+	//public static final String authServer = "https://sessionserver.mojang.com/";
+	  public static final String authServer = "https://authserver.mojang.com/";
+          public static final String hasJoined = "https://sessionserver.mojang.com/session/minecraft/hasJoined?";
 }

@@ -1,12 +1,10 @@
-/*
- _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ 
-|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|
-| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-| |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
-| |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
-| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|                                                                                                        
- 
+/**
+*  ____  _                                 _  ____
+* |  _ \(_) __ _ _ __ ___   ___  _ __   __| |/ ___|___  _ __ ___
+* | | | | |/ _` | '_ ` _ \ / _ \| '_ \ / _` | |   / _ \| '__/ _ \
+* | |_| | | (_| | | | | | | (_) | | | | (_| | |__| (_) | | |  __/
+* |____/|_|\__,_|_| |_| |_|\___/|_| |_|\__,_|\____\___/|_|  \___|     
+*
 */
 
 package org.diamondcore.block;
@@ -22,7 +20,7 @@ import java.util.EnumSet;
  */
 public enum BlockType {
 	
-	GRASS_BLOCK("minecraft:grass", 2, 0, GrassBlock.class), COBBLESTONE("minecraft:cobblestone", 4, 0, CobbleStone.class);
+	GRASS_BLOCK("minecraft:grass", 2, 0, GrassBlock.class), COBBLESTONE("minecraft:cobblestone", 4, 0, CobbleStone.class), BEDROCK("minecraft:bedrock", 7, 0, BedrockBlock.class);
 	
 	protected final String sid;
 	protected final int nid;

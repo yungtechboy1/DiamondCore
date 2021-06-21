@@ -1,12 +1,10 @@
-/*
- _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ 
-|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|
-| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-| |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
-| |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
-| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|                                                                                                        
- 
+/**
+*  ____  _                                 _  ____
+* |  _ \(_) __ _ _ __ ___   ___  _ __   __| |/ ___|___  _ __ ___
+* | | | | |/ _` | '_ ` _ \ / _ \| '_ \ / _` | |   / _ \| '__/ _ \
+* | |_| | | (_| | | | | | | (_) | | | | (_| | |__| (_) | | |  __/
+* |____/|_|\__,_|_| |_| |_|\___/|_| |_|\__,_|\____\___/|_|  \___|     
+*
 */
 
 package org.diamondcore.mojang;
@@ -145,7 +143,7 @@ public final class MojangAuthServer {
 		try {
 			if(!refresh) {
 				if(authData == null) {
-					String data = FileUtils.readFromURL(new URL("https://sessionserver.mojang.com/"));
+					String data = FileUtils.readFromURL(new URL("https://authserver.mojang.com/"));
 					authData = (JSONObject) new JSONParser().parse(data);
 					return authData;
 				} else {
@@ -153,7 +151,7 @@ public final class MojangAuthServer {
 				}
 			}
 			else {
-				String data = FileUtils.readFromURL(new URL("https://sessionserver.mojang.com/"));
+				String data = FileUtils.readFromURL(new URL("https://authserver.mojang.com/"));
 				authData = (JSONObject) new JSONParser().parse(data);
 				return authData;
 			}

@@ -1,12 +1,10 @@
-/*
- _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ 
-|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|
-| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-| |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
-| |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
-| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|  
-                                                                                                      
+/**
+*  ____  _                                 _  ____
+* |  _ \(_) __ _ _ __ ___   ___  _ __   __| |/ ___|___  _ __ ___
+* | | | | |/ _` | '_ ` _ \ / _ \| '_ \ / _` | |   / _ \| '__/ _ \
+* | |_| | | (_| | | | | | | (_) | | | | (_| | |__| (_) | | |  __/
+* |____/|_|\__,_|_| |_| |_|\___/|_| |_|\__,_|\____\___/|_|  \___|     
+*
 */
 
 package org.diamondcore;
@@ -167,7 +165,6 @@ public enum ChatColor {
 	private static final String ANSI_WHITE = (ANSI + "1;37m");
 	private static final String ANSI_RESET = (ANSI + "22m" + ANSI + "23m" + ANSI + "24m" + ANSI + "29m" + ANSI_GREY);
 	
-	// TODO: Get fonts working if possible
 	private static final String ANSI_OBFUSCATED = (ANSI_WHITE);
 	private static final String ANSI_BOLD = (ANSI_WHITE);
 	private static final String ANSI_ITALIC = (ANSI_WHITE);

@@ -1,12 +1,10 @@
-/*
- _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ _______ 
-|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|\     /|
-| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-| |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | | |   | |
-| |D  | | |i  | | |a  | | |m  | | |o  | | |n  | | |d  | | |C  | | |o  | | |r  | | |e  | |
-| +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ | +---+ |
-|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|/_____\|                                                                                                        
- 
+/**
+*  ____  _                                 _  ____
+* |  _ \(_) __ _ _ __ ___   ___  _ __   __| |/ ___|___  _ __ ___
+* | | | | |/ _` | '_ ` _ \ / _ \| '_ \ / _` | |   / _ \| '__/ _ \
+* | |_| | | (_| | | | | | | (_) | | | | (_| | |__| (_) | | |  __/
+* |____/|_|\__,_|_| |_| |_|\___/|_| |_|\__,_|\____\___/|_|  \___|     
+*
 */
 
 package org.diamondcore;
@@ -45,6 +43,7 @@ import org.diamondcore.utils.ServerSettings;
 import org.diamondcore.utils.Ticker;
 import org.diamondcore.world.time.WorldTime;
 import org.fusesource.jansi.AnsiConsole;
+import org.diamondcore.raknet.Listener;//wait
 
 /* NOTE: In order to load the server in debug mode in eclipse,
  * go to run configurations and add "true" in arguments! */
@@ -76,7 +75,7 @@ public class Server {
 	public Server(boolean shouldDebug) throws IOException, InterruptedException, PluginException, DiamondException, LangException {
 		// Predefine console data
 		AnsiConsole.systemInstall();
-		Lang.setLang("en_US"); // TODO: Add ability to change language
+		Lang.setLang("en_US");
 		
 		// Start server
 		debug = shouldDebug;
@@ -106,8 +105,15 @@ public class Server {
 		new MainTicker().start();
 		new UDPPacketHandler(new DatagramSocket(ServerSettings.getPEPort())).start();
 		new TCPPacketHandler(new ServerSocket(ServerSettings.getPCPort())).start();
-		this.broadcaster = new TCPBroadcaster(InetAddress.getByName("127.0.0.1"), 4445);
-		this.broadcaster.start();
+                Listener listener = new Listener();
+                if (listener.listen("127.0.0.1", 19132)) {
+                    System.out.println("RakNet Started!");
+                }else{
+                    System.out.println("Server cant start");
+                }
+                this.broadcaster = new Listener();
+		//this.broadcaster = new TCPBroadcaster(InetAddress.getByName("127.0.0.1"), 4445);
+		//this.broadcaster.start();
 		new Console().start();
 		
 		// Load plugins after everything is initialized
