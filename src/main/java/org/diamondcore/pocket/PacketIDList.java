@@ -29,8 +29,7 @@ public abstract class PacketIDList {
 	public static final int PROTOCOL_ID = 440;
 	
 	// MAGIC
-        public static final byte[] MAGIC = "\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x12\x34\x56\x78";
-	
+        public static final byte[] MAGIC = {(byte) 0x80, (byte) 0x81, (byte) 0x82, (byte) 0x83, (byte) 0x84, (byte) 0x85, (byte) 0x86, (byte) 0x87, (byte) 0x88, (byte) 0x89, (byte) 0x8A, (byte) 0x8B, (byte) 0x8C, (byte) 0x8D, (byte) 0x8E, (byte) 0x8F};
 
 	/* Login Packets */
 	/**
