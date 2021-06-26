@@ -43,7 +43,6 @@ import org.diamondcore.utils.ServerSettings;
 import org.diamondcore.utils.Ticker;
 import org.diamondcore.world.time.WorldTime;
 import org.fusesource.jansi.AnsiConsole;
-import org.diamondcore.raknet.Listener;//wait
 
 /* NOTE: In order to load the server in debug mode in eclipse,
  * go to run configurations and add "true" in arguments! */
@@ -105,15 +104,11 @@ public class Server {
 		new MainTicker().start();
 		new UDPPacketHandler(new DatagramSocket(ServerSettings.getPEPort())).start();
 		new TCPPacketHandler(new ServerSocket(ServerSettings.getPCPort())).start();
-                Listener listener = new Listener();
-                if (listener.listen("127.0.0.1", 19132)) {
-                    System.out.println("RakNet Started!");
-                }else{
-                    System.out.println("Server cant start");
-                }
-                this.broadcaster = new Listener();
-		//this.broadcaster = new TCPBroadcaster(InetAddress.getByName("127.0.0.1"), 4445);
-		//this.broadcaster.start();
+                //Listener listener = new Listener();
+                
+                //this.broadcaster = new Listener();
+		this.broadcaster = new TCPBroadcaster(InetAddress.getByName("127.0.0.1"), 4445);
+		this.broadcaster.start();
 		new Console().start();
 		
 		// Load plugins after everything is initialized
